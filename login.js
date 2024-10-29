@@ -10,8 +10,13 @@ loginBtn.addEventListener("click", () => {
     helpText.style.visibility = "visible";
   } else {
     loginBtn.style.backgroundColor = "#7f6aee";
+    document.location.href = "postList.html";
   }
 });
+
+document.getElementById("signInText").onclick = function () {
+  document.location.href = "signIn.html";
+};
 
 function outputText() {
   if (!validEmail(inputs[0].value)) {
