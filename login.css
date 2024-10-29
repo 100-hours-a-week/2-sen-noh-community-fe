@@ -7,6 +7,7 @@
 header {
   display: flex;
   justify-content: center;
+  align-items: center;
   padding-top: 36px;
   padding-bottom: 36px;
   border-bottom: 1px solid black;
@@ -28,6 +29,10 @@ h1 {
   line-height: 38px;
 }
 
+.signInTitle {
+  margin-top: 161px;
+}
+
 .loginForm {
   margin-top: 41px;
   display: flex;
@@ -35,6 +40,10 @@ h1 {
   align-items: center;
   flex-direction: column;
   margin-bottom: 4px;
+}
+
+.profileForm {
+  margin-top: 12px;
 }
 
 .email {
@@ -78,7 +87,18 @@ h1 {
   height: 30px;
   line-height: 14.5px;
   color: #ff0000;
-  visibility: hidden;
+  /* visibility: hidden; */
+}
+
+.helpText {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  font-size: 12px;
+  font-weight: 400;
+  width: 355px;
+  line-height: 14.5px;
+  color: #ff0000;
+  /* visibility: hidden; */
 }
 
 #loginBtn {
@@ -104,4 +124,22 @@ h1 {
   line-height: 16.7px;
   margin-top: 12px;
   margin-bottom: 300px;
+}
+
+#profileImg {
+  width: 149px;
+  height: 149px;
+  background-color: #c4c4c4;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+#back {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  left: 200px;
 }
