@@ -6,6 +6,9 @@ document.getElementById("signInText").onclick = function () {
 };
 
 const inputs = document.getElementsByClassName("emailInput");
+const isPerfect = [false, false, false, false];
+
+const signInBtn = document.getElementById("loginBtn");
 
 function handleBlur(inputIndex, helpTextFunction, helpTextId) {
   inputs[inputIndex].addEventListener("blur", () => {
@@ -14,8 +17,19 @@ function handleBlur(inputIndex, helpTextFunction, helpTextId) {
     if (text != "") {
       help.textContent = text;
       help.style.visibility = "visible";
+      isPerfect[inputIndex] = false;
+      signInBtn.style.backgroundColor = "#aca0eb";
     } else {
       help.style.visibility = "hidden";
+      isPerfect[inputIndex] = true;
+      if (isPerfect.every((i) => i === true)) {
+        signInBtn.style.backgroundColor = "#7f6aee";
+        signInBtn.addEventListener("click", () => {
+          document.location.href = "login.html";
+        });
+      } else {
+        signInBtn.style.backgroundColor = "#aca0eb";
+      }
     }
   });
 }
