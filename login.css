@@ -87,7 +87,7 @@ h1 {
   height: 30px;
   line-height: 14.5px;
   color: #ff0000;
-  /* visibility: hidden; */
+  visibility: hidden;
 }
 
 .helpText {
@@ -98,7 +98,7 @@ h1 {
   width: 355px;
   line-height: 14.5px;
   color: #ff0000;
-  /* visibility: hidden; */
+  visibility: hidden;
 }
 
 #loginBtn {
