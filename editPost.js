@@ -9,6 +9,7 @@ const title = urlParams.get("title");
 const body = urlParams.get("body");
 const img = urlParams.get("img");
 
-document.getElementsByClassName("editSubTitle")[1].textContent = title;
-document.getElementById("contentText").textContent = body;
+document.getElementById("titleTextArea").value =
+  title.length > 26 ? title.slice(0, 26) : title;
+document.getElementById("contentTextArea").value = body;
 document.getElementById("fileName").textContent = img;
