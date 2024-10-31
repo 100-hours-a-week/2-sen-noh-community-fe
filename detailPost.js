@@ -6,6 +6,8 @@ backBtn.addEventListener("click", () => {
 
 const postId = new URLSearchParams(window.location.search).get("postId");
 
+const editBtn = document.getElementsByClassName("editBtn")[0];
+
 fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`)
   .then((response) => response.json())
   .then((data) => {
@@ -19,6 +21,9 @@ fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`)
       `${formatLikes(data.body.length)}`;
     document.getElementsByClassName("nums")[1].textContent =
       `${formatLikes(data.body.length * 100)}`;
+    editBtn.addEventListener("click", () => {
+      document.location.href = "editPost.html?data=${data}";
+    });
   })
   .catch((error) => console.error("Fetch 오류:", error));
 
