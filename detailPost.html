@@ -14,22 +14,26 @@
       <img src="./images/IMG_1533.JPG" id="profile" />
     </header>
     <main>
-      <article>
-        <div><p>제목 1</p></div>
-        <div>
-          <div>
-            <img src="./images/IMG_1533.JPG" />
-            <p>더미 작성자1</p>
-            <p>2021-01-01 00:00:00</p>
-          </div>
-          <div>
-            <button>수정</button>
-            <button>삭제</button>
+      <article class="content">
+        <div class="titleBar">
+          <p class="contentTitle" style="background-color: #f4f5f7">제목 1</p>
+          <div class="writerBar">
+            <div class="writerBarL">
+              <img src="./images/IMG_1533.JPG" class="writerImg" />
+              <p id="writerText">더미 작성자1</p>
+              <p class="contentSub" style="margin-left: 24px">
+                2021-01-01 00:00:00
+              </p>
+            </div>
+            <div>
+              <button class="editBtn">수정</button>
+              <button class="editBtn">삭제</button>
+            </div>
           </div>
         </div>
         <div>
-          <img src="./images/IMG_1533.JPG" />
-          <p>
+          <img src="./images/IMG_1533.JPG" id="contentImg" />
+          <p id="contentText">
             무엇을 얘기할까요? 아무말이라면, 삶은 항상 놀라운 모험이라고
             생각합니다. 우리는 매일 새로운 경험을 하고 배우며 성장합니다. 때로는
             어려움과 도전이 있지만, 그것들이 우리를 더 강하고 지혜롭게 만듭니다.
@@ -45,40 +49,48 @@
             앞으로 나아가는 것이 중요하다고 생각합니다.
           </p>
         </div>
-        <div>
-          <div>
-            <p>123</p>
-            <p>좋아요수</p>
+        <div class="introTitle2">
+          <div class="cntBtn">
+            <p class="backTrans nums">123</p>
+            <p class="backTrans">좋아요수</p>
           </div>
-          <div>
-            <p>123</p>
-            <p>조회수</p>
+          <div class="cntBtn">
+            <p class="backTrans nums">123</p>
+            <p class="backTrans">조회수</p>
           </div>
-          <div>
-            <p>123</p>
-            <p>댓글</p>
+          <div class="cntBtn">
+            <p class="backTrans nums">123</p>
+            <p class="backTrans">댓글</p>
           </div>
         </div>
       </article>
-      <section>
-        <div>
-          <input type="text" />
-          <button>댓글 등록</button>
+      <section class="content">
+        <div class="content chat">
+          <input type="text" id="chatInput" />
+          <div class="chatBtnContainer">
+            <button id="addBtn">댓글 등록</button>
+          </div>
         </div>
-        <article>
-          <div>
-            <img />
-            <div>
-              <p>더미 작성자1</p>
-              <p>댓글 내용</p>
+        <section style="margin-bottom: 38px">
+          <article class="introTitle2 chatContainer">
+            <div class="introTitle2">
+              <img src="./images/IMG_1533.JPG" class="writerImg" />
+              <div class="content">
+                <div class="chatTop">
+                  <p id="writerText">더미 작성자1</p>
+                  <p class="contentSub backTrans" style="margin-left: 24px">
+                    2021-01-01 00:00:00
+                  </p>
+                </div>
+                <p id="chatText">댓글내용</p>
+              </div>
             </div>
-            <p>2021-01-01 00:00:00</p>
-          </div>
-          <div>
-            <button>수정</button>
-            <button>삭제</button>
-          </div>
-        </article>
+            <div style="margin-top: 19px">
+              <button class="editBtn">수정</button>
+              <button class="editBtn">삭제</button>
+            </div>
+          </article>
+        </section>
       </section>
     </main>
   </body>

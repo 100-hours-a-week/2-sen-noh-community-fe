@@ -29,7 +29,7 @@ fetch("https://jsonplaceholder.typicode.com/posts")
           <p class="contentSub" style="padding-right: 24px">2021-01-01 00:00:00</p>
         </div>
         <div class="writer">
-          <img src="./images/IMG_1533.JPG" id="writerImg" />
+          <img src="./images/IMG_1533.JPG" class="writerImg" />
           <p id="writerText">더미 작성자 ${post.userId}</p>
         </div>
       `;
