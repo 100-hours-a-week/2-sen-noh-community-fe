@@ -35,7 +35,7 @@ fetch("https://jsonplaceholder.typicode.com/posts")
       `;
       postList.appendChild(postArticle);
       postArticle.addEventListener("click", () => {
-        document.location.href = `detailPost.html?postId = ${post.id}}`;
+        document.location.href = `detailPost.html?postId=${post.id}`;
       });
     });
   })

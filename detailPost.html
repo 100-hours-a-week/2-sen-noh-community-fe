@@ -16,11 +16,13 @@
     <main>
       <article class="content">
         <div class="titleBar">
-          <p class="contentTitle" style="background-color: #f4f5f7">제목 1</p>
+          <p class="contentTitle" style="background-color: #f4f5f7" id="title">
+            제목 1
+          </p>
           <div class="writerBar">
             <div class="writerBarL">
               <img src="./images/IMG_1533.JPG" class="writerImg" />
-              <p id="writerText">더미 작성자1</p>
+              <p id="writerText">더미 작성자s1</p>
               <p class="contentSub" style="margin-left: 24px">
                 2021-01-01 00:00:00
               </p>
@@ -66,7 +68,7 @@
       </article>
       <section class="content">
         <div class="content chat">
-          <input type="text" id="chatInput" />
+          <textarea id="chatInput" placeholder="댓글을 남겨주세요!"></textarea>
           <div class="chatBtnContainer">
             <button id="addBtn">댓글 등록</button>
           </div>
@@ -93,5 +95,6 @@
         </section>
       </section>
     </main>
+    <script src="detailPost.js"></script>
   </body>
 </html>

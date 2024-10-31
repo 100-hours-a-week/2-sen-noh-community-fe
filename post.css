@@ -198,12 +198,21 @@
 }
 
 #chatInput {
-  width: 592px;
+  width: 592px; /* 부모 요소의 넓이에 맞춤 */
   height: 115px;
   border-radius: 16px 16px 0px 0px;
   border: 0px;
   border-bottom: 1px solid #00000029;
   background-color: #ffffff;
+  padding: 25px 27px 0px 27px;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 21.15px;
+  color: #000000;
+}
+
+#chatInput::placeholder {
+  color: #000000;
 }
 
 .chat {
