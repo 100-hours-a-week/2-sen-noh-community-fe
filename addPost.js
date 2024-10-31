@@ -1,3 +1,9 @@
+const backBtn = document.getElementById("back");
+
+backBtn.addEventListener("click", () => {
+  history.back();
+});
+
 const title = document.getElementById("titleTextArea");
 const content = document.getElementById("contentTextArea");
 const editFinBtn = document.getElementById("editFinBtn");
