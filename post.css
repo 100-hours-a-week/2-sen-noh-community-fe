@@ -40,6 +40,7 @@
   align-items: center;
   margin-bottom: 16px;
   border-radius: 16px;
+  box-shadow: 3px 4px 4px #cccccc40;
 }
 
 #addBtn {
@@ -60,6 +61,7 @@
   line-height: 31px;
   margin-top: 18px;
   padding-left: 24px;
+  padding-right: 24px;
   background-color: #ffffff;
   width: 100%;
 }
@@ -80,7 +82,7 @@
   width: 100%;
   padding-left: 24px;
   padding-bottom: 24px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+  border-bottom: 1px solid #00000029;
 }
 
 .contentSubNum {
@@ -113,4 +115,8 @@
   font-weight: 700;
   font-size: 15px;
   line-height: 19.5px;
+}
+
+#addBtn:hover {
+  background-color: #7f6aee;
 }
