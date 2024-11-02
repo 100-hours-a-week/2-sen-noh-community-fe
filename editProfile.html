@@ -23,37 +23,33 @@
     <main>
       <p class="loginTitle signInTitle">회원정보수정</p>
       <div class="loginForm profileForm">
-        <div>
+        <div style="width: 355px">
           <p class="emailText">프로필 사진*</p>
         </div>
-        <div id="profileImg">
-          <img src="./images/IMG_1533.JPG" alt="프로필 사진" />
-          <button>변경</button>
+        <div style="margin-top: 22px">
+          <img id="profileImg" src="./images/IMG_1533.JPG" />
+          <button id="editImgBtn">변경</button>
         </div>
-      </div>
-      <div class="loginForm">
-        <div>
-          <p class="emailText">이메일*</p>
-          <p>startupcode@gmail.com</p>
-        </div>
-        <div>
-          <p class="emailText">닉네임*</p>
-          <input
-            type="text"
-            class="emailInput"
-            placeholder="닉네임을 입력하세요"
-          />
-          <p class="helpText" id="helpText4">* helper text</p>
+        <div class="loginForm" style="margin-top: 36px">
+          <div style="width: 355px">
+            <p class="emailText">이메일</p>
+            <p style="margin-top: 16px">startupcode@gmail.com</p>
+          </div>
+          <div style="margin-top: 16px">
+            <p class="emailText">닉네임</p>
+            <input type="text" class="emailInput" value="스타트업코드" />
+            <p class="helpText">* helper text</p>
+          </div>
         </div>
       </div>
       <nav class="btn" style="margin-top: 8px">
         <button id="loginBtn">수정하기</button>
       </nav>
       <nav class="btn">
-        <p id="signInText">회원 탈퇴</p>
+        <p id="signInText" style="margin-bottom: 77px">회원 탈퇴</p>
       </nav>
-      <nav>
-        <button>수정완료</button>
+      <nav class="btn">
+        <button id="editFinBtn">수정완료</button>
       </nav>
     </main>
     <script src="signIn.js"></script>
