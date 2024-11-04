@@ -14,10 +14,16 @@ h1 {
 }
 
 header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid black;
+}
+
+.header {
   padding-top: 36px;
   padding-bottom: 36px;
-  border-bottom: 1px solid black;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,8 +40,28 @@ header {
   border-radius: 100%;
 }
 
-.header {
+.dropDownContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+#dropDown {
+  position: absolute;
+  top: -24px;
+  left: 156px;
+  background-color: #d9d9d9;
+  flex-direction: column;
+  visibility: visible;
+}
+
+.menu {
+  width: 115px;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14.52px;
+  height: 35px;
 }
