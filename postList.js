@@ -8,7 +8,7 @@ const postList = document.getElementById("postList");
 
 let posts = [];
 
-fetch("https://jsonplaceholder.typicode.com/posts")
+fetch("posts.json")
   .then((response) => response.json())
   .then((data) => {
     posts = data; // 데이터 할당
@@ -20,22 +20,22 @@ fetch("https://jsonplaceholder.typicode.com/posts")
         <div class="contentSubTotal">
           <div class="contentSubNum">
             <p class="contentSub">좋아요&nbsp;</p>
-            <p class="contentSub">${formatLikes(post.body.length * 10)}&nbsp;&nbsp;</p>
+            <p class="contentSub">${formatLikes(post.heartCnt)}&nbsp;&nbsp;</p>
             <p class="contentSub">댓글&nbsp;</p>
-            <p class="contentSub">${post.body.length}&nbsp;&nbsp;</p>
+            <p class="contentSub">${post.chatCnt}&nbsp;&nbsp;</p>
             <p class="contentSub">조회수&nbsp;</p>
-            <p class="contentSub">${formatLikes(post.body.length * 100)}&nbsp;&nbsp;</p>
+            <p class="contentSub">${formatLikes(post.visitCnt)}&nbsp;&nbsp;</p>
           </div>
-          <p class="contentSub" style="padding-right: 24px">2021-01-01 00:00:00</p>
+          <p class="contentSub" style="padding-right: 24px">${post.date}</p>
         </div>
         <div class="writer">
           <img src="./images/IMG_1533.JPG" class="writerImg" />
-          <p id="writerText">더미 작성자 ${post.userId}</p>
+          <p id="writerText">${post.nickname}</p>
         </div>
       `;
       postList.appendChild(postArticle);
       postArticle.addEventListener("click", () => {
-        document.location.href = `detailPost.html?postId=${post.id}`;
+        document.location.href = `detailPost.html?postId=${post.postId}`;
       });
     });
   })
