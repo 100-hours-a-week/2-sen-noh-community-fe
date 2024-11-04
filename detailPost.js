@@ -60,3 +60,14 @@ document
     document.body.style.overflow = "auto";
     document.location.href = "postList.html";
   });
+
+const cmtInput = document.getElementById("chatInput");
+const cmtBtn = document.getElementById("addCmtBtn");
+
+cmtInput.addEventListener("input", () => {
+  if (cmtInput.value.trim() != "") {
+    cmtBtn.style.backgroundColor = "#7f6aee";
+  } else {
+    cmtBtn.style.backgroundColor = "#aca0eb";
+  }
+});

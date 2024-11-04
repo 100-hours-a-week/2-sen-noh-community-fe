@@ -39,6 +39,18 @@
   box-shadow: 3px 4px 4px #cccccc40;
 }
 
+#addCmtBtn {
+  background-color: #aca0eb;
+  width: 138px;
+  height: 39px;
+  border-radius: 16px;
+  border: 0px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 25px;
+}
+
 #addBtn {
   background-color: #aca0eb;
   width: 138px;
