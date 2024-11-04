@@ -52,7 +52,7 @@ header {
   left: 156px;
   background-color: #d9d9d9;
   flex-direction: column;
-  visibility: visible;
+  visibility: hidden;
 }
 
 .menu {
