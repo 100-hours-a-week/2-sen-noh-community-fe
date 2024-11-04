@@ -1,12 +1,12 @@
 const backBtn = document.getElementById("back");
 
 backBtn.addEventListener("click", () => {
-  document.location.href = "postList.html";
+  history.back();
 });
 
 const postId = new URLSearchParams(window.location.search).get("postId");
 
-const editBtn = document.getElementsByClassName("editBtn")[0];
+const editBtn = document.getElementById("postEditBtn");
 
 const imgSrc = document.getElementById("contentImg").src;
 
@@ -38,3 +38,25 @@ function formatLikes(likes) {
     return likes.toString();
   }
 }
+
+const modal = document.getElementsByClassName("modalContainer")[0];
+
+document.getElementById("postDelBtn").addEventListener("click", () => {
+  modal.style.visibility = "visible";
+  document.body.style.overflow = "hidden";
+});
+
+document
+  .getElementsByClassName("modalBtnNo")[0]
+  .addEventListener("click", () => {
+    modal.style.visibility = "hidden";
+    document.body.style.overflow = "auto";
+  });
+
+document
+  .getElementsByClassName("modalBtnYes")[0]
+  .addEventListener("click", () => {
+    modal.style.visibility = "hidden";
+    document.body.style.overflow = "auto";
+    document.location.href = "postList.html";
+  });
