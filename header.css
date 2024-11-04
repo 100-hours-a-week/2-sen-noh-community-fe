@@ -66,3 +66,7 @@ header {
   line-height: 14.52px;
   height: 35px;
 }
+
+.menu:hover {
+  background-color: #e9e9e9;
+}

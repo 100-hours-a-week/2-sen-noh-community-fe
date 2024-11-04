@@ -76,7 +76,7 @@
   width: 355px;
   line-height: 14.5px;
   color: #ff0000;
-  /* visibility: hidden; */
+  visibility: hidden;
 }
 
 #loginBtn {
@@ -126,6 +126,7 @@
   border-radius: 30px;
   border: 0px;
   margin-bottom: 200px;
+  visibility: hidden;
 }
 
 #editImgBtn {
