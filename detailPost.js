@@ -60,25 +60,28 @@ fetch('comments.json')
               <div class="content">
                 <div class="chatTop">
                   <p id="writerText" style="background-color: #f4f5f7">
-                    더미 작성자1
+                    ${cmt.nickname}
                   </p>
                   <p class="contentSub backTrans" style="margin-left: 24px">
-                    2021-01-01 00:00:00
+                    ${formatDates(cmt.date)}
                   </p>
                 </div>
-                <p id="chatText">댓글내용</p>
+                <p id="chatText">${cmt.comment}</p>
               </div>
             </div>
             <div style="margin-top: 19px">
-              <button class="editBtn">수정</button>
-              <button class="editBtn">삭제</button>
+              <button class="editBtn" id="cmtEditBtn_${cmt.comment_id}">수정</button>
+              <button class="editBtn" id="cmtDelBtn_${cmt.comment_id}">삭제</button>
             </div>
       `;
             commentList.appendChild(cmtArticle);
+            cmtDelModal(cmt.comment_id);
+            cmtEdit(cmt);
         });
     })
     .catch(error => console.error('Fetch 오류:', error));
 
+//게시글 모달
 const modal = document.getElementsByClassName('modalContainer')[0];
 
 document.getElementById('postDelBtn').addEventListener('click', () => {
@@ -111,3 +114,40 @@ cmtInput.addEventListener('input', () => {
         cmtBtn.style.backgroundColor = '#aca0eb';
     }
 });
+
+//댓글 모달
+function cmtDelModal(commentId) {
+    const cmtModal = document.getElementsByClassName('modalContainer')[1];
+
+    document
+        .getElementById(`cmtDelBtn_${commentId}`)
+        .addEventListener('click', () => {
+            cmtModal.style.visibility = 'visible';
+            document.body.style.overflow = 'hidden';
+            console.log(`${commentId}`);
+        });
+
+    document
+        .getElementsByClassName('modalBtnNo')[1]
+        .addEventListener('click', () => {
+            cmtModal.style.visibility = 'hidden';
+            document.body.style.overflow = 'auto';
+        });
+
+    document
+        .getElementsByClassName('modalBtnYes')[1]
+        .addEventListener('click', () => {
+            cmtModal.style.visibility = 'hidden';
+            document.body.style.overflow = 'auto';
+        });
+}
+
+function cmtEdit(cmt) {
+    document
+        .getElementById(`cmtEditBtn_${cmt.comment_id}`)
+        .addEventListener('click', () => {
+            cmtInput.value = cmt.comment;
+            cmtBtn.textContent = '댓글 수정';
+            cmtBtn.style.backgroundColor = '#7f6aee';
+        });
+}
