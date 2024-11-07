@@ -1,72 +1,72 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  background-color: #f4f5f7;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f4f5f7;
 }
 
 h1 {
-  align-items: center;
-  font-weight: 400;
-  font-size: 36px;
-  line-height: 32px;
-  margin-left: 133px;
-  margin-right: 133px;
+    align-items: center;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 32px;
+    margin-left: 133px;
+    margin-right: 133px;
 }
 
 header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  border-bottom: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid black;
 }
 
 .header {
-  padding-top: 36px;
-  padding-bottom: 36px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    padding-top: 36px;
+    padding-bottom: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #back {
-  width: 22px;
-  height: 22px;
+    width: 22px;
+    height: 22px;
 }
 
 #profile {
-  width: 36px;
-  height: 36px;
-  border-radius: 100%;
+    width: 36px;
+    height: 36px;
+    border-radius: 100%;
 }
 
 .dropDownContainer {
-  position: relative;
-  display: flex;
-  flex-direction: column;
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 #dropDown {
-  position: absolute;
-  top: -24px;
-  left: 156px;
-  flex-direction: column;
-  visibility: hidden;
+    position: absolute;
+    top: -24px;
+    left: 156px;
+    flex-direction: column;
+    visibility: hidden;
 }
 
 .menu {
-  width: 115px;
-  display: flex;
-  background-color: #d9d9d9;
-  justify-content: center;
-  align-items: center;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14.52px;
-  height: 35px;
+    width: 115px;
+    display: flex;
+    background-color: #d9d9d9;
+    justify-content: center;
+    align-items: center;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14.52px;
+    height: 35px;
 }
 
 .menu:hover {
-  background-color: #e9e9e9;
+    background-color: #e9e9e9;
 }
