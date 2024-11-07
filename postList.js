@@ -20,11 +20,11 @@ fetch("posts.json")
         <div class="contentSubTotal">
           <div class="contentSubNum">
             <p class="contentSub">좋아요&nbsp;</p>
-            <p class="contentSub">${formatLikes(post.heartCnt)}&nbsp;&nbsp;</p>
+            <p class="contentSub">${formatLikes(post.heart_cnt)}&nbsp;&nbsp;</p>
             <p class="contentSub">댓글&nbsp;</p>
-            <p class="contentSub">${post.chatCnt}&nbsp;&nbsp;</p>
+            <p class="contentSub">${post.chat_cnt}&nbsp;&nbsp;</p>
             <p class="contentSub">조회수&nbsp;</p>
-            <p class="contentSub">${formatLikes(post.visitCnt)}&nbsp;&nbsp;</p>
+            <p class="contentSub">${formatLikes(post.visit_cnt)}&nbsp;&nbsp;</p>
           </div>
           <p class="contentSub" style="padding-right: 24px">${post.date}</p>
         </div>
@@ -35,7 +35,7 @@ fetch("posts.json")
       `;
       postList.appendChild(postArticle);
       postArticle.addEventListener("click", () => {
-        document.location.href = `detailPost.html?postId=${post.postId}`;
+        document.location.href = `detailPost.html?postId=${post.post_id}`;
       });
     });
   })

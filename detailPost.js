@@ -8,25 +8,25 @@ const postId = new URLSearchParams(window.location.search).get("postId");
 
 const editBtn = document.getElementById("postEditBtn");
 
-const imgSrc = document.getElementById("contentImg").src;
-
-const fileName = imgSrc.substring(imgSrc.lastIndexOf("/") + 1);
-
-fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`)
+fetch(`posts.json`)
   .then((response) => response.json())
-  .then((data) => {
+  .then((posts) => {
+    data = posts[`${postId}` - 1];
     document.getElementById("title").textContent = `${data.title}`;
-    document.getElementById("writerText").textContent =
-      `더미 작성자 ${data.userId}`;
-    document.getElementById("contentText").textContent = `${data.body}`;
+    document.getElementById("writerText").textContent = `${data.nickname}`;
+    document.getElementById("writeDate").textContent =
+      `${formatDates(data.date)}`;
+    document.getElementById("contentText").textContent = `${data.content}`;
     document.getElementsByClassName("nums")[0].textContent =
-      `${formatLikes(data.body.length * 10)}`;
+      `${formatLikes(data.heart_cnt)}`;
     document.getElementsByClassName("nums")[2].textContent =
-      `${formatLikes(data.body.length)}`;
+      `${formatLikes(data.visit_cnt)}`;
     document.getElementsByClassName("nums")[1].textContent =
-      `${formatLikes(data.body.length * 100)}`;
+      `${formatLikes(data.chat_cnt)}`;
     editBtn.addEventListener("click", () => {
-      document.location.href = `editPost.html?title=${encodeURIComponent(data.title)}&body=${encodeURIComponent(data.body)}&img=${fileName}`;
+      const imgSrc = `${data.post_image}`;
+      const fileName = imgSrc.substring(imgSrc.lastIndexOf("/") + 1);
+      document.location.href = `editPost.html?title=${encodeURIComponent(data.title)}&body=${encodeURIComponent(data.content)}&img=${fileName}`;
     });
   })
   .catch((error) => console.error("Fetch 오류:", error));
@@ -37,6 +37,11 @@ function formatLikes(likes) {
   } else {
     return likes.toString();
   }
+}
+
+function formatDates(date) {
+  const d = new Date(date);
+  return d.toISOString().slice(0, 19).replace("T", " ");
 }
 
 const modal = document.getElementsByClassName("modalContainer")[0];
