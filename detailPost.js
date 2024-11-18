@@ -11,7 +11,8 @@ const userId = parseInt(
 console.log(userId);
 const postId = new URLSearchParams(window.location.search).get('postId');
 
-axios(`http://localhost:3000/posts/${postId}`)
+axios
+    .get(`http://localhost:3000/posts/${postId}`)
     .then(response => {
         const { data } = response.data;
         document.getElementById('title').textContent = `${data.title}`;
@@ -59,7 +60,7 @@ axios(`http://localhost:3000/posts/${postId}`)
             editBtn.addEventListener('click', () => {
                 const imgSrc = `${data.post_image}`;
                 const fileName = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
-                document.location.href = `editPost.html?title=${encodeURIComponent(data.title)}&body=${encodeURIComponent(data.content)}&img=${fileName}`;
+                document.location.href = `editPost.html?postId=${postId}&userId=${userId}&title=${encodeURIComponent(data.title)}&body=${encodeURIComponent(data.content)}&img=${fileName}`;
             });
 
             delBtn.addEventListener('click', () => {
@@ -84,7 +85,8 @@ function formatDates(date) {
 
 const commentList = document.getElementById('commentList');
 
-axios(`http://localhost:3000/posts/${postId}/comments`)
+axios
+    .get(`http://localhost:3000/posts/${postId}/comments`)
     .then(res => {
         const comments = res.data.data;
         comments.forEach(cmt => {
