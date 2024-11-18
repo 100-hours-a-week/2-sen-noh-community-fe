@@ -8,10 +8,9 @@ const postId = new URLSearchParams(window.location.search).get('postId');
 
 const editBtn = document.getElementById('postEditBtn');
 
-fetch(`posts.json`)
-    .then(response => response.json())
-    .then(posts => {
-        data = posts[`${postId}` - 1];
+axios(`http://localhost:3000/posts/${postId}`)
+    .then(response => {
+        const { data } = response.data;
         document.getElementById('title').textContent = `${data.title}`;
         document.getElementById('writerText').textContent = `${data.nickname}`;
         document.getElementById('writeDate').textContent =
@@ -22,7 +21,16 @@ fetch(`posts.json`)
         document.getElementsByClassName('nums')[2].textContent =
             `${formatLikes(data.visit_cnt)}`;
         document.getElementsByClassName('nums')[1].textContent =
-            `${formatLikes(data.chat_cnt)}`;
+            `${formatLikes(data.comment_cnt)}`;
+
+        if (data.post_image) {
+            const imgElement = document.createElement('img');
+            imgElement.src = data.post_image;
+            imgElement.alt = '게시글 이미지';
+            imgElement.id = 'contentImg';
+            document.getElementById('imgContainer').appendChild(imgElement);
+        }
+
         editBtn.addEventListener('click', () => {
             const imgSrc = `${data.post_image}`;
             const fileName = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
