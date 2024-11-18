@@ -4,14 +4,21 @@ backBtn.addEventListener('click', () => {
     history.back();
 });
 
+const userId = parseInt(
+    new URLSearchParams(window.location.search).get('userId'),
+    10,
+);
+console.log(userId);
 const postId = new URLSearchParams(window.location.search).get('postId');
-
-const editBtn = document.getElementById('postEditBtn');
 
 axios(`http://localhost:3000/posts/${postId}`)
     .then(response => {
         const { data } = response.data;
         document.getElementById('title').textContent = `${data.title}`;
+        if (data.profile_image) {
+            document.getElementsByClassName('writerImg')[0].src =
+                `${data.profile_image}`;
+        }
         document.getElementById('writerText').textContent = `${data.nickname}`;
         document.getElementById('writeDate').textContent =
             `${formatDates(data.date)}`;
@@ -31,11 +38,35 @@ axios(`http://localhost:3000/posts/${postId}`)
             document.getElementById('imgContainer').appendChild(imgElement);
         }
 
-        editBtn.addEventListener('click', () => {
-            const imgSrc = `${data.post_image}`;
-            const fileName = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
-            document.location.href = `editPost.html?title=${encodeURIComponent(data.title)}&body=${encodeURIComponent(data.content)}&img=${fileName}`;
-        });
+        if (data.user_id === userId) {
+            const postBtnContainer =
+                document.getElementById('postBtnContainer');
+
+            // 수정 버튼 생성
+            const editBtn = document.createElement('button');
+            editBtn.classList.add('editBtn');
+            editBtn.id = 'postEditBtn';
+            editBtn.textContent = '수정';
+            postBtnContainer.appendChild(editBtn);
+
+            // 삭제 버튼 생성
+            const delBtn = document.createElement('button');
+            delBtn.classList.add('editBtn');
+            delBtn.id = 'postDelBtn';
+            delBtn.textContent = '삭제';
+            postBtnContainer.appendChild(delBtn);
+
+            editBtn.addEventListener('click', () => {
+                const imgSrc = `${data.post_image}`;
+                const fileName = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
+                document.location.href = `editPost.html?title=${encodeURIComponent(data.title)}&body=${encodeURIComponent(data.content)}&img=${fileName}`;
+            });
+
+            delBtn.addEventListener('click', () => {
+                modal.style.visibility = 'visible';
+                document.body.style.overflow = 'hidden';
+            });
+        }
     })
     .catch(error => console.error('Fetch 오류:', error));
 
@@ -53,17 +84,16 @@ function formatDates(date) {
 
 const commentList = document.getElementById('commentList');
 
-fetch('comments.json')
-    .then(res => res.json())
-    .then(data => {
-        comments = data.filter(cmt => cmt.post_id == postId);
+axios(`http://localhost:3000/posts/${postId}/comments`)
+    .then(res => {
+        const comments = res.data.data;
         comments.forEach(cmt => {
             const cmtArticle = document.createElement('article');
             cmtArticle.classList.add('introTitle2');
             cmtArticle.classList.add('chatContainer');
             cmtArticle.innerHTML = `
             <div class="introTitle2">
-              <img src="./images/IMG_1533.JPG" class="writerImg" />
+              <img src="${cmt.profile_image ? cmt.profile_image : './images/IMG_1533.JPG'}" class="writerImg" />
               <div class="content">
                 <div class="chatTop">
                   <p id="writerText" style="background-color: #f4f5f7">
@@ -77,24 +107,26 @@ fetch('comments.json')
               </div>
             </div>
             <div style="margin-top: 19px">
-              <button class="editBtn" id="cmtEditBtn_${cmt.comment_id}">수정</button>
-              <button class="editBtn" id="cmtDelBtn_${cmt.comment_id}">삭제</button>
+            ${
+                cmt.user_id === userId
+                    ? `
+                <button class="editBtn" id="cmtEditBtn_${cmt.comment_id}">수정</button>
+                <button class="editBtn" id="cmtDelBtn_${cmt.comment_id}">삭제</button>`
+                    : ``
+            }
             </div>
       `;
             commentList.appendChild(cmtArticle);
-            cmtDelModal(cmt.comment_id);
-            cmtEdit(cmt);
+            if (cmt.user_id === userId) {
+                cmtDelModal(cmt.comment_id);
+                cmtEdit(cmt);
+            }
         });
     })
     .catch(error => console.error('Fetch 오류:', error));
 
 //게시글 모달
 const modal = document.getElementsByClassName('modalContainer')[0];
-
-document.getElementById('postDelBtn').addEventListener('click', () => {
-    modal.style.visibility = 'visible';
-    document.body.style.overflow = 'hidden';
-});
 
 document
     .getElementsByClassName('modalBtnNo')[0]
@@ -131,7 +163,6 @@ function cmtDelModal(commentId) {
         .addEventListener('click', () => {
             cmtModal.style.visibility = 'visible';
             document.body.style.overflow = 'hidden';
-            console.log(`${commentId}`);
         });
 
     document

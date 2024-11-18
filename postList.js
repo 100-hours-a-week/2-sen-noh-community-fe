@@ -31,13 +31,13 @@ axios
                 <p class="contentSub" style="padding-right: 24px">${formatDates(post.date)}</p>
                 </div>
                 <div class="writer">
-                <img src="./images/IMG_1533.JPG" class="writerImg" />
+                <img src="${post.profile_image ? post.profile_image : './images/IMG_1533.JPG'}" class="writerImg" />
                 <p id="writerText">${post.nickname}</p>
                 </div>
             `;
             postList.appendChild(postArticle);
             postArticle.addEventListener('click', () => {
-                document.location.href = `detailPost.html?postId=${post.post_id}`;
+                document.location.href = `detailPost.html?postId=${post.post_id}&userId=${userId}`;
             });
         });
     })
@@ -46,9 +46,8 @@ axios
 function formatLikes(likes) {
     if (likes >= 1000) {
         return Math.floor(likes / 100) / 10 + 'k';
-    } else {
-        return likes.toString();
     }
+    return likes.toString();
 }
 
 function formatDates(date) {
