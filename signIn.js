@@ -14,7 +14,7 @@ function handleBlur(inputIndex, helpTextFunction, helpTextId) {
     inputs[inputIndex].addEventListener('blur', () => {
         const help = document.getElementById(helpTextId);
         const text = helpTextFunction(inputs[inputIndex].value);
-        if (text != '') {
+        if (text !== '') {
             help.textContent = text;
             help.style.visibility = 'visible';
             isPerfect[inputIndex] = false;
@@ -24,8 +24,13 @@ function handleBlur(inputIndex, helpTextFunction, helpTextId) {
             isPerfect[inputIndex] = true;
             if (isPerfect.every(i => i === true)) {
                 signInBtn.style.backgroundColor = '#7f6aee';
+                const data = {
+                    email: inputs[0].value,
+                    password: inputs[1].value,
+                    nickname: inputs[3].value,
+                };
                 signInBtn.addEventListener('click', () => {
-                    document.location.href = 'login.html';
+                    signIn(data);
                 });
             } else {
                 signInBtn.style.backgroundColor = '#aca0eb';
@@ -91,17 +96,28 @@ function rePwHelp(pw) {
 const names = 'sen';
 
 function nickNameHelp(name) {
-    if (name == '') {
+    if (name === '') {
         return '*닉네임을 입력해주세요.';
     }
     if (/\s/.test(name)) {
         return '*띄어쓰기를 없애주세요';
     }
-    if (name == names) {
+    if (name === names) {
         return '*중복된 닉네임입니다.';
     }
     if (name.length > 10) {
         return '*닉네임은 최대 10자 까지 작성 가능합니다.';
     }
     return '';
+}
+
+function signIn(data) {
+    axios
+        .post('http://localhost:3000/auth/signIn', data)
+        .then(res => {
+            if (res.status === 201) {
+                document.location.href = 'login.html';
+            }
+        })
+        .catch(err => console.log(err));
 }
