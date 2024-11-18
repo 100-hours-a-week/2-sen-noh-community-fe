@@ -77,7 +77,7 @@ function login(data) {
         .then(res => {
             helpText.style.visibility = 'hidden';
             if (res.status === 201) {
-                document.location.href = 'postList.html';
+                document.location.href = `postList.html?userId=${res.data.data.user_id}`;
             }
         })
         .catch(err => {

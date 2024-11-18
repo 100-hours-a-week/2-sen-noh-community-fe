@@ -33,10 +33,9 @@ fetch(`posts.json`)
 
 function formatLikes(likes) {
     if (likes >= 1000) {
-        return Math.floor(likes / 100) / 10 + 'k';
-    } else {
-        return likes.toString();
+        return `${Math.floor(likes / 100) / 10}k`;
     }
+    return likes.toString();
 }
 
 function formatDates(date) {
