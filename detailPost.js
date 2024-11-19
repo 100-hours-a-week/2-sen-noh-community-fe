@@ -199,7 +199,7 @@ function deletePostApi(data) {
         .delete(`http://localhost:3000/posts/${postId}`, { data: data })
         .then(res => {
             if (res.status === 200) {
-                document.location.href = 'postList.html';
+                document.location.href = `postList.html?userId=${userId}`;
             }
         })
         .catch(err => console.error(err));

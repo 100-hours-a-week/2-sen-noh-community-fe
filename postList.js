@@ -1,9 +1,10 @@
 const addBtn = document.getElementById('addBtn');
 
-addBtn.addEventListener('click', () => {
-    document.location.href = 'addPost.html';
-});
 const userId = new URLSearchParams(window.location.search).get('userId');
+
+addBtn.addEventListener('click', () => {
+    document.location.href = `addPost.html?userId=${userId}`;
+});
 
 const postList = document.getElementById('postList');
 
