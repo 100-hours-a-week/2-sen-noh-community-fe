@@ -158,6 +158,20 @@ cmtInput.addEventListener('input', () => {
     }
 });
 
+let commentId;
+
+cmtBtn.addEventListener('click', () => {
+    const data = {
+        user_id: userId,
+        comment: cmtInput.value,
+    };
+    if (cmtBtn.textContent === '댓글 수정') {
+        updateCommentApi(data);
+    } else {
+        addCommentApi(data);
+    }
+});
+
 //댓글 모달
 function cmtDelModal(commentId) {
     const cmtModal = document.getElementsByClassName('modalContainer')[1];
@@ -190,6 +204,7 @@ function cmtEdit(cmt) {
         .addEventListener('click', () => {
             cmtInput.value = cmt.comment;
             cmtBtn.textContent = '댓글 수정';
+            commentId = cmt.comment_id;
             cmtBtn.style.backgroundColor = '#7f6aee';
         });
 }
@@ -200,6 +215,31 @@ function deletePostApi(data) {
         .then(res => {
             if (res.status === 200) {
                 document.location.href = `postList.html?userId=${userId}`;
+            }
+        })
+        .catch(err => console.error(err));
+}
+
+function updateCommentApi(data) {
+    axios
+        .patch(
+            `http://localhost:3000/posts/${postId}/comments/${commentId}`,
+            data,
+        )
+        .then(res => {
+            if (res.status === 201) {
+                console.log('수정 완');
+            }
+        })
+        .catch(err => console.error(err));
+}
+
+function addCommentApi(data) {
+    axios
+        .post(`http://localhost:3000/posts/${postId}/comments`, data)
+        .then(res => {
+            if (res.status === 201) {
+                console.log('추가 완');
             }
         })
         .catch(err => console.error(err));
