@@ -8,7 +8,7 @@ const userId = parseInt(
     new URLSearchParams(window.location.search).get('userId'),
     10,
 );
-console.log(userId);
+
 const postId = new URLSearchParams(window.location.search).get('postId');
 
 axios
@@ -142,14 +142,16 @@ document
     .addEventListener('click', () => {
         modal.style.visibility = 'hidden';
         document.body.style.overflow = 'auto';
-        document.location.href = 'postList.html';
+        deletePostApi({
+            user_id: parseInt(userId, 10),
+        });
     });
 
 const cmtInput = document.getElementById('chatInput');
 const cmtBtn = document.getElementById('addCmtBtn');
 
 cmtInput.addEventListener('input', () => {
-    if (cmtInput.value.trim() != '') {
+    if (cmtInput.value.trim() !== '') {
         cmtBtn.style.backgroundColor = '#7f6aee';
     } else {
         cmtBtn.style.backgroundColor = '#aca0eb';
@@ -190,4 +192,15 @@ function cmtEdit(cmt) {
             cmtBtn.textContent = '댓글 수정';
             cmtBtn.style.backgroundColor = '#7f6aee';
         });
+}
+
+function deletePostApi(data) {
+    axios
+        .delete(`http://localhost:3000/posts/${postId}`, { data: data })
+        .then(res => {
+            if (res.status === 200) {
+                document.location.href = 'postList.html';
+            }
+        })
+        .catch(err => console.error(err));
 }
