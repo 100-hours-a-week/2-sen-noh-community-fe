@@ -181,20 +181,21 @@ function cmtDelModal(commentId) {
         .addEventListener('click', () => {
             cmtModal.style.visibility = 'visible';
             document.body.style.overflow = 'hidden';
-        });
 
-    document
-        .getElementsByClassName('modalBtnNo')[1]
-        .addEventListener('click', () => {
-            cmtModal.style.visibility = 'hidden';
-            document.body.style.overflow = 'auto';
-        });
+            document
+                .getElementsByClassName('modalBtnYes')[1]
+                .addEventListener('click', () => {
+                    cmtModal.style.visibility = 'hidden';
+                    document.body.style.overflow = 'auto';
+                    deleteCommentApi({ user_id: userId }, commentId);
+                });
 
-    document
-        .getElementsByClassName('modalBtnYes')[1]
-        .addEventListener('click', () => {
-            cmtModal.style.visibility = 'hidden';
-            document.body.style.overflow = 'auto';
+            document
+                .getElementsByClassName('modalBtnNo')[1]
+                .addEventListener('click', () => {
+                    cmtModal.style.visibility = 'hidden';
+                    document.body.style.overflow = 'auto';
+                });
         });
 }
 
@@ -240,6 +241,19 @@ function addCommentApi(data) {
         .then(res => {
             if (res.status === 201) {
                 console.log('추가 완');
+            }
+        })
+        .catch(err => console.error(err));
+}
+
+function deleteCommentApi(data, commentId) {
+    axios
+        .delete(`http://localhost:3000/posts/${postId}/comments/${commentId}`, {
+            data: data,
+        })
+        .then(res => {
+            if (res.status === 200) {
+                console.log('댓글 삭제 온');
             }
         })
         .catch(err => console.error(err));
