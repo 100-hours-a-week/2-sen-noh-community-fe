@@ -11,9 +11,9 @@ const isPerfect = [false, false, false, false];
 const signInBtn = document.getElementById('loginBtn');
 
 function handleBlur(inputIndex, helpTextFunction, helpTextId) {
-    inputs[inputIndex].addEventListener('blur', () => {
+    inputs[inputIndex].addEventListener('blur', async () => {
         const help = document.getElementById(helpTextId);
-        const text = helpTextFunction(inputs[inputIndex].value);
+        const text = await helpTextFunction(inputs[inputIndex].value);
         if (text !== '') {
             help.textContent = text;
             help.style.visibility = 'visible';
@@ -44,16 +44,16 @@ handleBlur(1, pwHelp, 'helpText2');
 handleBlur(2, rePwHelp, 'helpText3');
 handleBlur(3, nickNameHelp, 'helpText4');
 
-const emails = 'example@example.com';
-
-function emailHelp(email) {
+async function emailHelp(email) {
     if (email == '') {
         return '*이메일을 입력해주세요.';
     }
     if (!validEmail(email)) {
         return '*올바른 이메일 주소 형식을 입력해주세요. (예: example@example.com)';
     }
-    if (email == emails) {
+    const isExisted = await existEmail({ email });
+    if (isExisted) {
+        console.log('중복');
         return '*중복된 이메일 입니다. ';
     }
     return '';
@@ -120,4 +120,17 @@ function signIn(data) {
             }
         })
         .catch(err => console.log(err));
+}
+
+async function existEmail(data) {
+    try {
+        const res = await axios.post(
+            'http://localhost:3000/auth/checkEmail',
+            data,
+        );
+        return res.data.data.is_existed; // 서버에서 받은 값을 반환
+    } catch (err) {
+        console.error(err);
+        return true; // 기본값으로 true 반환 (중복된 이메일로 처리)
+    }
 }
