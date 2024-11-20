@@ -26,9 +26,9 @@ axios
         document.getElementById('contentText').textContent = `${data.content}`;
         document.getElementsByClassName('nums')[0].textContent =
             `${formatLikes(data.heart_cnt)}`;
-        document.getElementsByClassName('nums')[2].textContent =
-            `${formatLikes(data.visit_cnt)}`;
         document.getElementsByClassName('nums')[1].textContent =
+            `${formatLikes(data.visit_cnt)}`;
+        document.getElementsByClassName('nums')[2].textContent =
             `${formatLikes(data.comment_cnt)}`;
 
         if (data.post_image) {

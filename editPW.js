@@ -63,9 +63,21 @@ function validPW(pw) {
 
 finBtn.addEventListener('click', () => {
     if (isSuccess) {
-        toast.style.visibility = 'visible';
-        setTimeout(() => {
-            toast.style.visibility = 'hidden';
-        }, 1000);
+        updatePW({ password: inputs[0].value });
     }
 });
+
+// TODO - userId 변경, 새로고침 문제로 토스트 메시지 안뜨는 거 해결
+function updatePW(data) {
+    axios
+        .patch('http://localhost:3000/users/1/password', data)
+        .then(res => {
+            if (res.status === 200) {
+                toast.style.visibility = 'visible';
+                setTimeout(() => {
+                    toast.style.visibility = 'hidden';
+                }, 3000);
+            }
+        })
+        .catch(err => console.error(err));
+}
