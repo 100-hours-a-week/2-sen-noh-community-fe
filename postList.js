@@ -1,9 +1,7 @@
 const addBtn = document.getElementById('addBtn');
 
-const userId = new URLSearchParams(window.location.search).get('userId');
-
 addBtn.addEventListener('click', () => {
-    document.location.href = `addPost.html?userId=${userId}`;
+    document.location.href = `addPost.html`;
 });
 
 const postList = document.getElementById('postList');
@@ -38,7 +36,7 @@ axios
             `;
             postList.appendChild(postArticle);
             postArticle.addEventListener('click', () => {
-                document.location.href = `detailPost.html?postId=${post.post_id}&userId=${userId}`;
+                document.location.href = `detailPost.html?postId=${post.post_id}`;
             });
         });
     })

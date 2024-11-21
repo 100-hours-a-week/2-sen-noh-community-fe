@@ -76,8 +76,11 @@ function login(data) {
         .post('http://localhost:3000/auth/login', data)
         .then(res => {
             helpText.style.visibility = 'hidden';
+            sessionStorage.setItem('userId', res.data.data.user_id);
+            sessionStorage.setItem('profileImg', res.data.data.profile_image);
+
             if (res.status === 201) {
-                document.location.href = `postList.html?userId=${res.data.data.user_id}`;
+                document.location.href = `postList.html`;
             }
         })
         .catch(err => {

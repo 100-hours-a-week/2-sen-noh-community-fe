@@ -1,12 +1,7 @@
 const backBtn = document.getElementById('back');
 
-const userId = parseInt(
-    new URLSearchParams(window.location.search).get('userId'),
-    10,
-);
-
 backBtn.addEventListener('click', () => {
-    document.location.href = `postList.html?userId=${userId}`;
+    document.location.href = `postList.html`;
 });
 
 const postId = new URLSearchParams(window.location.search).get('postId');
@@ -59,7 +54,7 @@ axios
             editBtn.addEventListener('click', () => {
                 const imgSrc = `${data.post_image}`;
                 const fileName = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
-                document.location.href = `editPost.html?postId=${postId}&userId=${userId}&title=${encodeURIComponent(data.title)}&body=${encodeURIComponent(data.content)}&img=${fileName}`;
+                document.location.href = `editPost.html?postId=${postId}&title=${encodeURIComponent(data.title)}&body=${encodeURIComponent(data.content)}&img=${fileName}`;
             });
 
             delBtn.addEventListener('click', () => {
@@ -176,14 +171,16 @@ cmtInput.addEventListener('input', () => {
 let commentId;
 
 cmtBtn.addEventListener('click', () => {
-    const data = {
-        user_id: userId,
-        comment: cmtInput.value,
-    };
-    if (cmtBtn.textContent === '댓글 수정') {
-        updateCommentApi(data);
-    } else {
-        addCommentApi(data);
+    if (cmtInput.value.trim() !== '') {
+        const data = {
+            user_id: userId,
+            comment: cmtInput.value,
+        };
+        if (cmtBtn.textContent === '댓글 수정') {
+            updateCommentApi(data);
+        } else {
+            addCommentApi(data);
+        }
     }
 });
 
@@ -233,7 +230,7 @@ function deletePostApi(data) {
         .delete(`http://localhost:3000/posts/${postId}`, { data: data })
         .then(res => {
             if (res.status === 200) {
-                document.location.href = `postList.html?userId=${userId}`;
+                document.location.href = `postList.html`;
             }
         })
         .catch(err => console.error(err));

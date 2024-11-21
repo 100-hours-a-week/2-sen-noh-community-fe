@@ -4,8 +4,6 @@ backBtn.addEventListener('click', () => {
     history.back();
 });
 
-const userId = new URLSearchParams(window.location.search).get('userId');
-console.log(userId);
 const title = document.getElementById('titleTextArea');
 const content = document.getElementById('contentTextArea');
 const addFinBtn = document.getElementById('editFinBtn');
@@ -46,7 +44,7 @@ function addPostApi(data) {
             if (res.status === 201) {
                 const postId = res.data.postId;
                 // console.log(res.data);
-                document.location.href = `detailPost.html?postId=${postId}&userId=${userId}`;
+                document.location.href = `detailPost.html?postId=${postId}`;
             }
         })
         .catch(err => console.error(err));

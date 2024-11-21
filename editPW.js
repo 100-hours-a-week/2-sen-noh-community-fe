@@ -67,10 +67,9 @@ finBtn.addEventListener('click', () => {
     }
 });
 
-// TODO - userId 변경, 새로고침 문제로 토스트 메시지 안뜨는 거 해결
 function updatePW(data) {
     axios
-        .patch('http://localhost:3000/users/1/password', data)
+        .patch(`http://localhost:3000/users/${userId}/password`, data)
         .then(res => {
             if (res.status === 200) {
                 toast.style.visibility = 'visible';

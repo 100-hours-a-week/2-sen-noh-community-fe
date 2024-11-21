@@ -2,7 +2,6 @@ const nickname = document.getElementById('nickNameInput');
 const editBtn = document.getElementById('loginBtn');
 const helpText = document.getElementsByClassName('helpText')[0];
 const toast = document.getElementById('editFinBtn');
-
 editBtn.addEventListener('click', async () => {
     if (nickname.value === '') {
         helpText.textContent = '*닉네임을 입력해주세요.';
@@ -21,20 +20,22 @@ editBtn.addEventListener('click', async () => {
     }
 });
 
-// TODO - userId 가져오기
 axios
-    .get(`http://localhost:3000/users/1`)
+    .get(`http://localhost:3000/users/${userId}`)
     .then(res => {
         const userInfo = res.data.data;
         document.getElementById('userEmail').textContent = userInfo.email;
         document.getElementById('nickNameInput').value = userInfo.nickname;
+
+        if (profileImgStorage !== 'null') {
+            document.getElementById('profileImg').src = profileImgStorage;
+        }
     })
     .catch(err => console.error(err));
 
-// TODO - userId 추가
 function editProfile(data) {
     axios
-        .patch('http://localhost:3000/users/1/userInfo', data)
+        .patch(`http://localhost:3000/users/${userId}/userInfo`, data)
         .then(res => {
             toast.style.visibility = 'visible';
             setTimeout(() => {
@@ -67,10 +68,9 @@ document
         deleteUser();
     });
 
-// TODO - userId 추가
 function deleteUser() {
     axios
-        .delete('http://localhost:3000/users/4')
+        .delete(`http://localhost:3000/users/${userId}`)
         .then(res => {
             if (res.status === 200) {
                 document.location.href = `login.html`;

@@ -8,7 +8,6 @@ const urlParams = new URLSearchParams(window.location.search);
 const title = urlParams.get('title');
 const body = urlParams.get('body');
 const img = urlParams.get('img');
-const userId = urlParams.get('userId');
 const postId = urlParams.get('postId');
 
 document.getElementById('titleTextArea').value =
@@ -32,7 +31,7 @@ function editPostApi(data) {
         .then(response => {
             console.log(response);
             if (response.status === 200) {
-                document.location.href = `detailPost.html?postId=${postId}&userId=${userId}`;
+                document.location.href = `detailPost.html?postId=${postId}`;
             }
         })
         .catch(err => console.log(err));
