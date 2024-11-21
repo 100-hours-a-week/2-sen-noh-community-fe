@@ -1,13 +1,13 @@
 const backBtn = document.getElementById('back');
 
-backBtn.addEventListener('click', () => {
-    history.back();
-});
-
 const userId = parseInt(
     new URLSearchParams(window.location.search).get('userId'),
     10,
 );
+
+backBtn.addEventListener('click', () => {
+    document.location.href = `postList.html?userId=${userId}`;
+});
 
 const postId = new URLSearchParams(window.location.search).get('postId');
 const commentCnt = document.getElementsByClassName('nums')[2];
