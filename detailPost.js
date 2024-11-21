@@ -68,6 +68,19 @@ axios
                 document.body.style.overflow = 'hidden';
             });
         }
+
+        document
+            .getElementById('likeBtn')
+            .addEventListener('click', async () => {
+                console.log(data.is_liked);
+                const success = await likeApi(data.is_liked);
+                if (success) {
+                    data.is_liked = !data.is_liked;
+                    data.heart_cnt += data.is_liked ? 1 : -1;
+                    document.getElementsByClassName('nums')[0].textContent =
+                        `${formatLikes(data.heart_cnt)}`;
+                }
+            });
     })
     .catch(error => console.error('Fetch 오류:', error));
 
@@ -257,4 +270,24 @@ function deleteCommentApi(data, commentId) {
             }
         })
         .catch(err => console.error(err));
+}
+
+async function likeApi(isLiked) {
+    try {
+        if (isLiked) {
+            const res = await axios.delete(
+                `http://localhost:3000/posts/${postId}/like`,
+                { data: { user_id: userId } },
+            );
+            return res.data.success;
+        }
+        const res = await axios.post(
+            `http://localhost:3000/posts/${postId}/like`,
+            { user_id: userId },
+        );
+        return res.data.success;
+    } catch (err) {
+        console.error(err);
+        return false;
+    }
 }
