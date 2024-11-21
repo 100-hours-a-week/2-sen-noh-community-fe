@@ -10,7 +10,7 @@ const userId = parseInt(
 );
 
 const postId = new URLSearchParams(window.location.search).get('postId');
-
+const commentCnt = document.getElementsByClassName('nums')[2];
 axios
     .get(`http://localhost:3000/posts/${postId}`)
     .then(response => {
@@ -28,8 +28,7 @@ axios
             `${formatLikes(data.heart_cnt)}`;
         document.getElementsByClassName('nums')[1].textContent =
             `${formatLikes(data.visit_cnt)}`;
-        document.getElementsByClassName('nums')[2].textContent =
-            `${formatLikes(data.comment_cnt)}`;
+        commentCnt.textContent = `${formatLikes(data.comment_cnt)}`;
 
         if (data.post_image) {
             const imgElement = document.createElement('img');
@@ -81,6 +80,7 @@ axios
                         `${formatLikes(data.heart_cnt)}`;
                 }
             });
+        getComment();
     })
     .catch(error => console.error('Fetch 오류:', error));
 
@@ -98,15 +98,17 @@ function formatDates(date) {
 
 const commentList = document.getElementById('commentList');
 
-axios
-    .get(`http://localhost:3000/posts/${postId}/comments`)
-    .then(res => {
-        const comments = res.data.data;
-        comments.forEach(cmt => {
-            const cmtArticle = document.createElement('article');
-            cmtArticle.classList.add('introTitle2');
-            cmtArticle.classList.add('chatContainer');
-            cmtArticle.innerHTML = `
+function getComment() {
+    commentList.innerHTML = '';
+    axios
+        .get(`http://localhost:3000/posts/${postId}/comments`)
+        .then(res => {
+            const comments = res.data.data;
+            comments.forEach(cmt => {
+                const cmtArticle = document.createElement('article');
+                cmtArticle.classList.add('introTitle2');
+                cmtArticle.classList.add('chatContainer');
+                cmtArticle.innerHTML = `
             <div class="introTitle2">
               <img src="${cmt.profile_image ? cmt.profile_image : './images/IMG_1533.JPG'}" class="writerImg" />
               <div class="content">
@@ -131,15 +133,15 @@ axios
             }
             </div>
       `;
-            commentList.appendChild(cmtArticle);
-            if (cmt.user_id === userId) {
-                cmtDelModal(cmt.comment_id);
-                cmtEdit(cmt);
-            }
-        });
-    })
-    .catch(error => console.error('Fetch 오류:', error));
-
+                commentList.appendChild(cmtArticle);
+                if (cmt.user_id === userId) {
+                    cmtDelModal(cmt.comment_id);
+                    cmtEdit(cmt);
+                }
+            });
+        })
+        .catch(error => console.error('Fetch 오류:', error));
+}
 //게시글 모달
 const modal = document.getElementsByClassName('modalContainer')[0];
 
@@ -195,13 +197,16 @@ function cmtDelModal(commentId) {
             cmtModal.style.visibility = 'visible';
             document.body.style.overflow = 'hidden';
 
-            document
-                .getElementsByClassName('modalBtnYes')[1]
-                .addEventListener('click', () => {
+            document.getElementsByClassName('modalBtnYes')[1].addEventListener(
+                'click',
+                () => {
                     cmtModal.style.visibility = 'hidden';
                     document.body.style.overflow = 'auto';
+                    console.log(`${commentId}여긴 delmodal`);
                     deleteCommentApi({ user_id: userId }, commentId);
-                });
+                },
+                { once: true },
+            );
 
             document
                 .getElementsByClassName('modalBtnNo')[1]
@@ -241,8 +246,12 @@ function updateCommentApi(data) {
             data,
         )
         .then(res => {
-            if (res.status === 201) {
-                console.log('수정 완');
+            if (res.status === 200) {
+                console.log('수정완');
+                cmtInput.value = '';
+                cmtBtn.style.backgroundColor = '#aca0eb';
+                cmtBtn.textContent = '댓글 작성';
+                getComment();
             }
         })
         .catch(err => console.error(err));
@@ -253,13 +262,18 @@ function addCommentApi(data) {
         .post(`http://localhost:3000/posts/${postId}/comments`, data)
         .then(res => {
             if (res.status === 201) {
-                console.log('추가 완');
+                cmtInput.value = '';
+                cmtBtn.style.backgroundColor = '#aca0eb';
+                commentCnt.textContent =
+                    parseInt(commentCnt.textContent, 10) + 1;
+                getComment();
             }
         })
         .catch(err => console.error(err));
 }
 
 function deleteCommentApi(data, commentId) {
+    console.log(`${commentId}삭제에서의`);
     axios
         .delete(`http://localhost:3000/posts/${postId}/comments/${commentId}`, {
             data: data,
@@ -267,6 +281,9 @@ function deleteCommentApi(data, commentId) {
         .then(res => {
             if (res.status === 200) {
                 console.log('댓글 삭제 온');
+                commentCnt.textContent =
+                    parseInt(commentCnt.textContent, 10) - 1;
+                getComment();
             }
         })
         .catch(err => console.error(err));
