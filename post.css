@@ -1,358 +1,367 @@
-* {
-  background-color: #f4f5f7;
-}
-
 .introTitle {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 40px;
-  font-size: 24px;
-  line-height: 31.2px;
-  font-weight: 400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 40px;
+    font-size: 24px;
+    line-height: 31.2px;
+    font-weight: 400;
 }
 
 .introTitle2 {
-  display: flex;
-  flex-direction: row;
+    display: flex;
+    flex-direction: row;
 }
 
 .btn {
-  margin-top: 24px;
-  display: flex;
-  justify-content: flex-end;
-  width: 600px;
-  margin-bottom: 24px;
+    margin-top: 24px;
+    display: flex;
+    justify-content: flex-end;
+    width: 600px;
+    margin-bottom: 24px;
 }
 
 .content {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 .post {
-  background-color: #ffffff;
-  width: 600px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 16px;
-  border-radius: 16px;
-  box-shadow: 3px 4px 4px #cccccc40;
+    background-color: #ffffff;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 16px;
+    border-radius: 16px;
+    box-shadow: 3px 4px 4px #cccccc40;
+}
+
+#addCmtBtn {
+    background-color: #aca0eb;
+    width: 138px;
+    height: 39px;
+    border-radius: 16px;
+    border: 0px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 25px;
 }
 
 #addBtn {
-  background-color: #aca0eb;
-  width: 138px;
-  height: 39px;
-  border-radius: 16px;
-  border: 0px;
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 25px;
+    background-color: #aca0eb;
+    width: 138px;
+    height: 39px;
+    border-radius: 16px;
+    border: 0px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 25px;
 }
 
 .contentTitle {
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 31px;
-  margin-top: 18px;
-  padding-left: 24px;
-  padding-right: 24px;
-  background-color: #ffffff;
-  width: 100%;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 31px;
+    margin-top: 18px;
+    padding-left: 24px;
+    padding-right: 24px;
+    background-color: #ffffff;
+    width: 100%;
 }
 
 .contentSub {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 18.2px;
-  background-color: #ffffff;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18.2px;
+    background-color: #ffffff;
 }
 
 .contentSubTotal {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 10px;
-  background-color: #ffffff;
-  width: 100%;
-  padding-left: 24px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid #00000029;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+    background-color: #ffffff;
+    width: 100%;
+    padding-left: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #00000029;
 }
 
 .contentSubNum {
-  display: flex;
-  flex-direction: row;
-  margin-right: 10px;
+    display: flex;
+    flex-direction: row;
+    margin-right: 10px;
 }
 
 .writerImg {
-  width: 36px;
-  height: 36px;
-  border-radius: 100%;
-  margin-left: 24px;
+    width: 36px;
+    height: 36px;
+    border-radius: 100%;
+    margin-left: 24px;
 }
 
 .writer {
-  display: flex;
-  flex-direction: row;
-  margin-top: 16px;
-  margin-bottom: 16px;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    background-color: #ffffff;
 }
 
 #writerText {
-  margin-left: 10px;
-  background-color: #ffffff;
-  font-weight: 700;
-  font-size: 15px;
-  line-height: 19.5px;
+    margin-left: 10px;
+    background-color: #ffffff;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 19.5px;
 }
 
 #addBtn:hover {
-  background-color: #7f6aee;
+    background-color: #7f6aee;
 }
 
 .titleBar {
-  width: 592px;
-  margin-top: 6px;
+    width: 592px;
+    margin-top: 6px;
 }
 
 .writerBar {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #00000029;
-  /* background-color: #7f6aee; */
-  padding-bottom: 24px;
-  margin-top: 12px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #00000029;
+    /* background-color: #7f6aee; */
+    padding-bottom: 24px;
+    margin-top: 12px;
 }
 
 .writerBarL {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .editBtn {
-  width: 50px;
-  height: 27px;
-  border-radius: 8px;
-  border: 1px solid #aca0eb;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 23px;
-  margin-right: 24px;
-  margin-left: -18px;
+    width: 50px;
+    height: 27px;
+    border-radius: 8px;
+    border: 1px solid #aca0eb;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 23px;
+    margin-right: 24px;
+    margin-left: -18px;
 }
 
 #contentImg {
-  width: 544px;
-  height: 306px;
-  margin-top: 24px;
+    width: 544px;
+    height: 306px;
+    margin-top: 24px;
 }
 
 #contentText {
-  width: 544px;
-  margin-top: 24px;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 21.15px;
+    width: 544px;
+    margin-top: 24px;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 21.15px;
 }
 
 .cntBtn {
-  margin-top: 32px;
-  width: 116px;
-  height: 77px;
-  border-radius: 16px;
-  background-color: #d9d9d9;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-left: 4px;
-  margin-right: 4px;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 25px;
-  margin-bottom: 31px;
+    margin-top: 32px;
+    width: 116px;
+    height: 77px;
+    border-radius: 16px;
+    background-color: #d9d9d9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 4px;
+    margin-right: 4px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 25px;
+    margin-bottom: 31px;
 }
 
 .backTrans {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 .nums {
-  font-size: 20px;
-  line-height: 26px;
+    font-size: 20px;
+    line-height: 26px;
 }
 
 #chatInput {
-  width: 592px; /* 부모 요소의 넓이에 맞춤 */
-  height: 115px;
-  border-radius: 16px 16px 0px 0px;
-  border: 0px;
-  border-bottom: 1px solid #00000029;
-  background-color: #ffffff;
-  padding: 25px 27px 0px 27px;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 21.15px;
-  color: #000000;
-  resize: none;
-  outline: none;
+    width: 592px; /* 부모 요소의 넓이에 맞춤 */
+    height: 115px;
+    border-radius: 16px 16px 0px 0px;
+    border: 0px;
+    border-bottom: 1px solid #00000029;
+    background-color: #ffffff;
+    padding: 25px 27px 0px 27px;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 21.15px;
+    color: #000000;
+    resize: none;
+    outline: none;
 }
 
 #chatInput::placeholder {
-  color: #000000;
+    color: #000000;
 }
 
 .chat {
-  border-top: 1px solid #00000029;
-  padding-top: 33px;
+    border-top: 1px solid #00000029;
+    padding-top: 33px;
 }
 
 .chatBtnContainer {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  background-color: #ffffff;
-  border-radius: 0px 0px 16px 16px;
-  padding: 9px 8px 9px 0px;
-  margin-bottom: 16px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    background-color: #ffffff;
+    border-radius: 0px 0px 16px 16px;
+    padding: 9px 8px 9px 0px;
+    margin-bottom: 5px;
 }
 
 .chatContainer {
-  width: 595px;
-  display: flex;
-  justify-content: space-between;
-  margin-top: 5px;
-  padding-left: 3px;
+    width: 595px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding-left: 3px;
 }
 
 #chatText {
-  margin-top: 16px;
-  margin-left: 10px;
-  width: 385px;
-  overflow-wrap: break-word;
+    margin-top: 16px;
+    margin-left: 10px;
+    width: 385px;
+    overflow-wrap: break-word;
 }
 
 .chatTop {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  margin-top: 8px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-top: 8px;
 }
 
 .editTitle {
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 31px;
-  margin-top: 24px;
-  margin-bottom: 26px;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 31px;
+    margin-top: 24px;
+    margin-bottom: 26px;
 }
 
 .editSubTitle {
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 20.8px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #00000029;
-  margin-top: 25px;
-  width: 592px;
-  padding-left: 24px;
-  padding-right: 24px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 20.8px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #00000029;
+    margin-top: 25px;
+    width: 592px;
+    padding-left: 24px;
+    padding-right: 24px;
 }
 
 .helpText {
-  margin-top: 24px;
-  padding-top: 2px;
-  padding-left: 18px;
-  font-size: 12px;
-  font-weight: 400;
-  width: 355px;
-  line-height: 14.5px;
-  color: #f4f5f7;
-  border-top: 1px solid #00000029;
-  width: 100%;
-  /* visibility: hidden; */
+    margin-top: 24px;
+    padding-top: 2px;
+    padding-left: 18px;
+    font-size: 12px;
+    font-weight: 400;
+    width: 355px;
+    line-height: 14.5px;
+    color: #f4f5f7;
+    border-top: 1px solid #00000029;
+    width: 100%;
+    /* visibility: hidden; */
 }
 
 .imgText {
-  margin-top: 8px;
-  margin-bottom: 9px;
-  margin-left: 24px;
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 17.9px;
+    margin-top: 8px;
+    margin-bottom: 9px;
+    margin-left: 24px;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 17.9px;
 }
 
 #fileBtn {
-  width: 68px;
-  height: 29px;
-  border-radius: 4px;
-  border: 1px solid black;
-  font-size: 14px;
-  font-weight: 400;
-  /* line-height: 16.71px; */
-  background-color: #d9d9d9;
-  margin-left: 24px;
+    width: 68px;
+    height: 29px;
+    border-radius: 4px;
+    border: 1px solid black;
+    font-size: 14px;
+    font-weight: 400;
+    /* line-height: 16.71px; */
+    background-color: #d9d9d9;
+    margin-left: 24px;
 }
 
 #fileName {
-  font-size: 14px;
-  font-weight: 400;
-  /* line-height: 16.71px; */
-  margin-left: 12px;
+    font-size: 14px;
+    font-weight: 400;
+    /* line-height: 16.71px; */
+    margin-left: 12px;
 }
 
 #editFinBtn {
-  width: 355px;
-  height: 33px;
-  border-radius: 4px;
-  background-color: #7f6aee;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 16.71px;
-  color: #ffffff;
-  border: 0px;
-  margin-top: 27px;
+    width: 355px;
+    height: 33px;
+    border-radius: 4px;
+    background-color: #7f6aee;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 16.71px;
+    color: #ffffff;
+    border: 0px;
+    margin-top: 27px;
+    margin-bottom: 30px;
 }
 
 #contentTextArea {
-  width: 544px;
-  height: 231px;
-  margin-top: 24px;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 21.15px;
-  margin-left: 24px;
-  border: 0px;
-  resize: none;
-  outline: none;
+    width: 544px;
+    height: 231px;
+    margin-top: 24px;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 21.15px;
+    margin-left: 24px;
+    border: 0px;
+    resize: none;
+    outline: none;
 }
 
 #titleTextArea {
-  border: 0px;
-  resize: none;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 20.8px;
-  border-bottom: 1px solid #00000029;
-  margin-top: 25px;
-  height: 45px;
-  outline: none;
-  width: 100%;
-  padding-left: 24px;
-  padding-right: 24px;
+    border: 0px;
+    resize: none;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 20.8px;
+    border-bottom: 1px solid #00000029;
+    margin-top: 25px;
+    height: 45px;
+    outline: none;
+    width: 100%;
+    padding-left: 24px;
+    padding-right: 24px;
 }
