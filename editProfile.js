@@ -1,7 +1,12 @@
+import api from './api.js';
+
 const nickname = document.getElementById('nickNameInput');
 const editBtn = document.getElementById('loginBtn');
 const helpText = document.getElementsByClassName('helpText')[0];
 const toast = document.getElementById('editFinBtn');
+
+const profileImgStorage = sessionStorage.getItem('profileImg');
+
 editBtn.addEventListener('click', async () => {
     if (nickname.value === '') {
         helpText.textContent = '*닉네임을 입력해주세요.';
@@ -20,11 +25,11 @@ editBtn.addEventListener('click', async () => {
     }
 });
 
-axios
-    .get(`http://localhost:3000/users/`, {
-        withCredentials: true,
-    })
-    .then(res => {
+getUser();
+
+async function getUser() {
+    try {
+        const res = await api.get('/users/');
         const userInfo = res.data.data;
         document.getElementById('userEmail').textContent = userInfo.email;
         document.getElementById('nickNameInput').value = userInfo.nickname;
@@ -32,21 +37,21 @@ axios
         if (profileImgStorage !== 'null') {
             document.getElementById('profileImg').src = profileImgStorage;
         }
-    })
-    .catch(err => console.error(err));
+    } catch (err) {
+        console.error(err);
+    }
+}
 
-function editProfile(data) {
-    axios
-        .patch(`http://localhost:3000/users/userInfo`, data, {
-            withCredentials: true,
-        })
-        .then(res => {
-            toast.style.visibility = 'visible';
-            setTimeout(() => {
-                toast.style.visibility = 'hidden';
-            }, 1000);
-        })
-        .catch(err => console.error(err));
+async function editProfile(data) {
+    try {
+        await api.patch(`/users/userInfo`, data);
+        toast.style.visibility = 'visible';
+        setTimeout(() => {
+            toast.style.visibility = 'hidden';
+        }, 1000);
+    } catch (err) {
+        console.error(err);
+    }
 }
 
 const delBtn = document.getElementById('signInText');
@@ -72,33 +77,21 @@ document
         deleteUser();
     });
 
-function deleteUser() {
-    axios
-        .delete(`http://localhost:3000/users/`, {
-            withCredentials: true,
-        })
-        .then(res => {
-            if (res.status === 200) {
-                document.location.href = `login.html`;
-            }
-        })
-        .catch(err => {
-            console.error(err);
-        });
+async function deleteUser() {
+    try {
+        await api.delete(`/users/`);
+        window.location.href = `login.html`;
+    } catch (err) {
+        console.error(err);
+    }
 }
 
 async function existNickname(data) {
     try {
-        const res = await axios.post(
-            'http://localhost:3000/auth/checkNickname',
-            data,
-            {
-                withCredentials: true,
-            },
-        );
-        return res.data.data.is_existed; // 서버에서 받은 값을 반환
+        const res = await api.post('/auth/checkNickname', data);
+        return res.data.data.is_existed;
     } catch (err) {
         console.error(err);
-        return true; // 기본값으로 true 반환 (중복된 이메일로 처리)
+        return true;
     }
 }

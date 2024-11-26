@@ -1,3 +1,5 @@
+import api from './api.js';
+
 const backBtn = document.getElementById('back');
 
 backBtn.addEventListener('click', () => {
@@ -36,14 +38,12 @@ addFinBtn.addEventListener('click', () => {
     }
 });
 
-function addPostApi(data) {
-    axios
-        .post('http://localhost:3000/posts', data, { withCredentials: true })
-        .then(res => {
-            if (res.status === 201) {
-                const postId = res.data.postId;
-                document.location.href = `detailPost.html?postId=${postId}`;
-            }
-        })
-        .catch(err => console.error(err));
+async function addPostApi(data) {
+    try {
+        const res = await api.post('posts', data);
+        const { postId } = res.data;
+        window.location.href = `detailPost.html?postId=${postId}`;
+    } catch (err) {
+        console.error(err);
+    }
 }

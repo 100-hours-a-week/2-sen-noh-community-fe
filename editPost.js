@@ -1,3 +1,5 @@
+import api from './api.js';
+
 const backBtn = document.getElementById('back');
 
 backBtn.addEventListener('click', () => {
@@ -24,16 +26,13 @@ editFinBtn.addEventListener('click', () => {
     editPostApi(data);
 });
 
-function editPostApi(data) {
-    axios
-        .patch(`http://localhost:3000/posts/${postId}`, data, {
-            withCredentials: true,
-        })
-        .then(response => {
-            console.log(response);
-            if (response.status === 200) {
-                document.location.href = `detailPost.html?postId=${postId}`;
-            }
-        })
-        .catch(err => console.log(err));
+async function editPostApi(data) {
+    try {
+        const res = await api.patch(`/posts/${postId}`, data);
+        if (res.status === 200) {
+            window.location.href = `detailPost.html?postId=${postId}`;
+        }
+    } catch (err) {
+        console.error(err);
+    }
 }
