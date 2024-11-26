@@ -18,7 +18,6 @@ document.getElementById('fileName').textContent = img;
 const editFinBtn = document.getElementById('editFinBtn');
 editFinBtn.addEventListener('click', () => {
     const data = {
-        userId: parseInt(userId, 10),
         title: document.getElementById('titleTextArea').value,
         content: document.getElementById('contentTextArea').value,
     };

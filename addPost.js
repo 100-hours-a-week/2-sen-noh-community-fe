@@ -22,7 +22,7 @@ function checkInput() {
 const helpText = document.getElementsByClassName('helpText')[0];
 
 addFinBtn.addEventListener('click', () => {
-    if (title.value == '' || content.value == '') {
+    if (title.value === '' || content.value === '') {
         helpText.textContent = '*제목, 내용을 모두 작성해주세요';
         helpText.style.color = '#ff0000';
     } else {
@@ -31,7 +31,6 @@ addFinBtn.addEventListener('click', () => {
         const data = {
             title: title.value,
             content: content.value,
-            user_id: parseInt(userId, 10),
         };
         addPostApi(data);
     }
@@ -43,7 +42,6 @@ function addPostApi(data) {
         .then(res => {
             if (res.status === 201) {
                 const postId = res.data.postId;
-                // console.log(res.data);
                 document.location.href = `detailPost.html?postId=${postId}`;
             }
         })

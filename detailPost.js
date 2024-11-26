@@ -153,9 +153,7 @@ document
     .addEventListener('click', () => {
         modal.style.visibility = 'hidden';
         document.body.style.overflow = 'auto';
-        deletePostApi({
-            user_id: parseInt(userId, 10),
-        });
+        deletePostApi();
     });
 
 const cmtInput = document.getElementById('chatInput');
@@ -174,7 +172,6 @@ let commentId;
 cmtBtn.addEventListener('click', () => {
     if (cmtInput.value.trim() !== '') {
         const data = {
-            user_id: userId,
             comment: cmtInput.value,
         };
         if (cmtBtn.textContent === '댓글 수정') {
@@ -201,7 +198,7 @@ function cmtDelModal(commentId) {
                     cmtModal.style.visibility = 'hidden';
                     document.body.style.overflow = 'auto';
 
-                    deleteCommentApi({ user_id: userId }, commentId);
+                    deleteCommentApi(commentId);
                 },
                 { once: true },
             );
@@ -226,10 +223,9 @@ function cmtEdit(cmt) {
         });
 }
 
-function deletePostApi(data) {
+function deletePostApi() {
     axios
         .delete(`http://localhost:3000/posts/${postId}`, {
-            data: data,
             withCredentials: true,
         })
         .then(res => {
@@ -277,10 +273,9 @@ function addCommentApi(data) {
         .catch(err => console.error(err));
 }
 
-function deleteCommentApi(data, commentId) {
+function deleteCommentApi(commentId) {
     axios
         .delete(`http://localhost:3000/posts/${postId}/comments/${commentId}`, {
-            data: data,
             withCredentials: true,
         })
         .then(res => {

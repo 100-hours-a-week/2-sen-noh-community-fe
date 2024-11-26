@@ -29,6 +29,8 @@ if (profileImgStorage !== 'null') {
     profileImg.src = profileImgStorage;
 }
 
+const userId = parseInt(sessionStorage.getItem('userId'), 10);
+
 async function logout() {
     try {
         await axios.post(
