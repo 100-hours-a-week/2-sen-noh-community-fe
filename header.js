@@ -20,7 +20,7 @@ menu[1].addEventListener('click', () => {
 });
 menu[2].addEventListener('click', () => {
     sessionStorage.clear();
-    document.location.href = 'login.html';
+    logout();
 });
 
 const profileImgStorage = sessionStorage.getItem('profileImg');
@@ -29,4 +29,17 @@ if (profileImgStorage !== 'null') {
     profileImg.src = profileImgStorage;
 }
 
-const userId = parseInt(sessionStorage.getItem('userId'), 10);
+async function logout() {
+    try {
+        await axios.post(
+            `http://localhost:3000/users/logout`,
+            {},
+            {
+                withCredentials: true,
+            },
+        );
+        document.location.href = 'login.html';
+    } catch (err) {
+        console.error(err);
+    }
+}
