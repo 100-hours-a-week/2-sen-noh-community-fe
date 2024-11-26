@@ -39,7 +39,7 @@ addFinBtn.addEventListener('click', () => {
 
 function addPostApi(data) {
     axios
-        .post('http://localhost:3000/posts', data)
+        .post('http://localhost:3000/posts', data, { withCredentials: true })
         .then(res => {
             if (res.status === 201) {
                 const postId = res.data.postId;

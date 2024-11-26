@@ -21,7 +21,9 @@ editBtn.addEventListener('click', async () => {
 });
 
 axios
-    .get(`http://localhost:3000/users/${userId}`)
+    .get(`http://localhost:3000/users/${userId}`, {
+        withCredentials: true,
+    })
     .then(res => {
         const userInfo = res.data.data;
         document.getElementById('userEmail').textContent = userInfo.email;
@@ -35,7 +37,9 @@ axios
 
 function editProfile(data) {
     axios
-        .patch(`http://localhost:3000/users/${userId}/userInfo`, data)
+        .patch(`http://localhost:3000/users/${userId}/userInfo`, data, {
+            withCredentials: true,
+        })
         .then(res => {
             toast.style.visibility = 'visible';
             setTimeout(() => {
@@ -70,7 +74,9 @@ document
 
 function deleteUser() {
     axios
-        .delete(`http://localhost:3000/users/${userId}`)
+        .delete(`http://localhost:3000/users/${userId}`, {
+            withCredentials: true,
+        })
         .then(res => {
             if (res.status === 200) {
                 document.location.href = `login.html`;
@@ -86,6 +92,9 @@ async function existNickname(data) {
         const res = await axios.post(
             'http://localhost:3000/auth/checkNickname',
             data,
+            {
+                withCredentials: true,
+            },
         );
         return res.data.data.is_existed; // 서버에서 받은 값을 반환
     } catch (err) {

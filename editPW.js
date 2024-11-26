@@ -69,7 +69,9 @@ finBtn.addEventListener('click', () => {
 
 function updatePW(data) {
     axios
-        .patch(`http://localhost:3000/users/${userId}/password`, data)
+        .patch(`http://localhost:3000/users/${userId}/password`, data, {
+            withCredentials: true,
+        })
         .then(res => {
             if (res.status === 200) {
                 toast.style.visibility = 'visible';

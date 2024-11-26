@@ -73,7 +73,9 @@ function validPW(pw) {
 
 function login(data) {
     axios
-        .post('http://localhost:3000/auth/login', data)
+        .post('http://localhost:3000/auth/login', data, {
+            withCredentials: true,
+        })
         .then(res => {
             helpText.style.visibility = 'hidden';
             sessionStorage.setItem('userId', res.data.data.user_id);

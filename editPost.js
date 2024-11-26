@@ -27,7 +27,9 @@ editFinBtn.addEventListener('click', () => {
 
 function editPostApi(data) {
     axios
-        .patch(`http://localhost:3000/posts/${postId}`, data)
+        .patch(`http://localhost:3000/posts/${postId}`, data, {
+            withCredentials: true,
+        })
         .then(response => {
             console.log(response);
             if (response.status === 200) {

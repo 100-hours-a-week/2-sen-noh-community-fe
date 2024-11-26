@@ -7,7 +7,9 @@ backBtn.addEventListener('click', () => {
 const postId = new URLSearchParams(window.location.search).get('postId');
 const commentCnt = document.getElementsByClassName('nums')[2];
 axios
-    .get(`http://localhost:3000/posts/${postId}`)
+    .get(`http://localhost:3000/posts/${postId}`, {
+        withCredentials: true,
+    })
     .then(response => {
         const { data } = response.data;
         document.getElementById('title').textContent = `${data.title}`;
@@ -66,7 +68,6 @@ axios
         document
             .getElementById('likeBtn')
             .addEventListener('click', async () => {
-                console.log(data.is_liked);
                 const success = await likeApi(data.is_liked);
                 if (success) {
                     data.is_liked = !data.is_liked;
@@ -199,7 +200,7 @@ function cmtDelModal(commentId) {
                 () => {
                     cmtModal.style.visibility = 'hidden';
                     document.body.style.overflow = 'auto';
-                    console.log(`${commentId}여긴 delmodal`);
+
                     deleteCommentApi({ user_id: userId }, commentId);
                 },
                 { once: true },
@@ -227,7 +228,10 @@ function cmtEdit(cmt) {
 
 function deletePostApi(data) {
     axios
-        .delete(`http://localhost:3000/posts/${postId}`, { data: data })
+        .delete(`http://localhost:3000/posts/${postId}`, {
+            data: data,
+            withCredentials: true,
+        })
         .then(res => {
             if (res.status === 200) {
                 document.location.href = `postList.html`;
@@ -241,10 +245,12 @@ function updateCommentApi(data) {
         .patch(
             `http://localhost:3000/posts/${postId}/comments/${commentId}`,
             data,
+            {
+                withCredentials: true,
+            },
         )
         .then(res => {
             if (res.status === 200) {
-                console.log('수정완');
                 cmtInput.value = '';
                 cmtBtn.style.backgroundColor = '#aca0eb';
                 cmtBtn.textContent = '댓글 작성';
@@ -256,7 +262,9 @@ function updateCommentApi(data) {
 
 function addCommentApi(data) {
     axios
-        .post(`http://localhost:3000/posts/${postId}/comments`, data)
+        .post(`http://localhost:3000/posts/${postId}/comments`, data, {
+            withCredentials: true,
+        })
         .then(res => {
             if (res.status === 201) {
                 cmtInput.value = '';
@@ -270,14 +278,13 @@ function addCommentApi(data) {
 }
 
 function deleteCommentApi(data, commentId) {
-    console.log(`${commentId}삭제에서의`);
     axios
         .delete(`http://localhost:3000/posts/${postId}/comments/${commentId}`, {
             data: data,
+            withCredentials: true,
         })
         .then(res => {
             if (res.status === 200) {
-                console.log('댓글 삭제 온');
                 commentCnt.textContent =
                     parseInt(commentCnt.textContent, 10) - 1;
                 getComment();
@@ -291,13 +298,18 @@ async function likeApi(isLiked) {
         if (isLiked) {
             const res = await axios.delete(
                 `http://localhost:3000/posts/${postId}/like`,
-                { data: { user_id: userId } },
+                {
+                    withCredentials: true,
+                },
             );
             return res.data.success;
         }
         const res = await axios.post(
             `http://localhost:3000/posts/${postId}/like`,
-            { user_id: userId },
+            {},
+            {
+                withCredentials: true,
+            },
         );
         return res.data.success;
     } catch (err) {
