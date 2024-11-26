@@ -8,7 +8,8 @@ api.interceptors.response.use(
     err => {
         console.log(err.response.status);
         if (err.response.status === 401) {
-            window.location.href = '/login';
+            alert('세션만료입니다. 다시 로그인해주세요');
+            window.location.href = 'login.html';
         }
         return Promise.reject(err);
     },
