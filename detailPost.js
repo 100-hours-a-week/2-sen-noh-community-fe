@@ -1,17 +1,22 @@
+import api from './api.js';
+
 const backBtn = document.getElementById('back');
 
 backBtn.addEventListener('click', () => {
-    document.location.href = `postList.html`;
+    window.location.href = `postList.html`;
 });
 
 const postId = new URLSearchParams(window.location.search).get('postId');
 const commentCnt = document.getElementsByClassName('nums')[2];
-axios
-    .get(`http://localhost:3000/posts/${postId}`, {
-        withCredentials: true,
-    })
-    .then(response => {
-        const { data } = response.data;
+
+const userId = parseInt(sessionStorage.getItem('userId'), 10);
+
+getPost();
+
+async function getPost() {
+    try {
+        const res = await api.get(`/posts/${postId}`);
+        const { data } = res.data;
         document.getElementById('title').textContent = `${data.title}`;
         if (data.profile_image) {
             document.getElementsByClassName('writerImg')[0].src =
@@ -56,7 +61,7 @@ axios
             editBtn.addEventListener('click', () => {
                 const imgSrc = `${data.post_image}`;
                 const fileName = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
-                document.location.href = `editPost.html?postId=${postId}&title=${encodeURIComponent(data.title)}&body=${encodeURIComponent(data.content)}&img=${fileName}`;
+                window.location.href = `editPost.html?postId=${postId}&title=${encodeURIComponent(data.title)}&body=${encodeURIComponent(data.content)}&img=${fileName}`;
             });
 
             delBtn.addEventListener('click', () => {
@@ -76,9 +81,12 @@ axios
                         `${formatLikes(data.heart_cnt)}`;
                 }
             });
+
         getComment();
-    })
-    .catch(error => console.error('Fetch 오류:', error));
+    } catch (err) {
+        console.error('axios 오류:', err);
+    }
+}
 
 function formatLikes(likes) {
     if (likes >= 1000) {
@@ -94,50 +102,51 @@ function formatDates(date) {
 
 const commentList = document.getElementById('commentList');
 
-function getComment() {
-    commentList.innerHTML = '';
-    axios
-        .get(`http://localhost:3000/posts/${postId}/comments`)
-        .then(res => {
-            const comments = res.data.data;
-            comments.forEach(cmt => {
-                const cmtArticle = document.createElement('article');
-                cmtArticle.classList.add('introTitle2');
-                cmtArticle.classList.add('chatContainer');
-                cmtArticle.innerHTML = `
-            <div class="introTitle2">
-              <img src="${cmt.profile_image ? cmt.profile_image : './images/IMG_1533.JPG'}" class="writerImg" />
-              <div class="content">
-                <div class="chatTop">
-                  <p id="writerText" style="background-color: #f4f5f7">
-                    ${cmt.nickname}
-                  </p>
-                  <p class="contentSub backTrans" style="margin-left: 24px">
-                    ${formatDates(cmt.date)}
-                  </p>
+async function getComment() {
+    try {
+        commentList.innerHTML = '';
+        const res = await api.get(`/posts/${postId}/comments`);
+        const comments = res.data.data;
+        comments.forEach(cmt => {
+            const cmtArticle = document.createElement('article');
+            cmtArticle.classList.add('introTitle2');
+            cmtArticle.classList.add('chatContainer');
+            cmtArticle.innerHTML = `
+                <div class="introTitle2">
+                <img src="${cmt.profile_image ? cmt.profile_image : './images/IMG_1533.JPG'}" class="writerImg" />
+                <div class="content">
+                    <div class="chatTop">
+                    <p id="writerText" style="background-color: #f4f5f7">
+                        ${cmt.nickname}
+                    </p>
+                    <p class="contentSub backTrans" style="margin-left: 24px">
+                        ${formatDates(cmt.date)}
+                    </p>
+                    </div>
+                    <p id="chatText">${cmt.comment}</p>
                 </div>
-                <p id="chatText">${cmt.comment}</p>
-              </div>
-            </div>
-            <div style="margin-top: 19px">
-            ${
-                cmt.user_id === userId
-                    ? `
-                <button class="editBtn" id="cmtEditBtn_${cmt.comment_id}">수정</button>
-                <button class="editBtn" id="cmtDelBtn_${cmt.comment_id}">삭제</button>`
-                    : ``
-            }
-            </div>
-      `;
-                commentList.appendChild(cmtArticle);
-                if (cmt.user_id === userId) {
-                    cmtDelModal(cmt.comment_id);
-                    cmtEdit(cmt);
+                </div>
+                <div style="margin-top: 19px">
+                ${
+                    cmt.user_id === userId
+                        ? `
+                    <button class="editBtn" id="cmtEditBtn_${cmt.comment_id}">수정</button>
+                    <button class="editBtn" id="cmtDelBtn_${cmt.comment_id}">삭제</button>`
+                        : ``
                 }
-            });
-        })
-        .catch(error => console.error('Fetch 오류:', error));
+                </div>
+            `;
+            commentList.appendChild(cmtArticle);
+            if (cmt.user_id === userId) {
+                cmtDelModal(cmt.comment_id);
+                cmtEdit(cmt);
+            }
+        });
+    } catch (err) {
+        console.error('Fetch 오류:', err);
+    }
 }
+
 //게시글 모달
 const modal = document.getElementsByClassName('modalContainer')[0];
 
@@ -183,11 +192,11 @@ cmtBtn.addEventListener('click', () => {
 });
 
 //댓글 모달
-function cmtDelModal(commentId) {
+function cmtDelModal(cmdId) {
     const cmtModal = document.getElementsByClassName('modalContainer')[1];
 
     document
-        .getElementById(`cmtDelBtn_${commentId}`)
+        .getElementById(`cmtDelBtn_${cmdId}`)
         .addEventListener('click', () => {
             cmtModal.style.visibility = 'visible';
             document.body.style.overflow = 'hidden';
@@ -198,7 +207,7 @@ function cmtDelModal(commentId) {
                     cmtModal.style.visibility = 'hidden';
                     document.body.style.overflow = 'auto';
 
-                    deleteCommentApi(commentId);
+                    deleteCommentApi(cmdId);
                 },
                 { once: true },
             );
@@ -223,89 +232,67 @@ function cmtEdit(cmt) {
         });
 }
 
-function deletePostApi() {
-    axios
-        .delete(`http://localhost:3000/posts/${postId}`, {
-            withCredentials: true,
-        })
-        .then(res => {
-            if (res.status === 200) {
-                document.location.href = `postList.html`;
-            }
-        })
-        .catch(err => console.error(err));
+async function deletePostApi() {
+    try {
+        const res = await api.delete(`/posts/${postId}`);
+        if (res.status === 200) {
+            window.location.href = `postList.html`;
+        }
+    } catch (err) {
+        console.error(err);
+    }
 }
 
-function updateCommentApi(data) {
-    axios
-        .patch(
-            `http://localhost:3000/posts/${postId}/comments/${commentId}`,
+async function updateCommentApi(data) {
+    try {
+        const res = await api.patch(
+            `/posts/${postId}/comments/${commentId}`,
             data,
-            {
-                withCredentials: true,
-            },
-        )
-        .then(res => {
-            if (res.status === 200) {
-                cmtInput.value = '';
-                cmtBtn.style.backgroundColor = '#aca0eb';
-                cmtBtn.textContent = '댓글 작성';
-                getComment();
-            }
-        })
-        .catch(err => console.error(err));
+        );
+        if (res.status === 200) {
+            cmtInput.value = '';
+            cmtBtn.style.backgroundColor = '#aca0eb';
+            cmtBtn.textContent = '댓글 작성';
+            getComment();
+        }
+    } catch (err) {
+        console.error(err);
+    }
 }
 
-function addCommentApi(data) {
-    axios
-        .post(`http://localhost:3000/posts/${postId}/comments`, data, {
-            withCredentials: true,
-        })
-        .then(res => {
-            if (res.status === 201) {
-                cmtInput.value = '';
-                cmtBtn.style.backgroundColor = '#aca0eb';
-                commentCnt.textContent =
-                    parseInt(commentCnt.textContent, 10) + 1;
-                getComment();
-            }
-        })
-        .catch(err => console.error(err));
+async function addCommentApi(data) {
+    try {
+        const res = await api.post(`/posts/${postId}/comments`, data);
+        if (res.status === 201) {
+            cmtInput.value = '';
+            cmtBtn.style.backgroundColor = '#aca0eb';
+            commentCnt.textContent = parseInt(commentCnt.textContent, 10) + 1;
+            getComment();
+        }
+    } catch (err) {
+        console.error(err);
+    }
 }
 
-function deleteCommentApi(commentId) {
-    axios
-        .delete(`http://localhost:3000/posts/${postId}/comments/${commentId}`, {
-            withCredentials: true,
-        })
-        .then(res => {
-            if (res.status === 200) {
-                commentCnt.textContent =
-                    parseInt(commentCnt.textContent, 10) - 1;
-                getComment();
-            }
-        })
-        .catch(err => console.error(err));
+async function deleteCommentApi(delCmtId) {
+    try {
+        const res = await api.delete(`/posts/${postId}/comments/${delCmtId}`);
+        if (res.status === 200) {
+            commentCnt.textContent = parseInt(commentCnt.textContent, 10) - 1;
+            getComment();
+        }
+    } catch (err) {
+        console.error(err);
+    }
 }
 
 async function likeApi(isLiked) {
     try {
         if (isLiked) {
-            const res = await axios.delete(
-                `http://localhost:3000/posts/${postId}/like`,
-                {
-                    withCredentials: true,
-                },
-            );
+            const res = await api.delete(`/posts/${postId}/like`);
             return res.data.success;
         }
-        const res = await axios.post(
-            `http://localhost:3000/posts/${postId}/like`,
-            {},
-            {
-                withCredentials: true,
-            },
-        );
+        const res = await api.post(`/posts/${postId}/like`);
         return res.data.success;
     } catch (err) {
         console.error(err);
