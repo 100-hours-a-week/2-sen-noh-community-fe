@@ -21,7 +21,7 @@ editBtn.addEventListener('click', async () => {
 });
 
 axios
-    .get(`http://localhost:3000/users/${userId}`, {
+    .get(`http://localhost:3000/users/`, {
         withCredentials: true,
     })
     .then(res => {
@@ -37,7 +37,7 @@ axios
 
 function editProfile(data) {
     axios
-        .patch(`http://localhost:3000/users/${userId}/userInfo`, data, {
+        .patch(`http://localhost:3000/users/userInfo`, data, {
             withCredentials: true,
         })
         .then(res => {
@@ -74,7 +74,7 @@ document
 
 function deleteUser() {
     axios
-        .delete(`http://localhost:3000/users/${userId}`, {
+        .delete(`http://localhost:3000/users/`, {
             withCredentials: true,
         })
         .then(res => {
