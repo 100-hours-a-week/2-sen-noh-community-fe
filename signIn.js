@@ -1,3 +1,5 @@
+import api from './api.js';
+
 document.getElementById('back').onclick = function () {
     document.location.href = 'login.html';
 };
@@ -104,23 +106,20 @@ async function nickNameHelp(name) {
     return '';
 }
 
-function signIn(data) {
-    axios
-        .post('http://localhost:3000/auth/signIn', data)
-        .then(res => {
-            if (res.status === 201) {
-                document.location.href = 'login.html';
-            }
-        })
-        .catch(err => console.log(err));
+async function signIn(data) {
+    try {
+        const res = await api.post('/auth/signIn', data);
+        if (res.status === 201) {
+            document.location.href = 'login.html';
+        }
+    } catch (err) {
+        console.error(err);
+    }
 }
 
 async function existEmail(data) {
     try {
-        const res = await axios.post(
-            'http://localhost:3000/auth/checkEmail',
-            data,
-        );
+        const res = await api.post('/auth/checkEmail', data);
         return res.data.data.is_existed; // 서버에서 받은 값을 반환
     } catch (err) {
         console.error(err);
@@ -130,10 +129,7 @@ async function existEmail(data) {
 
 async function existNickname(data) {
     try {
-        const res = await axios.post(
-            'http://localhost:3000/auth/checkNickname',
-            data,
-        );
+        const res = await api.post('auth/checkNickname', data);
         return res.data.data.is_existed; // 서버에서 받은 값을 반환
     } catch (err) {
         console.error(err);
