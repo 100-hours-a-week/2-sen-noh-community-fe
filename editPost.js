@@ -15,7 +15,7 @@ const postId = urlParams.get('postId');
 document.getElementById('titleTextArea').value =
     title.length > 26 ? title.slice(0, 26) : title;
 document.getElementById('contentTextArea').value = body;
-document.getElementById('fileName').textContent = img;
+document.getElementById('fileName').textContent = img !== 'null' ? img : '';
 
 const editFinBtn = document.getElementById('editFinBtn');
 editFinBtn.addEventListener('click', () => {
