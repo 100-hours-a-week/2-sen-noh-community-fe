@@ -78,7 +78,10 @@ async function login(data) {
         const res = await api.post('/auth/login', data);
         helpText.style.visibility = 'hidden';
         sessionStorage.setItem('userId', res.data.data.user_id);
-        sessionStorage.setItem('profileImg', res.data.data.profile_image);
+        sessionStorage.setItem(
+            'profileImg',
+            `http://localhost:3000/${res.data.data.profile_image}`,
+        );
 
         if (res.status === 201) {
             document.location.href = `postList.html`;

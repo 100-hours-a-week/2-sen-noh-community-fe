@@ -26,13 +26,9 @@ function handleBlur(inputIndex, helpTextFunction, helpTextId) {
             isPerfect[inputIndex] = true;
             if (isPerfect.every(i => i === true)) {
                 signInBtn.style.backgroundColor = '#7f6aee';
-                const data = {
-                    email: inputs[0].value,
-                    password: inputs[1].value,
-                    nickname: inputs[3].value,
-                };
+
                 signInBtn.addEventListener('click', () => {
-                    signIn(data);
+                    signIn();
                 });
             } else {
                 signInBtn.style.backgroundColor = '#aca0eb';
@@ -106,12 +102,40 @@ async function nickNameHelp(name) {
     return '';
 }
 
-async function signIn(data) {
+const imageUpload = document.getElementById('imageUpload');
+const imagePlus = document.getElementById('imagePlus');
+const profilePreview = document.getElementById('profilePreview');
+
+imagePlus.addEventListener('click', () => {
+    document.getElementById('imageUpload').click();
+});
+
+imageUpload.addEventListener('change', event => {
+    const file = event.target.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+            profilePreview.src = e.target.result;
+            profilePreview.style.visibility = 'visible';
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+async function signIn() {
+    const formData = new FormData();
+    formData.append('email', inputs[0].value);
+    formData.append('password', inputs[1].value);
+    formData.append('nickname', inputs[3].value);
+    formData.append('profile_image', imageUpload.files[0]);
     try {
-        const res = await api.post('/auth/signIn', data);
-        if (res.status === 201) {
-            document.location.href = 'login.html';
-        }
+        await api.post('/auth/signIn', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        window.location.href = 'login.html';
     } catch (err) {
         console.error(err);
     }
@@ -120,19 +144,19 @@ async function signIn(data) {
 async function existEmail(data) {
     try {
         const res = await api.post('/auth/checkEmail', data);
-        return res.data.data.is_existed; // 서버에서 받은 값을 반환
+        return res.data.data.is_existed;
     } catch (err) {
         console.error(err);
-        return true; // 기본값으로 true 반환 (중복된 이메일로 처리)
+        return true;
     }
 }
 
 async function existNickname(data) {
     try {
         const res = await api.post('auth/checkNickname', data);
-        return res.data.data.is_existed; // 서버에서 받은 값을 반환
+        return res.data.data.is_existed;
     } catch (err) {
         console.error(err);
-        return true; // 기본값으로 true 반환 (중복된 이메일로 처리)
+        return true;
     }
 }
