@@ -9,7 +9,7 @@ backBtn.addEventListener('click', () => {
 const urlParams = new URLSearchParams(window.location.search);
 const title = urlParams.get('title');
 const body = urlParams.get('body');
-const img = urlParams.get('img');
+const img = decodeURIComponent(urlParams.get('img'));
 const postId = urlParams.get('postId');
 
 document.getElementById('titleTextArea').value =
@@ -19,19 +19,43 @@ document.getElementById('fileName').textContent = img;
 
 const editFinBtn = document.getElementById('editFinBtn');
 editFinBtn.addEventListener('click', () => {
-    const data = {
-        title: document.getElementById('titleTextArea').value,
-        content: document.getElementById('contentTextArea').value,
-    };
-    editPostApi(data);
+    editPostApi();
 });
 
-async function editPostApi(data) {
+const imagePlus = document.getElementById('fileBtn');
+const imageUpload = document.getElementById('imageUpload');
+
+imagePlus.addEventListener('click', () => {
+    imageUpload.click();
+});
+
+imageUpload.addEventListener('change', event => {
+    const file = event.target.files[0];
+
+    if (file) {
+        document.getElementById('fileName').textContent = file.name;
+    }
+});
+
+const newTitle = document.getElementById('titleTextArea');
+const newContent = document.getElementById('contentTextArea');
+
+async function editPostApi() {
+    const formData = new FormData();
+    if (newTitle.value !== title) {
+        formData.append('title', newTitle.value);
+    }
+    if (newContent.value !== body) {
+        formData.append('content', newContent.value);
+    }
+    formData.append('post_image', imageUpload.files[0]);
     try {
-        const res = await api.patch(`/posts/${postId}`, data);
-        if (res.status === 200) {
-            window.location.href = `detailPost.html?postId=${postId}`;
-        }
+        await api.patch(`/posts/${postId}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        window.location.href = `detailPost.html?postId=${postId}`;
     } catch (err) {
         console.error(err);
     }
