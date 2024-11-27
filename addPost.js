@@ -29,20 +29,37 @@ addFinBtn.addEventListener('click', () => {
         helpText.style.color = '#ff0000';
     } else {
         helpText.style.color = '#f4f5f7';
-
-        const data = {
-            title: title.value,
-            content: content.value,
-        };
-        addPostApi(data);
+        addPostApi();
     }
 });
 
-async function addPostApi(data) {
+const imagePlus = document.getElementById('fileBtn');
+const imageUpload = document.getElementById('imageUpload');
+
+imagePlus.addEventListener('click', () => {
+    imageUpload.click();
+});
+
+imageUpload.addEventListener('change', event => {
+    const file = event.target.files[0];
+
+    if (file) {
+        document.getElementById('fileName').textContent = file.name;
+    }
+});
+
+async function addPostApi() {
+    const formData = new FormData();
+    formData.append('title', title.value);
+    formData.append('content', content.value);
+    formData.append('post_image', imageUpload.files[0]);
     try {
-        const res = await api.post('posts', data);
-        const { postId } = res.data;
-        window.location.href = `detailPost.html?postId=${postId}`;
+        const res = await api.post('posts', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        window.location.href = `detailPost.html?postId=${res.data.postId}`;
     } catch (err) {
         console.error(err);
     }
