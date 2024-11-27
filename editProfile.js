@@ -7,6 +7,8 @@ const toast = document.getElementById('editFinBtn');
 
 const profileImgStorage = sessionStorage.getItem('profileImg');
 
+let originNickname;
+
 editBtn.addEventListener('click', async () => {
     if (nickname.value === '') {
         helpText.textContent = '*닉네임을 입력해주세요.';
@@ -14,14 +16,23 @@ editBtn.addEventListener('click', async () => {
     } else if (nickname.value.length > 11) {
         helpText.textContent = '*닉네임은 최대 10자 까지 작성 가능합니다.';
         helpText.style.visibility = 'visible';
-    } else if (await existNickname({ nickname: nickname.value })) {
+    } else if (
+        nickname.value !== originNickname &&
+        (await existNickname({ nickname: nickname.value }))
+    ) {
         helpText.textContent = '*중복된 닉네임 입니다.';
         helpText.style.visibility = 'visible';
     } else {
-        const data = {
-            nickname: nickname.value,
-        };
-        editProfile(data);
+        editBtn.style.backgroundColor = '#7F6AEE';
+        editProfile();
+    }
+});
+
+nickname.addEventListener('input', () => {
+    if (nickname.value !== originNickname) {
+        editBtn.style.backgroundColor = '#7F6AEE';
+    } else {
+        editBtn.style.backgroundColor = '#ACA0EB';
     }
 });
 
@@ -32,7 +43,8 @@ async function getUser() {
         const res = await api.get('/users/');
         const userInfo = res.data.data;
         document.getElementById('userEmail').textContent = userInfo.email;
-        document.getElementById('nickNameInput').value = userInfo.nickname;
+        nickname.value = userInfo.nickname;
+        originNickname = userInfo.nickname;
 
         if (profileImgStorage !== 'null') {
             document.getElementById('profileImg').src = profileImgStorage;
@@ -42,10 +54,50 @@ async function getUser() {
     }
 }
 
-async function editProfile(data) {
+const imageUpload = document.getElementById('imageUpload');
+const imagePlus = document.getElementById('editImgBtn');
+const profilePreview = document.getElementById('profileImg');
+
+imagePlus.addEventListener('click', () => {
+    imageUpload.click();
+});
+
+imageUpload.addEventListener('change', event => {
+    const file = event.target.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+            editBtn.style.backgroundColor = '#7F6AEE';
+            profilePreview.src = e.target.result;
+            profilePreview.style.visibility = 'visible';
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+async function editProfile() {
+    const formData = new FormData();
+
+    if (nickname.value !== originNickname) {
+        formData.append('nickname', nickname.value);
+    }
+    formData.append('profile_image', imageUpload.files[0]);
+
     try {
-        await api.patch(`/users/userInfo`, data);
+        const res = await api.patch(`/users/userInfo`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
         toast.style.visibility = 'visible';
+        editBtn.style.backgroundColor = '#ACA0EB';
+        if (res.data.img) {
+            sessionStorage.setItem('profileImg', res.data.img);
+            const profileImg = document.getElementById('profile');
+            profileImg.src = res.data.img;
+        }
+        originNickname = nickname.value;
         setTimeout(() => {
             toast.style.visibility = 'hidden';
         }, 1000);

@@ -107,7 +107,7 @@ const imagePlus = document.getElementById('imagePlus');
 const profilePreview = document.getElementById('profilePreview');
 
 imagePlus.addEventListener('click', () => {
-    document.getElementById('imageUpload').click();
+    imageUpload.click();
 });
 
 imageUpload.addEventListener('change', event => {
