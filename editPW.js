@@ -1,3 +1,5 @@
+import api from './api.js';
+
 const inputs = document.getElementsByClassName('emailInput');
 const helpPW = document.getElementById('helpText2');
 const helpRePW = document.getElementById('helpText3');
@@ -6,7 +8,7 @@ const toast = document.getElementById('editFinBtn');
 let isSuccess = true;
 
 inputs[0].addEventListener('blur', () => {
-    if (inputs[0].value == '') {
+    if (inputs[0].value === '') {
         helpPW.style.visibility = 'visible';
         helpPW.textContent = '*비밀번호를 입력해주세요.';
         finBtn.style.backgroundColor = '#aca0eb';
@@ -17,7 +19,7 @@ inputs[0].addEventListener('blur', () => {
             '*비밀번호는 8자 이상, 20자 이하이며, 대문자, 소문자, 숫자, 특수문자를 각각 최소 1개 포함해야 합니다.';
         finBtn.style.backgroundColor = '#aca0eb';
         isSuccess = false;
-    } else if (inputs[0].value != inputs[1].value) {
+    } else if (inputs[0].value !== inputs[1].value) {
         helpPW.style.visibility = 'visible';
         helpPW.textContent = '*비밀번호 확인과 다릅니다.';
         finBtn.style.backgroundColor = '#aca0eb';
@@ -31,12 +33,12 @@ inputs[0].addEventListener('blur', () => {
 });
 
 inputs[1].addEventListener('blur', () => {
-    if (inputs[1].value == '') {
+    if (inputs[1].value === '') {
         helpRePW.style.visibility = 'visible';
         helpRePW.textContent = '*비밀번호를 입력해주세요.';
         finBtn.style.backgroundColor = '#aca0eb';
         isSuccess = false;
-    } else if (inputs[0].value != inputs[1].value) {
+    } else if (inputs[0].value !== inputs[1].value) {
         helpRePW.style.visibility = 'visible';
         helpRePW.textContent = '*비밀번호 확인과 다릅니다.';
         finBtn.style.backgroundColor = '#aca0eb';
@@ -67,16 +69,14 @@ finBtn.addEventListener('click', () => {
     }
 });
 
-function updatePW(data) {
-    axios
-        .patch(`http://localhost:3000/users/${userId}/password`, data)
-        .then(res => {
-            if (res.status === 200) {
-                toast.style.visibility = 'visible';
-                setTimeout(() => {
-                    toast.style.visibility = 'hidden';
-                }, 3000);
-            }
-        })
-        .catch(err => console.error(err));
+async function updatePW(data) {
+    try {
+        await api.patch(`/users/password`, data);
+        toast.style.visibility = 'visible';
+        setTimeout(() => {
+            toast.style.visibility = 'hidden';
+        }, 1000);
+    } catch (err) {
+        console.error(err);
+    }
 }

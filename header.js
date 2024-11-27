@@ -1,7 +1,11 @@
+import api from './api.js';
+
 const profileImg = document.getElementById('profile');
 const menu = document.getElementsByClassName('menu');
 const dropDown = document.getElementById('dropDown');
+
 let dropDownVisible = true;
+
 profileImg.addEventListener('click', () => {
     if (dropDownVisible) {
         dropDown.style.visibility = 'visible';
@@ -20,7 +24,7 @@ menu[1].addEventListener('click', () => {
 });
 menu[2].addEventListener('click', () => {
     sessionStorage.clear();
-    document.location.href = 'login.html';
+    logout();
 });
 
 const profileImgStorage = sessionStorage.getItem('profileImg');
@@ -30,3 +34,12 @@ if (profileImgStorage !== 'null') {
 }
 
 const userId = parseInt(sessionStorage.getItem('userId'), 10);
+
+async function logout() {
+    try {
+        await api.post(`/users/logout`);
+        document.location.href = 'login.html';
+    } catch (err) {
+        console.error(err);
+    }
+}

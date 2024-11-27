@@ -34,11 +34,19 @@
                     </p>
                 </div>
                 <div id="profileImg">
+                    <input
+                        type="file"
+                        id="imageUpload"
+                        accept="image/*"
+                        style="display: none"
+                    />
                     <img
                         src="./images/plus-lg.svg"
                         alt="프로필 사진 추가"
+                        id="imagePlus"
                         style="background-color: transparent"
                     />
+                    <img src="./images/IMG_1533.JPG" id="profilePreview" />
                 </div>
             </div>
             <div class="loginForm">
@@ -54,7 +62,7 @@
                 <div>
                     <p class="emailText">비밀번호*</p>
                     <input
-                        type="text"
+                        type="password"
                         class="emailInput"
                         placeholder="비밀번호를 입력하세요"
                     />
@@ -63,7 +71,7 @@
                 <div>
                     <p class="emailText">비밀번호 확인*</p>
                     <input
-                        type="text"
+                        type="password"
                         class="emailInput"
                         placeholder="비밀번호를 한번 더 입력하세요"
                     />
@@ -86,6 +94,6 @@
                 <p id="signInText">로그인하러 가기</p>
             </nav>
         </main>
-        <script src="signIn.js"></script>
+        <script type="module" src="signIn.js"></script>
     </body>
 </html>

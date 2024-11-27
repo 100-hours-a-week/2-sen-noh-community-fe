@@ -44,15 +44,21 @@
                 <p class="helpText">*helper text</p>
                 <p class="imgText">이미지</p>
                 <div class="introTitle2" style="align-items: center">
+                    <input
+                        type="file"
+                        id="imageUpload"
+                        accept="image/*"
+                        style="display: none"
+                    />
                     <button id="fileBtn">파일 선택</button>
-                    <p id="fileName">기존 파일 명</p>
+                    <p id="fileName"></p>
                 </div>
             </div>
             <button id="editFinBtn" style="background-color: #aca0eb">
                 완료
             </button>
         </main>
-        <script src="addPost.js"></script>
-        <script src="header.js"></script>
+        <script type="module" src="addPost.js"></script>
+        <script type="module" src="header.js"></script>
     </body>
 </html>

@@ -112,7 +112,22 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     margin-top: 8px;
+}
+
+#profilePreview {
+    width: 149px;
+    height: 149px;
+    border-radius: 100%;
+    visibility: hidden;
+}
+
+#imagePlus {
+    width: 64px;
+    height: 64px;
+    position: absolute;
+    padding: 20px;
 }
 
 #editFinBtn {
