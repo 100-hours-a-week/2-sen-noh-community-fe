@@ -33,6 +33,10 @@ if (profileImgStorage !== 'null') {
     profileImg.src = profileImgStorage;
 }
 
+profileImg.onerror = () => {
+    profileImg.src = './images/IMG_1533.JPG';
+};
+
 const userId = parseInt(sessionStorage.getItem('userId'), 10);
 
 async function logout() {

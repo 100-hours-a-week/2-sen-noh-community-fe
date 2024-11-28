@@ -48,6 +48,10 @@ async function loadPosts() {
             postArticle.addEventListener('click', () => {
                 window.location.href = `detailPost.html?postId=${post.post_id}`;
             });
+            const postProfileImg = postArticle.querySelector('.writerImg');
+            postProfileImg.onerror = () => {
+                postProfileImg.src = './images/IMG_1533.JPG';
+            };
         });
 
         currentPage++;
