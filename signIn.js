@@ -56,7 +56,7 @@ async function emailHelp(email) {
 }
 
 function validEmail(email) {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return regex.test(email);
 }
 
@@ -105,9 +105,13 @@ async function nickNameHelp(name) {
 const imageUpload = document.getElementById('imageUpload');
 const imagePlus = document.getElementById('imagePlus');
 const profilePreview = document.getElementById('profilePreview');
+const imgHelpText = document.getElementById('helpText');
 
 imagePlus.addEventListener('click', () => {
     imageUpload.click();
+    imageUpload.value = '';
+    imgHelpText.style.visibility = 'visible';
+    profilePreview.style.visibility = 'hidden';
 });
 
 imageUpload.addEventListener('change', event => {
@@ -116,6 +120,7 @@ imageUpload.addEventListener('change', event => {
     if (file) {
         const reader = new FileReader();
         reader.onload = e => {
+            imgHelpText.style.visibility = 'hidden';
             profilePreview.src = e.target.result;
             profilePreview.style.visibility = 'visible';
         };

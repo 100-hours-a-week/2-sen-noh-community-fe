@@ -17,10 +17,10 @@ async function getPost() {
     try {
         const res = await api.get(`/posts/${postId}`);
         const { data } = res.data;
+        const profileImg = document.getElementsByClassName('writerImg')[0];
         document.getElementById('title').textContent = `${data.title}`;
         if (data.profile_image) {
-            document.getElementsByClassName('writerImg')[0].src =
-                `${data.profile_image}`;
+            profileImg.src = `${data.profile_image}`;
         }
         document.getElementById('writerText').textContent = `${data.nickname}`;
         document.getElementById('writeDate').textContent =
@@ -31,6 +31,10 @@ async function getPost() {
         document.getElementsByClassName('nums')[1].textContent =
             `${formatLikes(data.visit_cnt)}`;
         commentCnt.textContent = `${formatLikes(data.comment_cnt)}`;
+
+        profileImg.onerror = () => {
+            profileImg.src = './images/IMG_1533.JPG';
+        };
 
         if (data.post_image) {
             const imgElement = document.createElement('img');
