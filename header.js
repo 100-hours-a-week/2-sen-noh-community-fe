@@ -37,8 +37,6 @@ profileImg.onerror = () => {
     profileImg.src = './images/IMG_1533.JPG';
 };
 
-const userId = parseInt(sessionStorage.getItem('userId'), 10);
-
 async function logout() {
     try {
         await api.post(`/users/logout`);
