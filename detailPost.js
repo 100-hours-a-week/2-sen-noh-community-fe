@@ -9,8 +9,6 @@ backBtn.addEventListener('click', () => {
 const postId = new URLSearchParams(window.location.search).get('postId');
 const commentCnt = document.getElementsByClassName('nums')[2];
 
-const userId = parseInt(sessionStorage.getItem('userId'), 10);
-
 getPost();
 
 async function getPost() {
@@ -44,7 +42,7 @@ async function getPost() {
             document.getElementById('imgContainer').appendChild(imgElement);
         }
 
-        if (data.user_id === userId) {
+        if (data.is_user) {
             const postBtnContainer =
                 document.getElementById('postBtnContainer');
 
@@ -117,7 +115,7 @@ async function getComment() {
             cmtArticle.classList.add('chatContainer');
             cmtArticle.innerHTML = `
                 <div class="introTitle2">
-                <img src="${cmt.profile_image ? cmt.profile_image : './images/IMG_1533.JPG'}" class="writerImg" />
+                <img src="${cmt.profile_image ? cmt.profile_image : './images/IMG_1533.JPG'}" class="writerImg"/>
                 <div class="content">
                     <div class="chatTop">
                     <p id="writerText" style="background-color: #f4f5f7">
@@ -127,12 +125,12 @@ async function getComment() {
                         ${formatDates(cmt.date)}
                     </p>
                     </div>
-                    <p id="chatText">${cmt.comment}</p>
+                    <pre id="chatText">${cmt.comment}</pre>
                 </div>
                 </div>
                 <div style="margin-top: 19px">
                 ${
-                    cmt.user_id === userId
+                    cmt.is_user
                         ? `
                     <button class="editBtn" id="cmtEditBtn_${cmt.comment_id}">수정</button>
                     <button class="editBtn" id="cmtDelBtn_${cmt.comment_id}">삭제</button>`
@@ -141,10 +139,15 @@ async function getComment() {
                 </div>
             `;
             commentList.appendChild(cmtArticle);
-            if (cmt.user_id === userId) {
+            if (cmt.is_user) {
                 cmtDelModal(cmt.comment_id);
                 cmtEdit(cmt);
             }
+            const cmtImg = cmtArticle.querySelector('.writerImg');
+
+            cmtImg.onerror = () => {
+                cmtImg.src = './images/IMG_1533.JPG';
+            };
         });
     } catch (err) {
         console.error('Fetch 오류:', err);
@@ -210,7 +213,6 @@ function cmtDelModal(cmdId) {
                 () => {
                     cmtModal.style.visibility = 'hidden';
                     document.body.style.overflow = 'auto';
-
                     deleteCommentApi(cmdId);
                 },
                 { once: true },
@@ -238,10 +240,9 @@ function cmtEdit(cmt) {
 
 async function deletePostApi() {
     try {
-        const res = await api.delete(`/posts/${postId}`);
-        if (res.status === 200) {
-            window.location.href = `postList.html`;
-        }
+        await api.delete(`/posts/${postId}`);
+
+        window.location.href = `postList.html`;
     } catch (err) {
         console.error(err);
     }
@@ -249,16 +250,12 @@ async function deletePostApi() {
 
 async function updateCommentApi(data) {
     try {
-        const res = await api.patch(
-            `/posts/${postId}/comments/${commentId}`,
-            data,
-        );
-        if (res.status === 200) {
-            cmtInput.value = '';
-            cmtBtn.style.backgroundColor = '#aca0eb';
-            cmtBtn.textContent = '댓글 작성';
-            getComment();
-        }
+        await api.patch(`/posts/${postId}/comments/${commentId}`, data);
+
+        cmtInput.value = '';
+        cmtBtn.style.backgroundColor = '#aca0eb';
+        cmtBtn.textContent = '댓글 작성';
+        getComment();
     } catch (err) {
         console.error(err);
     }
@@ -266,13 +263,12 @@ async function updateCommentApi(data) {
 
 async function addCommentApi(data) {
     try {
-        const res = await api.post(`/posts/${postId}/comments`, data);
-        if (res.status === 201) {
-            cmtInput.value = '';
-            cmtBtn.style.backgroundColor = '#aca0eb';
-            commentCnt.textContent = parseInt(commentCnt.textContent, 10) + 1;
-            getComment();
-        }
+        await api.post(`/posts/${postId}/comments`, data);
+
+        cmtInput.value = '';
+        cmtBtn.style.backgroundColor = '#aca0eb';
+        commentCnt.textContent = parseInt(commentCnt.textContent, 10) + 1;
+        getComment();
     } catch (err) {
         console.error(err);
     }
@@ -280,11 +276,10 @@ async function addCommentApi(data) {
 
 async function deleteCommentApi(delCmtId) {
     try {
-        const res = await api.delete(`/posts/${postId}/comments/${delCmtId}`);
-        if (res.status === 200) {
-            commentCnt.textContent = parseInt(commentCnt.textContent, 10) - 1;
-            getComment();
-        }
+        await api.delete(`/posts/${postId}/comments/${delCmtId}`);
+
+        commentCnt.textContent = parseInt(commentCnt.textContent, 10) - 1;
+        getComment();
     } catch (err) {
         console.error(err);
     }

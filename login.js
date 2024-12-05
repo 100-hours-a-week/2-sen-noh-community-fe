@@ -77,12 +77,9 @@ async function login(data) {
     try {
         const res = await api.post('/auth/login', data);
         helpText.style.visibility = 'hidden';
-        sessionStorage.setItem('userId', res.data.data.user_id);
         sessionStorage.setItem('profileImg', res.data.data.profile_image);
 
-        if (res.status === 201) {
-            document.location.href = `postList.html`;
-        }
+        document.location.href = `postList.html`;
     } catch (err) {
         loginBtn.style.backgroundColor = '#ACA0EB';
         helpText.textContent = '* ' + err.response.data.message;
