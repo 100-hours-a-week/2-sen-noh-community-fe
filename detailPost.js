@@ -125,7 +125,7 @@ async function getComment() {
                         ${formatDates(cmt.date)}
                     </p>
                     </div>
-                    <p id="chatText">${cmt.comment}</p>
+                    <pre id="chatText">${cmt.comment}</pre>
                 </div>
                 </div>
                 <div style="margin-top: 19px">

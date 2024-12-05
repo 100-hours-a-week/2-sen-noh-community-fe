@@ -72,6 +72,9 @@ finBtn.addEventListener('click', () => {
 async function updatePW(data) {
     try {
         await api.patch(`/users/password`, data);
+        inputs[0].value = '';
+        inputs[1].value = '';
+        finBtn.style.backgroundColor = '#aca0eb';
         toast.style.visibility = 'visible';
         setTimeout(() => {
             toast.style.visibility = 'hidden';
