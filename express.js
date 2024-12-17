@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-const port = 3002;
+const port = 8080;
 
 app.use(express.static(join(__dirname)));
 
@@ -23,5 +23,5 @@ app.get('/postList', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`서버가 http://localhost:${port}에서 실행 중입니다.`);
+    console.log(`서버가 실행 중입니다.`);
 });
