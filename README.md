@@ -69,7 +69,7 @@
  $ node express.js
 ```
 
-http://localhost:3002/로 접속
+http://localhost:8080/로 접속
 
 ### 🗃️ [Backend](https://github.com/100-hours-a-week/2-sen-noh-community-be)
 
