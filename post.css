@@ -177,6 +177,7 @@
     font-size: 15px;
     line-height: 21.15px;
     white-space: pre-wrap;
+    overflow-wrap: break-word;
 }
 
 .cntBtn {

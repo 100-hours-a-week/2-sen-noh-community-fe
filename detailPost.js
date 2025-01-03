@@ -23,7 +23,7 @@ async function getPost() {
         document.getElementById('writerText').textContent = `${data.nickname}`;
         document.getElementById('writeDate').textContent =
             `${formatDates(data.date)}`;
-        document.getElementById('contentText').textContent = `${data.content}`;
+        document.getElementById('contentText').textContent = `${data.content}1`;
         document.getElementsByClassName('nums')[0].textContent =
             `${formatLikes(data.heart_cnt)}`;
         document.getElementsByClassName('nums')[1].textContent =
@@ -125,7 +125,7 @@ async function getComment() {
                         ${formatDates(cmt.date)}
                     </p>
                     </div>
-                    <pre id="chatText">${cmt.comment}</pre>
+                    <div id="chatText">${cmt.comment}</div>
                 </div>
                 </div>
                 <div style="margin-top: 19px">
