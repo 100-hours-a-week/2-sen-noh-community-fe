@@ -3,7 +3,7 @@ import api from './api.js';
 const backBtn = document.getElementById('back');
 
 backBtn.addEventListener('click', () => {
-    window.location.href = `postList.html`;
+    history.back();
 });
 
 const postId = new URLSearchParams(window.location.search).get('postId');

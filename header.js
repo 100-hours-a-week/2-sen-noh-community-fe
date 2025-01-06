@@ -45,3 +45,8 @@ async function logout() {
         console.error(err);
     }
 }
+
+const headerTitle = document.querySelector('h1');
+headerTitle.addEventListener('click', () => {
+    document.location.href = 'postList.html';
+});
