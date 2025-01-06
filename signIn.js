@@ -1,7 +1,7 @@
 import api from './api.js';
 
 document.getElementById('back').onclick = function () {
-    document.location.href = 'login.html';
+    history.back();
 };
 document.getElementById('signInText').onclick = function () {
     document.location.href = 'login.html';
