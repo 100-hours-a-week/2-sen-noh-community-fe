@@ -3,7 +3,7 @@ import api from './api.js';
 const backBtn = document.getElementById('back');
 
 backBtn.addEventListener('click', () => {
-    history.back();
+    document.location.href = 'postList.html';
 });
 
 const postId = new URLSearchParams(window.location.search).get('postId');
@@ -72,17 +72,25 @@ async function getPost() {
             });
         }
 
-        document
-            .getElementById('likeBtn')
-            .addEventListener('click', async () => {
-                const success = await likeApi(data.is_liked);
-                if (success) {
-                    data.is_liked = !data.is_liked;
-                    data.heart_cnt += data.is_liked ? 1 : -1;
-                    document.getElementsByClassName('nums')[0].textContent =
-                        `${formatLikes(data.heart_cnt)}`;
+        const likeBtn = document.getElementById('likeBtn');
+        if (data.is_liked) {
+            likeBtn.style.backgroundColor = '#aca0eb';
+        }
+
+        likeBtn.addEventListener('click', async () => {
+            const success = await likeApi(data.is_liked);
+            if (success) {
+                data.is_liked = !data.is_liked;
+                data.heart_cnt += data.is_liked ? 1 : -1;
+                if (data.is_liked) {
+                    likeBtn.style.backgroundColor = '#aca0eb';
+                } else {
+                    likeBtn.style.backgroundColor = '#d9d9d9';
                 }
-            });
+                document.getElementsByClassName('nums')[0].textContent =
+                    `${formatLikes(data.heart_cnt)}`;
+            }
+        });
 
         getComment();
     } catch (err) {
