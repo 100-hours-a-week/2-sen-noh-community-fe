@@ -1,4 +1,5 @@
 import api from '../api.js';
+import { SERVER_URL } from '../config.js';
 
 const nickname = document.getElementById('nickNameInput');
 const editBtn = document.getElementById('loginBtn');
@@ -93,9 +94,9 @@ async function editProfile() {
         toast.style.visibility = 'visible';
         editBtn.style.backgroundColor = '#ACA0EB';
         if (res.data.img) {
-            sessionStorage.setItem('profileImg', res.data.img);
+            sessionStorage.setItem('profileImg', SERVER_URL + res.data.img);
             const profileImg = document.getElementById('profile');
-            profileImg.src = res.data.img;
+            profileImg.src = SERVER_URL + res.data.img;
         }
         originNickname = nickname.value;
         setTimeout(() => {

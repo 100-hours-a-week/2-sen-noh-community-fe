@@ -1,4 +1,5 @@
 import api from '../api.js';
+import { SERVER_URL } from '../config.js';
 
 const addBtn = document.getElementById('addBtn');
 
@@ -40,7 +41,7 @@ async function loadPosts() {
                     <p class="contentSub" style="padding-right: 24px">${formatDates(post.date)}</p>
                 </div>
                 <div class="writer">
-                    <img src="${post.profile_image ? post.profile_image : '../../assets/IMG_1533.JPG'}" class="writerImg" />
+                    <img src="${post.profile_image ? SERVER_URL + post.profile_image : '../../assets/IMG_1533.JPG'}" class="writerImg" />
                     <p id="writerText">${post.nickname}</p>
                 </div>
             `;

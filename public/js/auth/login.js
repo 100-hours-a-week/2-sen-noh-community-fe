@@ -1,4 +1,5 @@
 import api from '../api.js';
+import { SERVER_URL } from '../config.js';
 
 const inputs = document.getElementsByClassName('emailInput');
 const loginBtn = document.getElementById('loginBtn');
@@ -77,7 +78,10 @@ async function login(data) {
     try {
         const res = await api.post('/auth/login', data);
         helpText.style.visibility = 'hidden';
-        sessionStorage.setItem('profileImg', res.data.data.profile_image);
+        sessionStorage.setItem(
+            'profileImg',
+            SERVER_URL + res.data.data.profile_image,
+        );
 
         document.location.href = `/posts`;
     } catch (err) {
