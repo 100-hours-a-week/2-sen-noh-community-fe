@@ -1,12 +1,13 @@
-import api from './api.js';
+import api from '../api.js';
 
 const backBtn = document.getElementById('back');
 
 backBtn.addEventListener('click', () => {
-    document.location.href = 'postList.html';
+    document.location.href = '/posts';
 });
 
-const postId = new URLSearchParams(window.location.search).get('postId');
+const pathSegments = window.location.pathname.split('/');
+const postId = pathSegments[pathSegments.length - 1];
 const commentCnt = document.getElementsByClassName('nums')[2];
 
 getPost();
@@ -31,7 +32,7 @@ async function getPost() {
         commentCnt.textContent = `${formatLikes(data.comment_cnt)}`;
 
         profileImg.onerror = () => {
-            profileImg.src = './images/IMG_1533.JPG';
+            profileImg.src = '../../assets/IMG_1533.JPG';
         };
 
         if (data.post_image) {
@@ -63,7 +64,7 @@ async function getPost() {
             editBtn.addEventListener('click', () => {
                 const imgSrc = `${data.post_image}`;
                 const fileName = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
-                window.location.href = `editPost.html?postId=${postId}&title=${encodeURIComponent(data.title)}&body=${encodeURIComponent(data.content)}&img=${fileName}`;
+                window.location.href = `/editPost?postId=${postId}&title=${encodeURIComponent(data.title)}&body=${encodeURIComponent(data.content)}&img=${fileName}`;
             });
 
             delBtn.addEventListener('click', () => {
@@ -123,7 +124,7 @@ async function getComment() {
             cmtArticle.classList.add('chatContainer');
             cmtArticle.innerHTML = `
                 <div class="introTitle2">
-                <img src="${cmt.profile_image ? cmt.profile_image : './images/IMG_1533.JPG'}" class="writerImg"/>
+                <img src="${cmt.profile_image ? cmt.profile_image : '../../assets/IMG_1533.JPG'}" class="writerImg"/>
                 <div class="content">
                     <div class="chatTop">
                     <p id="writerText" style="background-color: #f4f5f7">
@@ -154,7 +155,7 @@ async function getComment() {
             const cmtImg = cmtArticle.querySelector('.writerImg');
 
             cmtImg.onerror = () => {
-                cmtImg.src = './images/IMG_1533.JPG';
+                cmtImg.src = '../../assets/IMG_1533.JPG';
             };
         });
     } catch (err) {
@@ -250,7 +251,7 @@ async function deletePostApi() {
     try {
         await api.delete(`/posts/${postId}`);
 
-        window.location.href = `postList.html`;
+        window.location.href = `/posts`;
     } catch (err) {
         console.error(err);
     }

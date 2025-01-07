@@ -1,9 +1,9 @@
-import api from './api.js';
+import api from '../api.js';
 
 const addBtn = document.getElementById('addBtn');
 
 addBtn.addEventListener('click', () => {
-    window.location.href = `addPost.html`;
+    window.location.href = `/addPost`;
 });
 
 const postList = document.getElementById('postList');
@@ -40,17 +40,17 @@ async function loadPosts() {
                     <p class="contentSub" style="padding-right: 24px">${formatDates(post.date)}</p>
                 </div>
                 <div class="writer">
-                    <img src="${post.profile_image ? post.profile_image : './images/IMG_1533.JPG'}" class="writerImg" />
+                    <img src="${post.profile_image ? post.profile_image : '../../assets/IMG_1533.JPG'}" class="writerImg" />
                     <p id="writerText">${post.nickname}</p>
                 </div>
             `;
             postList.appendChild(postArticle);
             postArticle.addEventListener('click', () => {
-                window.location.href = `detailPost.html?postId=${post.post_id}`;
+                window.location.href = `/posts/${post.post_id}`;
             });
             const postProfileImg = postArticle.querySelector('.writerImg');
             postProfileImg.onerror = () => {
-                postProfileImg.src = './images/IMG_1533.JPG';
+                postProfileImg.src = '../../assets/IMG_1533.JPG';
             };
         });
 

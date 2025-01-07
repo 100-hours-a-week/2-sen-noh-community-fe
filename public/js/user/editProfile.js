@@ -1,4 +1,4 @@
-import api from './api.js';
+import api from '../api.js';
 
 const nickname = document.getElementById('nickNameInput');
 const editBtn = document.getElementById('loginBtn');
@@ -132,7 +132,7 @@ document
 async function deleteUser() {
     try {
         await api.delete(`/users/`);
-        window.location.href = `login.html`;
+        window.location.href = `/login`;
     } catch (err) {
         console.error(err);
     }
