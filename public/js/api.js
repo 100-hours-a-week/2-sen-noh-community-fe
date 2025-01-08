@@ -1,4 +1,4 @@
-const SERVER_URL = 'http://localhost:3000/api/';
+import { SERVER_URL } from './config.js';
 
 const api = axios.create({
     baseURL: SERVER_URL,
