@@ -1,10 +1,10 @@
-import api from './api.js';
+import api from '../api.js';
 
 document.getElementById('back').onclick = function () {
     history.back();
 };
 document.getElementById('signInText').onclick = function () {
-    document.location.href = 'login.html';
+    window.location.href = '/login';
 };
 
 const inputs = document.getElementsByClassName('emailInput');
@@ -140,7 +140,7 @@ async function signIn() {
                 'Content-Type': 'multipart/form-data',
             },
         });
-        window.location.href = 'login.html';
+        window.location.href = '/login';
     } catch (err) {
         console.error(err);
     }

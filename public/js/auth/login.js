@@ -1,4 +1,5 @@
-import api from './api.js';
+import api from '../api.js';
+import { SERVER_URL } from '../config.js';
 
 const inputs = document.getElementsByClassName('emailInput');
 const loginBtn = document.getElementById('loginBtn');
@@ -42,7 +43,7 @@ loginBtn.addEventListener('click', () => {
 });
 
 document.getElementById('signInText').onclick = function () {
-    document.location.href = 'signIn.html';
+    document.location.href = '/signIn';
 };
 
 function outputEmailText() {
@@ -77,9 +78,12 @@ async function login(data) {
     try {
         const res = await api.post('/auth/login', data);
         helpText.style.visibility = 'hidden';
-        sessionStorage.setItem('profileImg', res.data.data.profile_image);
+        sessionStorage.setItem(
+            'profileImg',
+            SERVER_URL + res.data.data.profile_image,
+        );
 
-        document.location.href = `postList.html`;
+        document.location.href = `/posts`;
     } catch (err) {
         loginBtn.style.backgroundColor = '#ACA0EB';
         helpText.textContent = '* ' + err.response.data.message;

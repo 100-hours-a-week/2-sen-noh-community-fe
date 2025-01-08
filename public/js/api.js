@@ -1,5 +1,7 @@
+const SERVER_URL = 'http://localhost:3000/api/';
+
 const api = axios.create({
-    baseURL: 'http://localhost:3000/api/',
+    baseURL: SERVER_URL,
     withCredentials: true,
 });
 
@@ -9,7 +11,7 @@ api.interceptors.response.use(
         console.log(err.response.status);
         if (err.response.status === 401) {
             alert('세션만료입니다. 다시 로그인해주세요');
-            window.location.href = 'login.html';
+            window.location.href = '/login';
         }
         return Promise.reject(err);
     },

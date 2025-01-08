@@ -3,8 +3,8 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" type="text/css" href="header.css" />
-        <link rel="stylesheet" type="text/css" href="login.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/header.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/login.css" />
         <title>회원가입</title>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     </head>
@@ -12,13 +12,13 @@
         <header>
             <div class="header">
                 <img
-                    src="./images/chevron-left.svg"
+                    src="../../assets/chevron-left.svg"
                     id="back"
                     alt="뒤로 가기"
                 />
                 <h1>아무 말 대잔치</h1>
                 <img
-                    src="./images/IMG_1533.JPG"
+                    src="../../assets/IMG_1533.JPG"
                     id="profile"
                     style="visibility: hidden"
                 />
@@ -41,12 +41,12 @@
                         style="display: none"
                     />
                     <img
-                        src="./images/plus-lg.svg"
+                        src="../../assets/plus-lg.svg"
                         alt="프로필 사진 추가"
                         id="imagePlus"
                         style="background-color: transparent"
                     />
-                    <img src="./images/IMG_1533.JPG" id="profilePreview" />
+                    <img src="../../assets/IMG_1533.JPG" id="profilePreview" />
                 </div>
             </div>
             <div class="loginForm">
@@ -94,6 +94,6 @@
                 <p id="signInText">로그인하러 가기</p>
             </nav>
         </main>
-        <script type="module" src="signIn.js"></script>
+        <script type="module" src="../../js/auth/signIn.js"></script>
     </body>
 </html>

@@ -17,10 +17,10 @@ profileImg.addEventListener('click', () => {
 });
 
 menu[0].addEventListener('click', () => {
-    document.location.href = 'editProfile.html';
+    document.location.href = '/editProfile';
 });
 menu[1].addEventListener('click', () => {
-    document.location.href = 'editPW.html';
+    document.location.href = '/editPW';
 });
 menu[2].addEventListener('click', () => {
     sessionStorage.clear();
@@ -34,13 +34,13 @@ if (profileImgStorage !== 'null') {
 }
 
 profileImg.onerror = () => {
-    profileImg.src = './images/IMG_1533.JPG';
+    profileImg.src = '../../assets/IMG_1533.JPG';
 };
 
 async function logout() {
     try {
         await api.post(`/users/logout`);
-        document.location.href = 'login.html';
+        window.location.href = '/login';
     } catch (err) {
         console.error(err);
     }
@@ -48,5 +48,5 @@ async function logout() {
 
 const headerTitle = document.querySelector('h1');
 headerTitle.addEventListener('click', () => {
-    document.location.href = 'postList.html';
+    window.location.href = '/posts';
 });

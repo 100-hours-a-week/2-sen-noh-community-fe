@@ -1,4 +1,4 @@
-import api from './api.js';
+import api from '../api.js';
 
 const backBtn = document.getElementById('back');
 
@@ -55,7 +55,7 @@ async function editPostApi() {
                 'Content-Type': 'multipart/form-data',
             },
         });
-        window.location.href = `detailPost.html?postId=${postId}`;
+        window.location.href = `/posts/${postId}`;
     } catch (err) {
         console.error(err);
     }
