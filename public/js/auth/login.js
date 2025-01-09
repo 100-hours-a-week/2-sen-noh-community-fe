@@ -1,5 +1,5 @@
 import api from '../api.js';
-import { SERVER_URL } from '../config.js';
+import { IMG_URL } from '../config.js';
 
 const inputs = document.getElementsByClassName('emailInput');
 const loginBtn = document.getElementById('loginBtn');
@@ -80,7 +80,7 @@ async function login(data) {
         helpText.style.visibility = 'hidden';
         sessionStorage.setItem(
             'profileImg',
-            SERVER_URL + res.data.data.profile_image,
+            IMG_URL + res.data.data.profile_image,
         );
 
         document.location.href = `/posts`;
