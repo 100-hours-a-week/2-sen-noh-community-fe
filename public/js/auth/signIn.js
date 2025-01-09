@@ -7,6 +7,10 @@ document.getElementById('signInText').onclick = function () {
     window.location.href = '/login';
 };
 
+const root = document.documentElement; // <html> 요소를 참조
+const orange = getComputedStyle(root).getPropertyValue('--orange');
+const darkOrange = getComputedStyle(root).getPropertyValue('--dark-orange');
+
 const inputs = document.getElementsByClassName('emailInput');
 const isPerfect = [false, false, false, false];
 
@@ -20,18 +24,18 @@ function handleBlur(inputIndex, helpTextFunction, helpTextId) {
             help.textContent = text;
             help.style.visibility = 'visible';
             isPerfect[inputIndex] = false;
-            signInBtn.style.backgroundColor = '#aca0eb';
+            signInBtn.style.backgroundColor = orange;
         } else {
             help.style.visibility = 'hidden';
             isPerfect[inputIndex] = true;
             if (isPerfect.every(i => i === true)) {
-                signInBtn.style.backgroundColor = '#7f6aee';
+                signInBtn.style.backgroundColor = darkOrange;
 
                 signInBtn.addEventListener('click', () => {
                     signIn();
                 });
             } else {
-                signInBtn.style.backgroundColor = '#aca0eb';
+                signInBtn.style.backgroundColor = orange;
             }
         }
     });

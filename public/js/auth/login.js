@@ -5,6 +5,10 @@ const inputs = document.getElementsByClassName('emailInput');
 const loginBtn = document.getElementById('loginBtn');
 const helpText = document.getElementById('helpText');
 
+const root = document.documentElement; // <html> 요소를 참조
+const orange = getComputedStyle(root).getPropertyValue('--orange');
+const darkOrange = getComputedStyle(root).getPropertyValue('--dark-orange');
+
 let emailText;
 let pwText;
 
@@ -13,9 +17,9 @@ inputs[0].addEventListener('blur', () => {
     if (emailText !== '') {
         helpText.textContent = emailText;
         helpText.style.visibility = 'visible';
-        loginBtn.style.backgroundColor = '#ACA0EB';
+        loginBtn.style.backgroundColor = orange;
     } else if (pwText === '') {
-        loginBtn.style.backgroundColor = '#7f6aee';
+        loginBtn.style.backgroundColor = darkOrange;
         helpText.style.visibility = 'hidden';
     }
 });
@@ -25,9 +29,9 @@ inputs[1].addEventListener('blur', () => {
     if (pwText !== '') {
         helpText.textContent = pwText;
         helpText.style.visibility = 'visible';
-        loginBtn.style.backgroundColor = '#ACA0EB';
+        loginBtn.style.backgroundColor = orange;
     } else if (emailText === '') {
-        loginBtn.style.backgroundColor = '#7f6aee';
+        loginBtn.style.backgroundColor = darkOrange;
         helpText.style.visibility = 'hidden';
     }
 });
@@ -85,7 +89,7 @@ async function login(data) {
 
         document.location.href = `/posts`;
     } catch (err) {
-        loginBtn.style.backgroundColor = '#ACA0EB';
+        loginBtn.style.backgroundColor = orange;
         helpText.textContent = '* ' + err.response.data.message;
         helpText.style.visibility = 'visible';
     }
