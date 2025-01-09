@@ -1,5 +1,5 @@
 import api from '../api.js';
-import { SERVER_URL } from '../config.js';
+import { IMG_URL } from '../config.js';
 
 const backBtn = document.getElementById('back');
 
@@ -20,7 +20,7 @@ async function getPost() {
         const profileImg = document.getElementsByClassName('writerImg')[0];
         document.getElementById('title').textContent = `${data.title}`;
         if (data.profile_image) {
-            profileImg.src = `${SERVER_URL}${data.profile_image}`;
+            profileImg.src = `${IMG_URL}${data.profile_image}`;
         }
         document.getElementById('writerText').textContent = `${data.nickname}`;
         document.getElementById('writeDate').textContent =
@@ -38,7 +38,7 @@ async function getPost() {
 
         if (data.post_image) {
             const imgElement = document.createElement('img');
-            imgElement.src = SERVER_URL + data.post_image;
+            imgElement.src = IMG_URL + data.post_image;
             imgElement.alt = '게시글 이미지';
             imgElement.id = 'contentImg';
             document.getElementById('imgContainer').appendChild(imgElement);
@@ -125,7 +125,7 @@ async function getComment() {
             cmtArticle.classList.add('chatContainer');
             cmtArticle.innerHTML = `
                 <div class="introTitle2">
-                <img src="${cmt.profile_image ? SERVER_URL + cmt.profile_image : '../../assets/IMG_1533.JPG'}" class="writerImg"/>
+                <img src="${cmt.profile_image ? IMG_URL + cmt.profile_image : '../../assets/IMG_1533.JPG'}" class="writerImg"/>
                 <div class="content">
                     <div class="chatTop">
                     <p id="writerText" style="background-color: #f4f5f7">
