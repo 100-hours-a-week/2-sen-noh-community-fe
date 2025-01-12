@@ -1,43 +1,70 @@
+/* styles.css */
+:root {
+    --yellow: #fbed56;
+    --light-yellow: #fdf5a9;
+    --light-green: #b7d08f;
+    --green: #9bc558;
+    --light-orange: #e9b882;
+    --orange: #ea973e;
+    --dark-orange: #e06437;
+    --sky-blue: #52aadd;
+    --light-sky-blue: #add0e4;
+    --background: #fffefb;
+    --error: #fe5050;
+    --border-gray: #00000029;
+    --shadow-gray: #cccccc40;
+    --dark-black: #333030;
+    --medium-black: #494646;
+    --dark-gray: #646464;
+    --gray: #9b9b9b;
+    --light-gray: #e9e9e9;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #f2f6ff;
+    background-color: var(--background-color);
 }
 
 h1 {
     align-items: center;
-    font-weight: 400;
-    font-size: 36px;
-    line-height: 32px;
-    margin-left: 133px;
-    margin-right: 133px;
+    font-weight: 800;
+    font-size: 20px;
+    /* margin-left: 203px;
+    margin-right: 203px; */
 }
 
 header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    border-bottom: 1px solid black;
+    justify-content: space-between;
+    /* width: 100%; */
+    /* border-bottom: 1px solid var(--orange); */
+    background-color: var(--dark-orange);
+    color: var(--background);
 }
 
 .header {
-    padding-top: 36px;
-    padding-bottom: 36px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    width: 640px;
 }
 
 #back {
     width: 22px;
     height: 22px;
+    margin-left: 8px;
+    margin-right: 8px;
 }
 
 #profile {
-    width: 36px;
-    height: 36px;
+    width: 30px;
+    height: 30px;
     border-radius: 100%;
 }
 
@@ -49,26 +76,31 @@ header {
 
 #dropDown {
     position: absolute;
-    top: -24px;
-    left: 156px;
+    top: -5px;
+    left: 206px;
     flex-direction: column;
     visibility: hidden;
+    border: 1px solid var(--gray);
 }
 
 .menu {
     width: 115px;
     display: flex;
-    background-color: #d9d9d9;
+    background-color: var(--background);
     justify-content: center;
+
     align-items: center;
     font-weight: 400;
     font-size: 12px;
     line-height: 14.52px;
+    color: var(--gray);
     height: 35px;
+    /* border-radius: 4px; */
+    border-bottom: 0.5px solid var(--light-gray);
 }
 
 .menu:hover {
-    background-color: #e9e9e9;
+    background-color: var(--light-gray);
 }
 
 .modalContainer {
