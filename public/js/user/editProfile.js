@@ -15,9 +15,8 @@ const orange = getComputedStyle(root).getPropertyValue('--orange');
 let originNickname;
 
 editBtn.addEventListener('click', async () => {
-    if (nickname.value === originNickname) {
+    if (!imageUpload.files[0] && nickname.value === originNickname) {
         editBtn.style.backgroundColor = orange;
-        helpText.style.visibility = 'hidden';
     } else if (nickname.value === '') {
         helpText.textContent = '*닉네임을 입력해주세요.';
         helpText.style.visibility = 'visible';
@@ -26,11 +25,15 @@ editBtn.addEventListener('click', async () => {
         helpText.textContent = '*닉네임은 최대 10자 까지 작성 가능합니다.';
         helpText.style.visibility = 'visible';
         editBtn.style.backgroundColor = orange;
-    } else if (await existNickname({ nickname: nickname.value })) {
+    } else if (
+        nickname.value !== originNickname &&
+        (await existNickname({ nickname: nickname.value }))
+    ) {
         helpText.textContent = '*중복된 닉네임 입니다.';
         helpText.style.visibility = 'visible';
         editBtn.style.backgroundColor = orange;
     } else {
+        helpText.style.visibility = 'hidden';
         editBtn.style.backgroundColor = darkOrange;
         editProfile();
     }
@@ -90,7 +93,9 @@ async function editProfile() {
     if (nickname.value !== originNickname) {
         formData.append('nickname', nickname.value);
     }
-    formData.append('profile_image', imageUpload.files[0]);
+    if (imageUpload.files[0]) {
+        formData.append('profile_image', imageUpload.files[0]);
+    }
 
     try {
         const res = await api.patch(`/users/userInfo`, formData, {
