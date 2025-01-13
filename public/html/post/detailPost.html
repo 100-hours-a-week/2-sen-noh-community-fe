@@ -32,8 +32,8 @@
                 <div class="titleBar">
                     <p
                         class="contentTitle"
-                        style="background-color: #f4f5f7"
                         id="title"
+                        style="cursor: default; text-decoration: none"
                     ></p>
                     <div class="writerBar">
                         <div class="writerBarL">
@@ -41,10 +41,7 @@
                                 src="../../assets/IMG_1533.JPG"
                                 class="writerImg"
                             />
-                            <p
-                                id="writerText"
-                                style="background-color: #f4f5f7"
-                            ></p>
+                            <p id="writerText"></p>
                             <p
                                 id="writeDate"
                                 class="contentSub backTrans"
@@ -58,29 +55,36 @@
                     <div id="imgContainer"></div>
                     <div id="contentText"></div>
                 </div>
-                <div class="introTitle2">
-                    <div class="cntBtn" id="likeBtn">
+                <div class="introTitle2 cntContainer">
+                    <div class="cntBtn" id="likeBtn" style="cursor: pointer">
+                        <img src="../../assets/heart.svg" class="cntImg" />
+                        <p class="backTrans">좋아요</p>
                         <p class="backTrans nums"></p>
-                        <p class="backTrans">좋아요수</p>
                     </div>
                     <div class="cntBtn">
+                        <img src="../../assets/eye.svg" class="cntImg" />
+                        <p class="backTrans">조회</p>
                         <p class="backTrans nums"></p>
-                        <p class="backTrans">조회수</p>
                     </div>
                     <div class="cntBtn">
-                        <p class="backTrans nums"></p>
+                        <img src="../../assets/chat.svg" class="cntImg" />
                         <p class="backTrans">댓글</p>
+                        <p class="backTrans nums"></p>
                     </div>
                 </div>
             </article>
             <section class="content">
-                <div class="content chat">
-                    <textarea
-                        id="chatInput"
-                        placeholder="댓글을 남겨주세요!"
-                    ></textarea>
-                    <div class="chatBtnContainer">
-                        <button id="addCmtBtn">댓글 등록</button>
+                <div class="chat">
+                    <img src="../../assets/IMG_1533.JPG" class="writerImg" />
+                    <div class="content">
+                        <textarea
+                            id="chatInput"
+                            placeholder="댓글을 남겨주세요!"
+                        ></textarea>
+                        <div class="chatBtnContainer">
+                            <button id="addCmtBtn2">취소</button>
+                            <button id="addCmtBtn">댓글</button>
+                        </div>
                     </div>
                 </div>
                 <section id="commentList" style="margin-bottom: 38px"></section>

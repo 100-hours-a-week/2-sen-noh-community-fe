@@ -11,6 +11,10 @@ const pathSegments = window.location.pathname.split('/');
 const postId = pathSegments[pathSegments.length - 1];
 const commentCnt = document.getElementsByClassName('nums')[2];
 
+const root = document.documentElement; // <html> 요소를 참조
+const darkOrange = getComputedStyle(root).getPropertyValue('--dark-orange');
+const orange = getComputedStyle(root).getPropertyValue('--orange');
+
 getPost();
 
 async function getPost() {
@@ -50,14 +54,14 @@ async function getPost() {
 
             // 수정 버튼 생성
             const editBtn = document.createElement('button');
-            editBtn.classList.add('editBtn');
+            editBtn.classList.add('editPostBtn');
             editBtn.id = 'postEditBtn';
             editBtn.textContent = '수정';
             postBtnContainer.appendChild(editBtn);
 
             // 삭제 버튼 생성
             const delBtn = document.createElement('button');
-            delBtn.classList.add('editBtn');
+            delBtn.classList.add('editPostBtn');
             delBtn.id = 'postDelBtn';
             delBtn.textContent = '삭제';
             postBtnContainer.appendChild(delBtn);
@@ -74,9 +78,10 @@ async function getPost() {
             });
         }
 
+        const likeImg = document.getElementsByClassName('cntImg')[0];
         const likeBtn = document.getElementById('likeBtn');
         if (data.is_liked) {
-            likeBtn.style.backgroundColor = '#aca0eb';
+            likeImg.src = '../../assets/fillHeart.svg';
         }
 
         likeBtn.addEventListener('click', async () => {
@@ -85,9 +90,9 @@ async function getPost() {
                 data.is_liked = !data.is_liked;
                 data.heart_cnt += data.is_liked ? 1 : -1;
                 if (data.is_liked) {
-                    likeBtn.style.backgroundColor = '#aca0eb';
+                    likeImg.src = '../../assets/fillHeart.svg';
                 } else {
-                    likeBtn.style.backgroundColor = '#d9d9d9';
+                    likeImg.src = '../../assets/heart.svg';
                 }
                 document.getElementsByClassName('nums')[0].textContent =
                     `${formatLikes(data.heart_cnt)}`;
@@ -125,28 +130,36 @@ async function getComment() {
             cmtArticle.classList.add('chatContainer');
             cmtArticle.innerHTML = `
                 <div class="introTitle2">
-                <img src="${cmt.profile_image ? IMG_URL + cmt.profile_image : '../../assets/IMG_1533.JPG'}" class="writerImg"/>
-                <div class="content">
-                    <div class="chatTop">
-                    <p id="writerText" style="background-color: #f4f5f7">
-                        ${cmt.nickname}
-                    </p>
-                    <p class="contentSub backTrans" style="margin-left: 24px">
-                        ${formatDates(cmt.date)}
-                    </p>
+                    <img src="${cmt.profile_image ? IMG_URL + cmt.profile_image : '../../assets/IMG_1533.JPG'}" class="writerImg"/>
+                    <div class="content">
+                        <div class="chatTop">
+                        <p id="writerText" >
+                            ${cmt.nickname}
+                        </p>
+                        <p class="contentSub backTrans" style="margin-left: 24px">
+                            ${formatDates(cmt.date)}
+                        </p>
+                        </div>
+                        <div id="chatText">${cmt.comment}</div>
                     </div>
-                    <div id="chatText">${cmt.comment}</div>
                 </div>
-                </div>
-                <div style="margin-top: 19px">
+                <div>
+                
+                <div style="margin-top: 0px">
                 ${
                     cmt.is_user
-                        ? `
-                    <button class="editBtn" id="cmtEditBtn_${cmt.comment_id}">수정</button>
-                    <button class="editBtn" id="cmtDelBtn_${cmt.comment_id}">삭제</button>`
+                        ? `<img src="../../assets/ellipsis.svg" class = "ellipsis"/>`
                         : ``
                 }
                 </div>
+                <div class="chatDropDownContainer" id="dropdown_${cmt.comment_id}">
+                    <div id="chatDropDown">
+                         <button class="editBtn" id="cmtEditBtn_${cmt.comment_id}">수정</button>
+                        <button class="editBtn" id="cmtDelBtn_${cmt.comment_id}">삭제</button>
+                    </div>
+                </div>
+                </div>
+            </div>
             `;
             commentList.appendChild(cmtArticle);
             if (cmt.is_user) {
@@ -158,11 +171,52 @@ async function getComment() {
             cmtImg.onerror = () => {
                 cmtImg.src = '../../assets/IMG_1533.JPG';
             };
+
+            const ellipsis = cmtArticle.querySelector('.ellipsis');
+            const dropdown = cmtArticle.querySelector('.chatDropDownContainer');
+
+            if (ellipsis) {
+                ellipsis.addEventListener('click', event => {
+                    event.stopPropagation(); // 클릭 이벤트가 상위 요소로 전파되지 않도록 방지
+                    // 모든 드롭다운을 닫고, 클릭한 드롭다운을 열기
+                    const allDropdowns = document.querySelectorAll(
+                        '.chatDropDownContainer',
+                    );
+                    allDropdowns.forEach(otherDropdown => {
+                        if (otherDropdown !== dropdown) {
+                            otherDropdown.style.display = 'none'; // 다른 드롭다운 닫기
+                        }
+                    });
+
+                    // 클릭한 드롭다운 열기/닫기
+                    if (
+                        dropdown.style.display === 'none' ||
+                        !dropdown.style.display
+                    ) {
+                        dropdown.style.display = 'block';
+                    } else {
+                        dropdown.style.display = 'none';
+                    }
+                });
+            }
         });
     } catch (err) {
         console.error('Fetch 오류:', err);
     }
 }
+
+document.addEventListener('click', event => {
+    const allDropdowns = document.querySelectorAll('.chatDropDownContainer');
+
+    allDropdowns.forEach(dropdown => {
+        if (
+            !dropdown.contains(event.target) &&
+            !event.target.classList.contains('ellipsis')
+        ) {
+            dropdown.style.display = 'none';
+        }
+    });
+});
 
 //게시글 모달
 const modal = document.getElementsByClassName('modalContainer')[0];
@@ -184,13 +238,20 @@ document
 
 const cmtInput = document.getElementById('chatInput');
 const cmtBtn = document.getElementById('addCmtBtn');
+const cmtBtn2 = document.getElementById('addCmtBtn2');
 
 cmtInput.addEventListener('input', () => {
     if (cmtInput.value.trim() !== '') {
-        cmtBtn.style.backgroundColor = '#7f6aee';
+        cmtBtn.style.backgroundColor = darkOrange;
     } else {
-        cmtBtn.style.backgroundColor = '#aca0eb';
+        cmtBtn.style.backgroundColor = orange;
     }
+});
+
+cmtBtn2.addEventListener('click', () => {
+    cmtInput.value = '';
+    cmtBtn.style.backgroundColor = orange;
+    cmtBtn.textContent = '댓글';
 });
 
 let commentId;
@@ -200,7 +261,7 @@ cmtBtn.addEventListener('click', () => {
         const data = {
             comment: cmtInput.value,
         };
-        if (cmtBtn.textContent === '댓글 수정') {
+        if (cmtBtn.textContent === '수정') {
             updateCommentApi(data);
         } else {
             addCommentApi(data);
@@ -242,9 +303,9 @@ function cmtEdit(cmt) {
         .getElementById(`cmtEditBtn_${cmt.comment_id}`)
         .addEventListener('click', () => {
             cmtInput.value = cmt.comment;
-            cmtBtn.textContent = '댓글 수정';
+            cmtBtn.textContent = '수정';
             commentId = cmt.comment_id;
-            cmtBtn.style.backgroundColor = '#7f6aee';
+            cmtBtn.style.backgroundColor = darkOrange;
         });
 }
 
@@ -263,8 +324,8 @@ async function updateCommentApi(data) {
         await api.patch(`/posts/${postId}/comments/${commentId}`, data);
 
         cmtInput.value = '';
-        cmtBtn.style.backgroundColor = '#aca0eb';
-        cmtBtn.textContent = '댓글 작성';
+        cmtBtn.style.backgroundColor = orange;
+        cmtBtn.textContent = '댓글';
         getComment();
     } catch (err) {
         console.error(err);
@@ -276,7 +337,7 @@ async function addCommentApi(data) {
         await api.post(`/posts/${postId}/comments`, data);
 
         cmtInput.value = '';
-        cmtBtn.style.backgroundColor = '#aca0eb';
+        cmtBtn.style.backgroundColor = orange;
         commentCnt.textContent = parseInt(commentCnt.textContent, 10) + 1;
         getComment();
     } catch (err) {
@@ -308,3 +369,11 @@ async function likeApi(isLiked) {
         return false;
     }
 }
+
+const chatInput = document.getElementById('chatInput');
+
+// 자동 높이 조정 이벤트
+chatInput.addEventListener('input', () => {
+    chatInput.style.height = 'auto'; // 높이를 초기화하여 정확히 계산
+    chatInput.style.height = chatInput.scrollHeight + 'px'; // 내용 높이에 맞게 조정
+});
