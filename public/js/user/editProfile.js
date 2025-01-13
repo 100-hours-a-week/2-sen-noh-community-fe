@@ -8,32 +8,39 @@ const toast = document.getElementById('editFinBtn');
 
 const profileImgStorage = sessionStorage.getItem('profileImg');
 
+const root = document.documentElement;
+const darkOrange = getComputedStyle(root).getPropertyValue('--dark-orange');
+const orange = getComputedStyle(root).getPropertyValue('--orange');
+
 let originNickname;
 
 editBtn.addEventListener('click', async () => {
-    if (nickname.value === '') {
+    if (nickname.value === originNickname) {
+        editBtn.style.backgroundColor = orange;
+        helpText.style.visibility = 'hidden';
+    } else if (nickname.value === '') {
         helpText.textContent = '*닉네임을 입력해주세요.';
         helpText.style.visibility = 'visible';
+        editBtn.style.backgroundColor = orange;
     } else if (nickname.value.length > 11) {
         helpText.textContent = '*닉네임은 최대 10자 까지 작성 가능합니다.';
         helpText.style.visibility = 'visible';
-    } else if (
-        nickname.value !== originNickname &&
-        (await existNickname({ nickname: nickname.value }))
-    ) {
+        editBtn.style.backgroundColor = orange;
+    } else if (await existNickname({ nickname: nickname.value })) {
         helpText.textContent = '*중복된 닉네임 입니다.';
         helpText.style.visibility = 'visible';
+        editBtn.style.backgroundColor = orange;
     } else {
-        editBtn.style.backgroundColor = '#7F6AEE';
+        editBtn.style.backgroundColor = darkOrange;
         editProfile();
     }
 });
 
 nickname.addEventListener('input', () => {
     if (nickname.value !== originNickname) {
-        editBtn.style.backgroundColor = '#7F6AEE';
+        editBtn.style.backgroundColor = darkOrange;
     } else {
-        editBtn.style.backgroundColor = '#ACA0EB';
+        editBtn.style.backgroundColor = orange;
     }
 });
 
@@ -69,7 +76,7 @@ imageUpload.addEventListener('change', event => {
     if (file) {
         const reader = new FileReader();
         reader.onload = e => {
-            editBtn.style.backgroundColor = '#7F6AEE';
+            editBtn.style.backgroundColor = darkOrange;
             profilePreview.src = e.target.result;
             profilePreview.style.visibility = 'visible';
         };
@@ -92,7 +99,7 @@ async function editProfile() {
             },
         });
         toast.style.visibility = 'visible';
-        editBtn.style.backgroundColor = '#ACA0EB';
+        editBtn.style.backgroundColor = orange;
         if (res.data.img) {
             sessionStorage.setItem('profileImg', IMG_URL + res.data.img);
             const profileImg = document.getElementById('profile');
