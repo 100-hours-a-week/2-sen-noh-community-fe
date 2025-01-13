@@ -117,6 +117,9 @@ function formatDates(date) {
     return d.toLocaleString('ja-JP').replaceAll('/', '-');
 }
 
+const chatWriterImg = document.getElementById('chatWriterImg');
+chatWriterImg.src = sessionStorage.getItem('profileImg');
+
 const commentList = document.getElementById('commentList');
 
 async function getComment() {
