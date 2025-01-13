@@ -25,14 +25,14 @@
     padding: 0;
     box-sizing: border-box;
     background-color: var(--background-color);
+    font-family: 'NanumSquare';
 }
 
 h1 {
+    font-family: 'NanumSquareExtraBold';
     align-items: center;
     font-weight: 800;
     font-size: 20px;
-    /* margin-left: 203px;
-    margin-right: 203px; */
 }
 
 header {
@@ -127,7 +127,7 @@ header {
 }
 
 .modalTitle {
-    font-weight: 700;
+    font-family: 'NanumSquareExtraBold';
     font-size: 24px;
     line-height: 28.64px;
     margin-top: 48px;
