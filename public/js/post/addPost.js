@@ -13,11 +13,16 @@ const addFinBtn = document.getElementById('editFinBtn');
 title.addEventListener('input', checkInput);
 content.addEventListener('input', checkInput);
 
+const root = document.documentElement;
+const darkOrange = getComputedStyle(root).getPropertyValue('--dark-orange');
+const orange = getComputedStyle(root).getPropertyValue('--orange');
+const backgroundColor = getComputedStyle(root).getPropertyValue('--background');
+
 function checkInput() {
     if (title.value !== '' && content.value !== '') {
-        addFinBtn.style.backgroundColor = '#7f6aee';
+        addFinBtn.style.backgroundColor = darkOrange;
     } else {
-        addFinBtn.style.backgroundColor = '#aca0eb'; // 기본 색으로 되돌리기
+        addFinBtn.style.backgroundColor = orange;
     }
 }
 
@@ -28,7 +33,7 @@ addFinBtn.addEventListener('click', () => {
         helpText.textContent = '*제목, 내용을 모두 작성해주세요';
         helpText.style.color = '#ff0000';
     } else {
-        helpText.style.color = '#f4f5f7';
+        helpText.style.color = backgroundColor;
         addPostApi();
     }
 });

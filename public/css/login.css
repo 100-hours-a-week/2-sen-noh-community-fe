@@ -166,7 +166,7 @@ input:focus {
 #editFinBtn {
     width: 102px;
     height: 46px;
-    background-color: #aca0eb;
+    background-color: var(--orange);
     font-size: 18px;
     font-weight: 400;
     line-height: 21.6px;

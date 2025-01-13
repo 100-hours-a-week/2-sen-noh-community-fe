@@ -429,7 +429,7 @@
     padding-bottom: 16px;
     border-bottom: 1px solid #00000029;
     margin-top: 25px;
-    width: 592px;
+    width: 640px;
     padding-left: 24px;
     padding-right: 24px;
 }
@@ -442,7 +442,7 @@
     font-weight: 400;
     width: 355px;
     line-height: 14.5px;
-    color: #f4f5f7;
+    color: var(--background);
     border-top: 1px solid #00000029;
     width: 100%;
     /* visibility: hidden; */
@@ -477,21 +477,22 @@
 }
 
 #editFinBtn {
-    width: 355px;
-    height: 33px;
-    border-radius: 4px;
-    background-color: #7f6aee;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 16.71px;
-    color: #ffffff;
-    border: 0px;
     margin-top: 27px;
     margin-bottom: 30px;
+
+    width: 355px;
+    height: 70px;
+    background-color: var(--orange);
+    border: 0px;
+    border-radius: 32px;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 16.7px;
 }
 
 #contentTextArea {
-    width: 544px;
+    width: 592px;
     height: 231px;
     margin-top: 24px;
     font-weight: 400;
