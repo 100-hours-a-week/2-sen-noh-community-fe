@@ -123,6 +123,7 @@ header {
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
+    background-color: var(--background);
 }
 
 .modalTitle {
@@ -157,7 +158,7 @@ header {
 }
 
 .modalBtnYes {
-    background-color: #c4a5fa;
+    background-color: var(--orange);
     width: 127px;
     height: 44px;
     border-radius: 12px;
@@ -166,4 +167,5 @@ header {
     line-height: 23.87px;
     margin-left: 8px;
     border: 0px;
+    color: #ffffff;
 }
