@@ -12,6 +12,10 @@ const body = urlParams.get('body');
 const img = decodeURIComponent(urlParams.get('img'));
 const postId = urlParams.get('postId');
 
+const root = document.documentElement;
+const darkOrange = getComputedStyle(root).getPropertyValue('--dark-orange');
+const orange = getComputedStyle(root).getPropertyValue('--orange');
+
 document.getElementById('titleTextArea').value =
     title.length > 26 ? title.slice(0, 26) : title;
 document.getElementById('contentTextArea').value = body;
@@ -34,6 +38,7 @@ imageUpload.addEventListener('change', event => {
 
     if (file) {
         document.getElementById('fileName').textContent = file.name;
+        editFinBtn.style.backgroundColor = darkOrange;
     }
 });
 
@@ -60,3 +65,19 @@ async function editPostApi() {
         console.error(err);
     }
 }
+
+newTitle.addEventListener('input', () => {
+    if (newTitle.value !== title || newContent.value !== body) {
+        editFinBtn.style.backgroundColor = darkOrange;
+    } else {
+        editFinBtn.style.backgroundColor = orange;
+    }
+});
+
+newContent.addEventListener('input', () => {
+    if (newTitle.value !== title || newContent.value !== body) {
+        editFinBtn.style.backgroundColor = darkOrange;
+    } else {
+        editFinBtn.style.backgroundColor = orange;
+    }
+});
