@@ -73,6 +73,10 @@ imagePlus.addEventListener('click', () => {
     imageUpload.click();
 });
 
+profilePreview.addEventListener('click', () => {
+    imageUpload.click();
+});
+
 imageUpload.addEventListener('change', event => {
     const file = event.target.files[0];
 

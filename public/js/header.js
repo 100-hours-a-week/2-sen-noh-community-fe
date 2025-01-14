@@ -50,3 +50,4 @@ const headerTitle = document.querySelector('h1');
 headerTitle.addEventListener('click', () => {
     window.location.href = '/posts';
 });
+headerTitle.style.cursor = 'pointer';

@@ -109,12 +109,12 @@ async function nickNameHelp(name) {
 const imageUpload = document.getElementById('imageUpload');
 const imagePlus = document.getElementById('imagePlus');
 const profilePreview = document.getElementById('profilePreview');
-const imgHelpText = document.getElementById('helpText');
+// const imgHelpText = document.getElementById('helpText');
 
 imagePlus.addEventListener('click', () => {
     imageUpload.click();
     imageUpload.value = '';
-    imgHelpText.style.visibility = 'visible';
+    // imgHelpText.style.visibility = 'visible';
     profilePreview.style.visibility = 'hidden';
 });
 
@@ -124,7 +124,7 @@ imageUpload.addEventListener('change', event => {
     if (file) {
         const reader = new FileReader();
         reader.onload = e => {
-            imgHelpText.style.visibility = 'hidden';
+            // imgHelpText.style.visibility = 'hidden';
             profilePreview.src = e.target.result;
             profilePreview.style.visibility = 'visible';
         };

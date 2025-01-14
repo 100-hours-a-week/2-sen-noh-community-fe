@@ -60,12 +60,14 @@ header {
     height: 22px;
     margin-left: 8px;
     margin-right: 8px;
+    cursor: pointer;
 }
 
 #profile {
     width: 30px;
     height: 30px;
     border-radius: 100%;
+    cursor: pointer;
 }
 
 .dropDownContainer {
@@ -155,6 +157,7 @@ header {
     font-weight: 400;
     line-height: 23.87px;
     margin-right: 8px;
+    cursor: pointer;
 }
 
 .modalBtnYes {
@@ -168,4 +171,5 @@ header {
     margin-left: 8px;
     border: 0px;
     color: #ffffff;
+    cursor: pointer;
 }
