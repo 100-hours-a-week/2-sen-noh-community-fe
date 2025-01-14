@@ -147,6 +147,7 @@ async function signIn() {
         window.location.href = '/login';
     } catch (err) {
         console.error(err);
+        alert('서버 오류');
     }
 }
 
