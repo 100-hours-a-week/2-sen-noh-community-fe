@@ -34,7 +34,7 @@ app.get('/posts/:postId', (req, res) => {
     res.sendFile(join(__dirname, '../public/html/post/detailPost.html'));
 });
 
-app.get('/editPost', (req, res) => {
+app.get('/editPost/:postId', (req, res) => {
     res.sendFile(join(__dirname, '../public/html/post/editPost.html'));
 });
 

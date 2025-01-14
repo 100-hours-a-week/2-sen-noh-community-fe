@@ -6,20 +6,36 @@ backBtn.addEventListener('click', () => {
     history.back();
 });
 
-const urlParams = new URLSearchParams(window.location.search);
-const title = urlParams.get('title');
-const body = urlParams.get('body');
-const img = decodeURIComponent(urlParams.get('img'));
-const postId = urlParams.get('postId');
+// const urlParams = new URLSearchParams(window.location.search);
+let title = '';
+let body = '';
+// const img = decodeURIComponent(urlParams.get('img'));
+// const postId = urlParams.get('postId');
+
+const pathSegments = window.location.pathname.split('/');
+const postId = pathSegments[pathSegments.length - 1];
 
 const root = document.documentElement;
 const darkOrange = getComputedStyle(root).getPropertyValue('--dark-orange');
 const orange = getComputedStyle(root).getPropertyValue('--orange');
 
-document.getElementById('titleTextArea').value =
-    title.length > 26 ? title.slice(0, 26) : title;
-document.getElementById('contentTextArea').value = body;
-document.getElementById('fileName').textContent = img !== 'null' ? img : '';
+getPost();
+
+async function getPost() {
+    try {
+        const res = await api.get(`/posts/edit/${postId}`);
+        const { data } = res.data;
+        title = data.title;
+        body = data.content;
+        document.getElementById('titleTextArea').value =
+            data.title.length > 26 ? data.title.slice(0, 26) : data.title;
+        document.getElementById('contentTextArea').value = data.content;
+        document.getElementById('fileName').textContent =
+            data.post_image !== 'null' ? data.post_image.substring(8) : '';
+    } catch (err) {
+        console.error('axios 오류:', err);
+    }
+}
 
 const editFinBtn = document.getElementById('editFinBtn');
 editFinBtn.addEventListener('click', () => {

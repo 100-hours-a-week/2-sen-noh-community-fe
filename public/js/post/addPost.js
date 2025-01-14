@@ -66,6 +66,11 @@ async function addPostApi() {
         });
         window.location.href = `/posts/${res.data.postId}`;
     } catch (err) {
+        if (err.response.status === 413) {
+            alert('파일 사이즈가 너무 큽니다.');
+        } else {
+            alert('서버 오류.');
+        }
         console.error(err);
     }
 }

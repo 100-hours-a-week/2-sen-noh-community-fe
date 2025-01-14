@@ -29,7 +29,7 @@ async function getPost() {
         document.getElementById('writerText').textContent = `${data.nickname}`;
         document.getElementById('writeDate').textContent =
             `${formatDates(data.date)}`;
-        document.getElementById('contentText').textContent = `${data.content}1`;
+        document.getElementById('contentText').textContent = `${data.content}`;
         document.getElementsByClassName('nums')[0].textContent =
             `${formatLikes(data.heart_cnt)}`;
         document.getElementsByClassName('nums')[1].textContent =
@@ -69,7 +69,7 @@ async function getPost() {
             editBtn.addEventListener('click', () => {
                 const imgSrc = `${data.post_image}`;
                 const fileName = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
-                window.location.href = `/editPost?postId=${postId}&title=${encodeURIComponent(data.title)}&body=${encodeURIComponent(data.content)}&img=${fileName}`;
+                window.location.href = `/editPost/${data.post_id}`;
             });
 
             delBtn.addEventListener('click', () => {
@@ -319,6 +319,7 @@ async function deletePostApi() {
         window.location.href = `/posts`;
     } catch (err) {
         console.error(err);
+        alert('서버 오류');
     }
 }
 
@@ -332,6 +333,7 @@ async function updateCommentApi(data) {
         getComment();
     } catch (err) {
         console.error(err);
+        alert('서버 오류');
     }
 }
 
@@ -345,6 +347,7 @@ async function addCommentApi(data) {
         getComment();
     } catch (err) {
         console.error(err);
+        alert('서버 오류');
     }
 }
 
@@ -356,6 +359,7 @@ async function deleteCommentApi(delCmtId) {
         getComment();
     } catch (err) {
         console.error(err);
+        alert('서버 오류');
     }
 }
 
