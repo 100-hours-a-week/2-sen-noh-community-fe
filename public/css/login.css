@@ -120,6 +120,7 @@ input:focus {
     font-size: 20px;
     font-weight: 700;
     line-height: 16.7px;
+    cursor: pointer;
 }
 
 .btn {
@@ -134,6 +135,7 @@ input:focus {
     margin-top: 12px;
     margin-bottom: 300px;
     color: var(--gray);
+    cursor: pointer;
 }
 
 #profileImg {
@@ -146,6 +148,8 @@ input:focus {
     justify-content: center;
     flex-direction: column;
     margin-top: 8px;
+    cursor: pointer;
+    z-index: 4;
 }
 
 #profilePreview {
@@ -153,13 +157,16 @@ input:focus {
     height: 149px;
     border-radius: 100%;
     visibility: hidden;
+    z-index: 5;
 }
 
 #imagePlus {
-    width: 64px;
-    height: 64px;
+    width: 149px;
+    height: 149px;
     position: absolute;
-    padding: 20px;
+    padding: 63px;
+    border-radius: 100%;
+    z-index: 6;
 }
 
 #editFinBtn {
@@ -189,4 +196,5 @@ input:focus {
     position: relative;
     left: 50px;
     bottom: 88px;
+    cursor: pointer;
 }
