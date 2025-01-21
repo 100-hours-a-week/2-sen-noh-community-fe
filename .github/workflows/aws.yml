@@ -6,7 +6,7 @@ on:
 
 env:
   AWS_REGION: ap-northeast-2                 
-  ECR_REPOSITORY: community-be          
+  ECR_REPOSITORY: community-fe          
 
 permissions:
   contents: read
