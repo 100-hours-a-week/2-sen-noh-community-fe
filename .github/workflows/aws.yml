@@ -55,7 +55,6 @@ jobs:
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         application_name: ${{ env.APPLICATION_NAME }}
         environment_name: ${{ env.ENVIRONMENT_NAME }}
-        version_label: "deploy-${{ github.run_id }}-${{ format('yyyyMMdd-HHmmss', github.event.head_commit.timestamp) }}"
         region: ${{ env.AWS_REGION }}
         deployment_package: "docker-compose.yml"
 
