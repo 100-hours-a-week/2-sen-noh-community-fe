@@ -1,11 +1,13 @@
-name: Push to Amazon ECR
+name: Push to Amazon ECR and Deploy to EB
 
 on:
   push:
     branches: [ "main" ]
 
 env:
-  AWS_REGION: ap-northeast-2                 
+  AWS_REGION: ap-northeast-2
+  APPLICATION_NAME: "community"
+  ENVIRONMENT_NAME: "Community-env-1"
   ECR_REPOSITORY: community-fe          
 
 permissions:
@@ -41,5 +43,20 @@ jobs:
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+    - name: Update docker-compose.yml with the new image
+      run: |
+        sed -i 's|image: .*|image: '"$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"'|g' docker-compose.yml
+
+    - name: Deploy to Elastic Beanstalk (Docker Compose)
+      uses: einaregilsson/beanstalk-deploy@v21
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        application_name: ${{ env.APPLICATION_NAME }}
+        environment_name: ${{ env.ENVIRONMENT_NAME }}
+        version_label: "deploy-${{ github.run_id }}"
+        region: ${{ env.AWS_REGION }}
+        deployment_package: "docker-compose.yml"
 
 
