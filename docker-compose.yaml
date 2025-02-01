@@ -1,0 +1,10 @@
+services:
+    frontend:
+        image: 852662289260.dkr.ecr.ap-northeast-2.amazonaws.com/community-fe:d0db8f30215cb890d9827ff01307ca3fa74f4a10
+        ports:
+            - '80:8080'
+        networks:
+            - app-network
+
+networks:
+    app-network:
