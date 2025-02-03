@@ -38,54 +38,94 @@ async function loadPosts() {
             postArticle.classList.add('post');
 
             const borderColor = colors[index % 4];
-
             postArticle.style.borderTop = `1px solid ${borderColor}`;
-            postArticle.innerHTML = `
-            <div class="postContainer">
-                <div class="postContentContainer">
-                    <div>
-                        <div class="writer">
-                            <img src="${post.profile_image ? IMG_URL + post.profile_image : '../../assets/IMG_1533.JPG'}" class="writerImg" />
-                            <div>
-                                <p id="writerText">${post.nickname}</p>
-                                <p class="contentSub" style="margin-left: 10px">${formatDates(post.date)}</p>              
-                            </div>
-                        </div>
-                        <div>
-                            <div class="contentTitle">${post.title.length > 26 ? post.title.slice(0, 26) : post.title}</div>
-                            <div class="contentContent">${post.content}</div>
-                        </div>
-                    </div>
-                    <div class="contentSubTotal" >
-                        <div class="contentSubNum">
-                            <p class="contentSub">좋아요&nbsp;</p>
-                            <p class="contentSub">${formatLikes(post.heart_cnt)}&nbsp;&nbsp;</p>
-                            <p class="contentSub">댓글&nbsp;</p>
-                            <p class="contentSub">${formatLikes(post.comment_cnt)}&nbsp;&nbsp;</p>
-                            <p class="contentSub">조회수&nbsp;</p>
-                            <p class="contentSub">${formatLikes(post.visit_cnt)}&nbsp;&nbsp;</p>
-                        </div>
-                    </div>
-                </div>
-                <img 
-                    src="${post.post_image !== null ? IMG_URL + post.post_image : '../../assets/IMG_1533.JPG'}" 
-                    class="postImg" 
-                    style="visibility: ${post.post_image === null ? 'hidden' : 'visible'}"
-                />
 
-                </div>
-               
-            `;
-            postList.appendChild(postArticle);
-            // postArticle.addEventListener('click', () => {
-            //     window.location.href = `/posts/${post.post_id}`;
-            // });
+            const postContainer = document.createElement('div');
+            postContainer.classList.add('postContainer');
 
-            const contentTitle = postArticle.querySelector('.contentTitle');
-            const contentContent = postArticle.querySelector('.contentContent');
-            const postImg = postArticle.querySelector('.postImg');
+            const postContentContainer = document.createElement('div');
+            postContentContainer.classList.add('postContentContainer');
 
-            [contentTitle, contentContent, postImg].forEach(element => {
+            const topContainer = document.createElement('div');
+
+            const writer = document.createElement('div');
+            writer.classList.add('writer');
+            const writerImg = document.createElement('img');
+            writerImg.src = post.profile_image
+                ? IMG_URL + post.profile_image
+                : '../../assets/IMG_1533.JPG';
+            writerImg.classList.add('writerImg');
+            writer.appendChild(writerImg);
+
+            const writerTextContainer = document.createElement('div');
+            const writerText = document.createElement('p');
+            writerText.id = 'writerText';
+            writerText.textContent = post.nickname;
+            writerTextContainer.appendChild(writerText);
+
+            const dateText = document.createElement('p');
+            dateText.classList.add('contentSub');
+            dateText.style.marginLeft = '10px';
+            dateText.textContent = formatDates(post.date);
+            writerTextContainer.appendChild(dateText);
+
+            writer.appendChild(writerTextContainer);
+
+            topContainer.appendChild(writer);
+
+            const postContent = document.createElement('div');
+
+            const contentTitle = document.createElement('div');
+            contentTitle.classList.add('contentTitle');
+            contentTitle.textContent =
+                post.title.length > 26 ? post.title.slice(0, 26) : post.title;
+            postContent.appendChild(contentTitle);
+
+            const contentContent = document.createElement('div');
+            contentContent.classList.add('contentContent');
+            contentContent.textContent = post.content;
+            postContent.appendChild(contentContent);
+
+            const contentSubTotal = document.createElement('div');
+            contentSubTotal.classList.add('contentSubTotal');
+
+            const contentSubNum = document.createElement('div');
+            contentSubNum.classList.add('contentSubNum');
+
+            const likeText = document.createElement('p');
+            likeText.classList.add('contentSub');
+            likeText.textContent = `좋아요 ${formatLikes(post.heart_cnt)}`;
+            likeText.appendChild(document.createTextNode('\u00A0\u00A0'));
+            contentSubNum.appendChild(likeText);
+
+            const commentText = document.createElement('p');
+            commentText.classList.add('contentSub');
+            commentText.textContent = `댓글 ${formatLikes(post.comment_cnt)}`;
+            commentText.appendChild(document.createTextNode('\u00A0\u00A0'));
+            contentSubNum.appendChild(commentText);
+
+            const visitText = document.createElement('p');
+            visitText.classList.add('contentSub');
+            visitText.textContent = `조회수 ${formatLikes(post.visit_cnt)}`;
+            contentSubNum.appendChild(visitText);
+
+            contentSubTotal.appendChild(contentSubNum);
+
+            topContainer.appendChild(postContent);
+
+            postContentContainer.appendChild(topContainer);
+            postContentContainer.appendChild(contentSubTotal);
+
+            const postImage = document.createElement('img');
+            postImage.classList.add('postImg');
+            postImage.src =
+                post.post_image !== null
+                    ? IMG_URL + post.post_image
+                    : '../../assets/IMG_1533.JPG';
+            postImage.style.visibility =
+                post.post_image === null ? 'hidden' : 'visible';
+
+            [contentTitle, contentContent, postImage].forEach(element => {
                 if (element) {
                     element.addEventListener('click', () => {
                         window.location.href = `/posts/${post.post_id}`;
@@ -93,10 +133,16 @@ async function loadPosts() {
                 }
             });
 
-            const postProfileImg = postArticle.querySelector('.writerImg');
-            postProfileImg.onerror = () => {
-                postProfileImg.src = '../../assets/IMG_1533.JPG';
+            writerImg.onerror = () => {
+                writerImg.src = '../../assets/IMG_1533.JPG';
             };
+
+            postContainer.appendChild(postContentContainer);
+            postContainer.appendChild(postImage);
+
+            postArticle.appendChild(postContainer);
+
+            postList.appendChild(postArticle);
         });
 
         currentPage++;
