@@ -127,80 +127,117 @@ async function getComment() {
         commentList.innerHTML = '';
         const res = await api.get(`/posts/${postId}/comments`);
         const comments = res.data.data;
+
         comments.forEach(cmt => {
             const cmtArticle = document.createElement('article');
-            cmtArticle.classList.add('introTitle2');
-            cmtArticle.classList.add('chatContainer');
-            cmtArticle.innerHTML = `
-                <div class="introTitle2">
-                    <img src="${cmt.profile_image ? IMG_URL + cmt.profile_image : '../../assets/IMG_1533.JPG'}" class="writerImg"/>
-                    <div class="content">
-                        <div class="chatTop">
-                        <p id="writerText" >
-                            ${cmt.nickname}
-                        </p>
-                        <p class="contentSub backTrans" style="margin-left: 24px">
-                            ${formatDates(cmt.date)}
-                        </p>
-                        </div>
-                        <div id="chatText">${cmt.comment}</div>
-                    </div>
-                </div>
-                <div>
-                
-                <div style="margin-top: 0px">
-                ${
-                    cmt.is_user
-                        ? `<img src="../../assets/ellipsis.svg" class = "ellipsis"/>`
-                        : ``
-                }
-                </div>
-                <div class="chatDropDownContainer" id="dropdown_${cmt.comment_id}">
-                    <div id="chatDropDown">
-                         <button class="editBtn" id="cmtEditBtn_${cmt.comment_id}">수정</button>
-                        <button class="editBtn" id="cmtDelBtn_${cmt.comment_id}">삭제</button>
-                    </div>
-                </div>
-                </div>
-            </div>
-            `;
+            cmtArticle.classList.add('introTitle2', 'chatContainer');
+
+            const writerContainer = document.createElement('div');
+            writerContainer.classList.add('introTitle2');
+
+            const writerImg = document.createElement('img');
+            writerImg.src = cmt.profile_image
+                ? IMG_URL + cmt.profile_image
+                : '../../assets/IMG_1533.JPG';
+            writerImg.classList.add('writerImg');
+            writerContainer.appendChild(writerImg);
+
+            const contentContainer = document.createElement('div');
+            contentContainer.classList.add('content');
+
+            const chatTop = document.createElement('div');
+            chatTop.classList.add('chatTop');
+
+            const writerText = document.createElement('p');
+            writerText.id = 'writerText';
+            writerText.textContent = cmt.nickname;
+            chatTop.appendChild(writerText);
+
+            const dateText = document.createElement('p');
+            dateText.classList.add('contentSub', 'backTrans');
+            dateText.style.marginLeft = '24px';
+            dateText.textContent = formatDates(cmt.date);
+            chatTop.appendChild(dateText);
+
+            contentContainer.appendChild(chatTop);
+
+            const chatText = document.createElement('div');
+            chatText.id = 'chatText';
+            chatText.textContent = cmt.comment;
+            contentContainer.appendChild(chatText);
+
+            writerContainer.appendChild(contentContainer);
+
+            const actionsContainer = document.createElement('div');
+            const dropdownWrapper = document.createElement('div');
+            dropdownWrapper.style.marginTop = '0px';
+
+            if (cmt.is_user) {
+                const ellipsisImg = document.createElement('img');
+                ellipsisImg.src = '../../assets/ellipsis.svg';
+                ellipsisImg.classList.add('ellipsis');
+                dropdownWrapper.appendChild(ellipsisImg);
+                actionsContainer.appendChild(dropdownWrapper);
+            }
+
+            const dropdownContainer = document.createElement('div');
+            dropdownContainer.classList.add('chatDropDownContainer');
+            dropdownContainer.id = `dropdown_${cmt.comment_id}`;
+
+            const dropdownMenu = document.createElement('div');
+            dropdownMenu.id = 'chatDropDown';
+
+            if (cmt.is_user) {
+                const editBtn = document.createElement('button');
+                editBtn.classList.add('editBtn');
+                editBtn.id = `cmtEditBtn_${cmt.comment_id}`;
+                editBtn.textContent = '수정';
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.classList.add('editBtn');
+                deleteBtn.id = `cmtDelBtn_${cmt.comment_id}`;
+                deleteBtn.textContent = '삭제';
+
+                dropdownMenu.appendChild(editBtn);
+                dropdownMenu.appendChild(deleteBtn);
+            }
+
+            dropdownContainer.appendChild(dropdownMenu);
+            actionsContainer.appendChild(dropdownContainer);
+
+            cmtArticle.appendChild(writerContainer);
+            cmtArticle.appendChild(actionsContainer);
             commentList.appendChild(cmtArticle);
+
+            // 이벤트 리스너 설정
+            writerImg.onerror = () => {
+                writerImg.src = '../../assets/IMG_1533.JPG';
+            };
+
             if (cmt.is_user) {
                 cmtDelModal(cmt.comment_id);
                 cmtEdit(cmt);
-            }
-            const cmtImg = cmtArticle.querySelector('.writerImg');
 
-            cmtImg.onerror = () => {
-                cmtImg.src = '../../assets/IMG_1533.JPG';
-            };
+                const ellipsis = cmtArticle.querySelector('.ellipsis');
 
-            const ellipsis = cmtArticle.querySelector('.ellipsis');
-            const dropdown = cmtArticle.querySelector('.chatDropDownContainer');
+                if (ellipsis) {
+                    ellipsis.addEventListener('click', event => {
+                        event.stopPropagation();
+                        const allDropdowns = document.querySelectorAll(
+                            '.chatDropDownContainer',
+                        );
+                        allDropdowns.forEach(otherDropdown => {
+                            if (otherDropdown !== dropdownContainer) {
+                                otherDropdown.style.display = 'none';
+                            }
+                        });
 
-            if (ellipsis) {
-                ellipsis.addEventListener('click', event => {
-                    event.stopPropagation(); // 클릭 이벤트가 상위 요소로 전파되지 않도록 방지
-                    // 모든 드롭다운을 닫고, 클릭한 드롭다운을 열기
-                    const allDropdowns = document.querySelectorAll(
-                        '.chatDropDownContainer',
-                    );
-                    allDropdowns.forEach(otherDropdown => {
-                        if (otherDropdown !== dropdown) {
-                            otherDropdown.style.display = 'none'; // 다른 드롭다운 닫기
-                        }
+                        dropdownContainer.style.display =
+                            dropdownContainer.style.display === 'block'
+                                ? 'none'
+                                : 'block';
                     });
-
-                    // 클릭한 드롭다운 열기/닫기
-                    if (
-                        dropdown.style.display === 'none' ||
-                        !dropdown.style.display
-                    ) {
-                        dropdown.style.display = 'block';
-                    } else {
-                        dropdown.style.display = 'none';
-                    }
-                });
+                }
             }
         });
     } catch (err) {
