@@ -119,6 +119,9 @@ function formatDates(date) {
 
 const chatWriterImg = document.getElementById('chatWriterImg');
 chatWriterImg.src = sessionStorage.getItem('profileImg');
+chatWriterImg.onerror = () => {
+    chatWriterImg.src = '../../assets/IMG_1533.JPG';
+};
 
 const commentList = document.getElementById('commentList');
 
