@@ -13,9 +13,12 @@ const darkOrange = getComputedStyle(root).getPropertyValue('--dark-orange');
 const orange = getComputedStyle(root).getPropertyValue('--orange');
 
 let originNickname;
+let isEdit = false;
+let hasImg = false;
 
 editBtn.addEventListener('click', async () => {
-    if (!imageUpload.files[0] && nickname.value === originNickname) {
+    console.log(originNickname);
+    if (!isEdit && nickname.value === originNickname) {
         editBtn.style.backgroundColor = orange;
     } else if (nickname.value === '') {
         helpText.textContent = '*닉네임을 입력해주세요.';
@@ -59,6 +62,7 @@ async function getUser() {
 
         if (profileImgStorage !== 'null') {
             document.getElementById('profileImg').src = profileImgStorage;
+            hasImg = true;
         }
     } catch (err) {
         console.error(err);
@@ -71,10 +75,24 @@ const profilePreview = document.getElementById('profileImg');
 
 imagePlus.addEventListener('click', () => {
     imageUpload.click();
+    imageUpload.value = '';
+    // imgHelpText.style.visibility = 'visible';
+    profilePreview.src = '';
+    if (hasImg) {
+        isEdit = true;
+        editBtn.style.backgroundColor = darkOrange;
+    }
 });
 
 profilePreview.addEventListener('click', () => {
     imageUpload.click();
+    imageUpload.value = '';
+    // imgHelpText.style.visibility = 'visible';
+    profilePreview.src = '';
+    if (hasImg) {
+        isEdit = true;
+        editBtn.style.backgroundColor = darkOrange;
+    }
 });
 
 imageUpload.addEventListener('change', event => {
@@ -97,8 +115,13 @@ async function editProfile() {
     if (nickname.value !== originNickname) {
         formData.append('nickname', nickname.value);
     }
+
     if (imageUpload.files[0]) {
         formData.append('profile_image', imageUpload.files[0]);
+    }
+
+    if (isEdit) {
+        formData.append('originProfile', true);
     }
 
     try {
@@ -109,11 +132,11 @@ async function editProfile() {
         });
         toast.style.visibility = 'visible';
         editBtn.style.backgroundColor = orange;
-        if (res.data.img) {
-            sessionStorage.setItem('profileImg', IMG_URL + res.data.img);
-            const profileImg = document.getElementById('profile');
-            profileImg.src = IMG_URL + res.data.img;
-        }
+
+        sessionStorage.setItem('profileImg', IMG_URL + res.data.img);
+        const profileImg = document.getElementById('profile');
+        profileImg.src = IMG_URL + res.data.img;
+
         originNickname = nickname.value;
         setTimeout(() => {
             toast.style.visibility = 'hidden';
