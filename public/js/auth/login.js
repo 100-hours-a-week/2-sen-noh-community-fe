@@ -82,10 +82,13 @@ async function login(data) {
     try {
         const res = await api.post('/auth/login', data);
         helpText.style.visibility = 'hidden';
-        sessionStorage.setItem(
-            'profileImg',
-            IMG_URL + res.data.data.profile_image,
-        );
+        console.log(res.data.data);
+        if (res.data.data.profile_image) {
+            sessionStorage.setItem(
+                'profileImg',
+                IMG_URL + res.data.data.profile_image,
+            );
+        }
 
         document.location.href = `/posts`;
     } catch (err) {
