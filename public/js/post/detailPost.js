@@ -367,10 +367,20 @@ async function updateCommentApi(data) {
     try {
         await api.patch(`/posts/${postId}/comments/${commentId}`, data);
 
+        // 기존 댓글 요소 찾기
+        const commentElement = document
+            .querySelector(`#dropdown_${commentId}`)
+            .closest('.chatContainer');
+
+        if (commentElement) {
+            // 댓글 내용 업데이트
+            const chatText = commentElement.querySelector('#chatText');
+            chatText.textContent = data.comment;
+        }
+
         cmtInput.value = '';
         cmtBtn.style.backgroundColor = orange;
         cmtBtn.textContent = '댓글';
-        getComment();
     } catch (err) {
         console.error(err);
         alert('서버 오류');
