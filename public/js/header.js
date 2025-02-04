@@ -29,7 +29,7 @@ menu[2].addEventListener('click', () => {
 
 const profileImgStorage = sessionStorage.getItem('profileImg');
 
-if (profileImgStorage !== 'null') {
+if (profileImgStorage) {
     profileImg.src = profileImgStorage;
 }
 

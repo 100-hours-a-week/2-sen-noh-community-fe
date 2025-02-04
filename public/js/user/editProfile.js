@@ -17,7 +17,6 @@ let isEdit = false;
 let hasImg = false;
 
 editBtn.addEventListener('click', async () => {
-    console.log(originNickname);
     if (!isEdit && nickname.value === originNickname) {
         editBtn.style.backgroundColor = orange;
     } else if (nickname.value === '') {
@@ -60,7 +59,7 @@ async function getUser() {
         nickname.value = userInfo.nickname;
         originNickname = userInfo.nickname;
 
-        if (profileImgStorage !== 'null') {
+        if (profileImgStorage) {
             document.getElementById('profileImg').src = profileImgStorage;
             hasImg = true;
         }
@@ -76,28 +75,26 @@ const profilePreview = document.getElementById('profileImg');
 imagePlus.addEventListener('click', () => {
     imageUpload.click();
     imageUpload.value = '';
-    // imgHelpText.style.visibility = 'visible';
     profilePreview.src = '';
     if (hasImg) {
-        isEdit = true;
         editBtn.style.backgroundColor = darkOrange;
+        isEdit = true;
     }
 });
 
 profilePreview.addEventListener('click', () => {
     imageUpload.click();
     imageUpload.value = '';
-    // imgHelpText.style.visibility = 'visible';
     profilePreview.src = '';
     if (hasImg) {
-        isEdit = true;
         editBtn.style.backgroundColor = darkOrange;
+        isEdit = true;
     }
 });
 
 imageUpload.addEventListener('change', event => {
     const file = event.target.files[0];
-
+    isEdit = true;
     if (file) {
         const reader = new FileReader();
         reader.onload = e => {
@@ -106,6 +103,8 @@ imageUpload.addEventListener('change', event => {
             profilePreview.style.visibility = 'visible';
         };
         reader.readAsDataURL(file);
+    } else if (!hasImg) {
+        isEdit = false;
     }
 });
 
@@ -118,10 +117,10 @@ async function editProfile() {
 
     if (imageUpload.files[0]) {
         formData.append('profile_image', imageUpload.files[0]);
-    }
-
-    if (isEdit) {
+        hasImg = true;
+    } else if (isEdit) {
         formData.append('originProfile', true);
+        hasImg = false;
     }
 
     try {
@@ -133,10 +132,15 @@ async function editProfile() {
         toast.style.visibility = 'visible';
         editBtn.style.backgroundColor = orange;
 
-        sessionStorage.setItem('profileImg', IMG_URL + res.data.img);
         const profileImg = document.getElementById('profile');
-        profileImg.src = IMG_URL + res.data.img;
-
+        if (res.data.img) {
+            sessionStorage.setItem('profileImg', IMG_URL + res.data.img);
+            profileImg.src = IMG_URL + res.data.img;
+        } else if (isEdit) {
+            sessionStorage.removeItem('profileImg');
+            profileImg.src = '';
+        }
+        isEdit = false;
         originNickname = nickname.value;
         setTimeout(() => {
             toast.style.visibility = 'hidden';
