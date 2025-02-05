@@ -64,11 +64,12 @@
 }
 
 .btn {
-    margin-top: 24px;
+    /* margin-top: 24px; */
     display: flex;
     justify-content: flex-end;
     width: 640px;
-    margin-bottom: 24px;
+    margin-bottom: -30px;
+    z-index: 1;
 }
 
 .content {
@@ -112,14 +113,14 @@
 }
 
 #addBtn {
-    font-family: 'NanumSquareExtraBold';
+    font-family: 'NanumSquareBold';
     background-color: var(--orange);
-    width: 138px;
-    height: 39px;
-    border-radius: 6px;
+    width: 90px;
+    height: 32px;
+    border-radius: 10px;
     border: 0px;
     color: #ffffff;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     line-height: 25px;
     cursor: pointer;
@@ -517,4 +518,31 @@
     width: 100%;
     padding-left: 24px;
     padding-right: 24px;
+}
+
+.category {
+    height: 40px;
+    width: 640px;
+    /* background-color: #52aadd; */
+    border-top: solid 1px var(--gray);
+    border-bottom: solid 1px var(--gray);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 14px;
+}
+
+.category1 {
+    width: 80px;
+    height: 30px;
+    border: solid 1px var(--dark-orange);
+    border-radius: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.category1.active {
+    background-color: var(--dark-orange);
+    color: var(--background);
 }

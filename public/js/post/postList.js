@@ -12,7 +12,6 @@ const yellow = getComputedStyle(root).getPropertyValue('--yellow');
 const darkOrange = getComputedStyle(root).getPropertyValue('--light-green');
 const orange = getComputedStyle(root).getPropertyValue('--light-orange');
 const green = getComputedStyle(root).getPropertyValue('--light-sky-blue');
-const skyBlue = getComputedStyle(root).getPropertyValue('--error');
 
 const colors = [yellow, darkOrange, orange, green];
 
@@ -23,13 +22,15 @@ const pageSize = 12;
 let isLoading = false;
 let hasMore = true;
 
-async function loadPosts() {
+loadPosts(0);
+
+async function loadPosts(categoryInt) {
     if (isLoading || !hasMore) return;
     isLoading = true;
 
     try {
         const res = await api.get(
-            `/posts?page=${currentPage}&size=${pageSize}`,
+            `/posts?page=${currentPage}&size=${pageSize}&category=${categoryInt}`,
         );
         const { data, meta } = res.data;
 
@@ -38,7 +39,7 @@ async function loadPosts() {
             postArticle.classList.add('post');
 
             const borderColor = colors[index % 4];
-            postArticle.style.borderTop = `1px solid ${borderColor}`;
+            postArticle.style.borderBottom = `1px solid ${borderColor}`;
 
             const postContainer = document.createElement('div');
             postContainer.classList.add('postContainer');
@@ -161,8 +162,6 @@ window.addEventListener('scroll', () => {
     }
 });
 
-loadPosts();
-
 function formatLikes(likes) {
     if (likes >= 1000) {
         return Math.floor(likes / 100) / 10 + 'k';
@@ -175,12 +174,17 @@ function formatDates(date) {
     return d.toLocaleString('ja-JP').replaceAll('/', '-');
 }
 
-function truncateText(container, maxLines) {
-    const lineHeight = parseFloat(getComputedStyle(container).lineHeight);
-    const maxHeight = lineHeight * maxLines;
+document.querySelectorAll('.category1').forEach((button, index) => {
+    button.addEventListener('click', function () {
+        document.querySelectorAll('.category1').forEach(btn => {
+            btn.classList.remove('active');
+        });
 
-    while (container.scrollHeight > maxHeight) {
-        container.textContent = container.textContent.slice(0, -1).trim();
-    }
-    container.textContent += '...';
-}
+        this.classList.add('active');
+
+        currentPage = 1;
+        postList.innerHTML = '';
+
+        loadPosts(index);
+    });
+});
